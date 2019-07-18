@@ -9,15 +9,12 @@ class SessionManager(object):
     def __init__(self, access_key, secret_key):
         self._builtin       = BuiltIn()
         self._cache         = ConnectionCache('No sessions.')
-        self.access_key     = access_key
-        self.secret_key     = secret_key
         self.session        = None
-        self.s3_session     = None
+        self.r_session      = None
         self.client         = None
     
-    def get_session(self, *args, **kwargs):
 
-        
+    def create_session(self, *args, **kwargs):
         creds = dict(enumerate(args))
         region = creds.get(0, kwargs.pop('region', None))
     
@@ -40,21 +37,12 @@ class SessionManager(object):
             self.client = client
         return self.client
 
-    def get_s3_session(self):
-        print(self.session.access_key, "44e4")
+    def get_resource(self, resource='s3'):
+        session = self.session
+
         if self.session == None:
-            session = self.get_session()
-            if session is None:
-                return None # Raise some error
-            s3_session = session.resource("s3")
-            self.s3_session = s3_session
-        return self.s3_session
+            session = self.create_session()
 
-    
-    def list_buckets(self):
-        client = self.get_client()
-        if self.get_client == None:
-            return "First set client"
-        
-        return client.list_buckets()
-
+        r_session = session.resource(resource)
+        self.r_session = r_session
+        return self.r_session
