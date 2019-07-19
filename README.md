@@ -8,11 +8,11 @@ A library of keywords for interacting with AWS services.
 > ## Session
 ####  Keywords
 
- | `Create Session` | region | profile=optional |
- | `Delete Session` | region | profile=optional |
- | `Delete All Sessions` |
+ - | `Create Session` | region | profile=optional |
+ - | `Delete Session` | region | profile=optional |
+ - | `Delete All Sessions` |
 
  > ### S3 
  ####  Keywords
- | `Get Bucket` | bucket_name |
- | `Get Object` | bucket_name | object_path 
+ - | `Get Bucket` | bucket_name |
+ - | `Get Object` | bucket_name | object_path 
