@@ -1,5 +1,5 @@
-from AWSLibrary.keywords.session import SessionManager
-from AWSLibrary.keywords.s3 import S3Manager    
+from .session import SessionManager
+from .s3 import S3Manager    
 
 
 __all__ = [

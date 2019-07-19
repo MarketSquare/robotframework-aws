@@ -1,5 +1,5 @@
-from AWSLibrary.keywords import SessionManager, S3Manger
-from AWSLibrary.version import get_version
+from .keywords import *
+from .version import get_version
 
 
 __version__ = get_version()
@@ -16,7 +16,7 @@ class AWSLibrary(SessionManager, S3Manager):
     interacts with Boto3.
 
     Examples:
-    | `Create Session` | us-west-2 | access_key=key | secret_key=secret | label=oregon    |
+    | `Create Session` | us-west-2 |
     """
 
 
