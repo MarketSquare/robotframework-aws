@@ -4,6 +4,7 @@
 
 A library of keywords for interacting with AWS services.
 
+### Contributors are welcome. This package is at the beginning of development.
 
 > ## Session
 ####  Keywords
