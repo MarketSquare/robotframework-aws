@@ -1,0 +1,9 @@
+language: python
+sudo: false
+
+python:
+  - "3.6"
+  - "3.7-dev"
+
+script:
+  - tox -v -e py

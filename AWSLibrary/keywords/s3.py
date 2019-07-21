@@ -1,4 +1,5 @@
 from robot.api import logger
+from botocore.exceptions import ClientError
 
 
 class FatalError(RuntimeError):
@@ -6,6 +7,9 @@ class FatalError(RuntimeError):
 
 class KeywordError(RuntimeError):
     ROBOT_SUPPRESS_NAME = True
+
+class ContinuableError(RuntimeError):
+    ROBOT_CONTINUE_ON_FAILURE = True
 
 
 class S3Manager(object):
@@ -28,7 +32,7 @@ class S3Manager(object):
         res = bucket in s3.buckets.all()
         if res == False:
             raise KeywordError("Bucket {} does not exist".format(bname))
-        # return self.bucket
+        
 
     def get_object(self, bucket_name, obj):
         client = self.get_client()
@@ -37,16 +41,33 @@ class S3Manager(object):
         resp = client.get_object(Bucket=bucket_name, Key=obj) 
         self._builtin.log("Returned Object: %s" % resp['Body'].read()) 
 
-    def upload_file(self):
-        client = self.get_client()
-        if s3 == None:
-            s3 = self.get_resource()
+    def key_should_not_exist(self, bucket, path, key):
+        client = self.client
+        try:
+            res = client.head_object(Bucket=bucket, Key=key)
+            if res['ResponseMetadata']['HTTPStatusCode'] == 200:
+                raise KeywordError("Key: {}, already exists at path: {}".format(key, path))
+        except ClientError as e:
+            self._builtin.log(e.response['Error']) 
+            logger.console(e.response['Error'])
+        return True
 
-        resp = client.put_object(Bucket=bucket_name,
-                                    Key=obj,
-                                    Body=request.files['myfile'],
-                                    ServerSideEncryption='aws:kms',
-                                    )
-        s3 = self.r_session
+    def key_should_exist(self, bucket, path, key):
+        client = self.client
+        res = client.head_object(Bucket=bucket, Key=key)
+        try:
+            if res['ResponseMetadata']['HTTPStatusCode'] == 404:
+                raise KeywordError("Key: {}, does not exist at path: {}".format(key, path))
+        except ClientError as e:
+            self._builtin.log(e.response['Error']) 
+            logger.console(e.response['Error'])
+        return True
 
-
+    def upload_file(self, bucket, path, key):
+        client = self.client
+        try:
+            file = client.upload_file(path, bucket, key)
+        except ClientError as e:
+            self._builtin.log(e.response['Error']) 
+            logger.console(e.response['Error'])
+        return True
