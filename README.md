@@ -35,19 +35,26 @@ Library  AWSLibrary  ${access_key}  ${secret_key}
    ```
 
 > ## Session
-####  Keywords
+####  A session is created to use AWS services as a user defining the region and profile is optional.
 
  - | `Create Session` | region | profile=optional |
  - | `Delete Session` | region | profile=optional |
  - | `Delete All Sessions` |
 
  > ### S3 
- ####  Keywords
 #####  A key represents the path of the file located in the S3 bucket and Object Path represents the local path of the file on your host.
 
  - | `Get Bucket` | bucket_name |
  - | `Get Object` | bucket_name | object_path |
  - | `Upload File` | bucket_name | object_path | key |
+ - | `Download File` | bucket_name | object_path | key |
  - | `Key Should Exist` | bucket_name | object_path | key |
  - | `Key Should Not Exist` | bucket_name | object_path | key |
+
+
+> ### Resources
+####  Keywords can be used for local functionality that can be used with all services. These are helper methods to validate functionality, existence, and so on.
+
+ - | `Local File Should Exist` | path |
+ - | `Local File Should Not Exist` | path |
 
