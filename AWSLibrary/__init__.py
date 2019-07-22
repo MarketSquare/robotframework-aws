@@ -1,11 +1,10 @@
 from .keywords import *
 from .version import get_version
 
-
 __version__ = get_version()
 
 
-class AWSLibrary(SessionManager, S3Manager):
+class AWSLibrary(SessionManager, S3Manager, ResourceManager):
 
     ROBOT_EXIT_ON_FAILURE = True
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
