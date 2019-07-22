@@ -33,7 +33,6 @@ class S3Manager(object):
         if res == False:
             raise KeywordError("Bucket {} does not exist".format(bname))
         
-
     def get_object(self, bucket_name, obj):
         client = self.get_client()
         if self.client == None:
@@ -41,33 +40,45 @@ class S3Manager(object):
         resp = client.get_object(Bucket=bucket_name, Key=obj) 
         self._builtin.log("Returned Object: %s" % resp['Body'].read()) 
 
-    def key_should_not_exist(self, bucket, path, key):
-        client = self.client
+    def key_should_not_exist(self, bucket, key):
+        client = self.get_client()
         try:
             res = client.head_object(Bucket=bucket, Key=key)
             if res['ResponseMetadata']['HTTPStatusCode'] == 200:
-                raise KeywordError("Key: {}, already exists at path: {}".format(key, path))
+                raise KeywordError("Key: {}, already exists".format(key))
         except ClientError as e:
             self._builtin.log(e.response['Error']) 
             logger.console(e.response['Error'])
         return True
 
-    def key_should_exist(self, bucket, path, key):
+    def key_should_exist(self, bucket, key):
         client = self.client
         res = client.head_object(Bucket=bucket, Key=key)
         try:
             if res['ResponseMetadata']['HTTPStatusCode'] == 404:
-                raise KeywordError("Key: {}, does not exist at path: {}".format(key, path))
+                raise KeywordError("Key: {}, does not exist".format(key))
         except ClientError as e:
             self._builtin.log(e.response['Error']) 
             logger.console(e.response['Error'])
         return True
 
     def upload_file(self, bucket, path, key):
-        client = self.client
+        client = self.get_client()
         try:
             file = client.upload_file(path, bucket, key)
         except ClientError as e:
             self._builtin.log(e.response['Error']) 
             logger.console(e.response['Error'])
         return True
+
+    def download_file(self, bucket, path, key):
+        client = self.get_client()
+        try:
+            file = client.download_file(bucket, key, path)
+            self._builtin.log(file) 
+        except ClientError as e:
+            if e.response['Error']['Code'] == 404:
+                self._builtin.log(e.response['Error']) 
+                raise KeywordError("The bucket does not exist")
+            else:
+                raise
