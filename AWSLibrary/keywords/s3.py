@@ -1,4 +1,5 @@
 from robot.api import logger
+from robot import utils
 from botocore.exceptions import ClientError
 
 
@@ -83,4 +84,14 @@ class S3Manager(object):
             else:
                 raise
 
-    
+    def allowed_methods(self, bucket, methods=[]):
+        client = self.get_client()
+        try:
+            response = client.get_bucket_cors(Bucket=bucket)
+            obj = response['CORSRules'][0]
+            aws_methods = obj['AllowedMethods']
+            assert set(aws_methods) == set(methods)
+        except ClientError as e:
+            raise KeywordError("Error: " + e)
+
+
