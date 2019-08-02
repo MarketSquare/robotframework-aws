@@ -4,10 +4,10 @@
  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
  ![PyPI](https://img.shields.io/pypi/v/robotframework-aws.svg)
 
-A library of keywords for interacting with AWS services.
+A library of keywords for interacting with AWS services in your robot tests. This library covers a variety of AWS services.
 
 
-#### Instructions
+#### Installation
 
 1. Install the package
 
@@ -50,6 +50,15 @@ Library  AWSLibrary  ${access_key}  ${secret_key}
  - | `Download File` | bucket_name | object_path | key |
  - | `Key Should Exist` | bucket_name | object_path | key |
  - | `Key Should Not Exist` | bucket_name | object_path | key |
+ - | `Allowed Methods` | array of methods |
+
+
+ > ### DynamoDB
+#####  Keywords to interact with Dynamo Database
+
+ - | `Dynamo Query` | region | sql-command |
+ - | `Table Should Exist` | region |
+
 
 
 > ### Resources
@@ -57,4 +66,5 @@ Library  AWSLibrary  ${access_key}  ${secret_key}
 
  - | `Local File Should Exist` | path |
  - | `Local File Should Not Exist` | path |
+ - | `List And JSON String Should Be Equal` | region | array |
 

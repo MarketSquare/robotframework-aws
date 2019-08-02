@@ -17,19 +17,29 @@ class S3Manager(object):
 
     def __init__(self, access_key, secret_key):
         self.bucket = None
+        self.access_key = access_key
+        self.secret_key = secret_key
 
     def list_buckets(self):
-        client = self.get_client()
-        if self.get_client == None:
-            return "First set client"
-        return client.list_buckets()
+        s3 = self.get_client()
+        response = s3.list_buckets()
+        if response:
+            for _object in response.get('Buckets', []):
+                yield _object['Name']
 
-    def get_bucket(self, bname):
+    def list_objects(self, bucket_name):
+        s3 = self.get_client()
+        response = s3.list_objects(Bucket=bucket_name)
+        if response:
+            for _object in response.get('Contents', []):
+                yield _object['Key']
+
+    def get_bucket(self, bucket_name):
         logger.console(self.access_key)
         s3 = self.r_session
         if s3 == None:
             s3 = self.get_resource()
-        bucket = s3.Bucket(bname)
+        bucket = s3.Bucket(bucket_name)
         res = bucket in s3.buckets.all()
         if res == False:
             raise KeywordError("Bucket {} does not exist".format(bname))
@@ -40,6 +50,14 @@ class S3Manager(object):
             client = self.get_client()
         resp = client.get_object(Bucket=bucket_name, Key=obj) 
         self._builtin.log("Returned Object: %s" % resp['Body'].read()) 
+
+    def read_s3_object(self, bucket_name, key):
+        if self.client() is None:
+            s3 = get_client()
+        s3 = self.client()
+        response = s3.get_object(Bucket=bucket_name, Key=key)
+        if response:
+            return response['Body']
 
     def key_should_not_exist(self, bucket, key):
         client = self.get_client()
