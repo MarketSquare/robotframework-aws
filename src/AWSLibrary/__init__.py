@@ -1,5 +1,5 @@
-from .keywords import *
-from .version import get_version
+from AWSLibrary.keywords import SessionManager, S3Manager, ResourceManager
+from AWSLibrary.version import get_version
 
 __version__ = get_version()
 

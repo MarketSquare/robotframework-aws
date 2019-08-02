@@ -1,0 +1,8 @@
+action: robot, msg: getenv
+cwd: /Users/dillanteagle/workspace/rb_aws
+cmd: /Users/dillanteagle/workspace/rb_aws/.tox/robot/bin/python -m pip install robotframework
+Collecting robotframework
+  Using cached https://files.pythonhosted.org/packages/22/0f/1b9ffa0c4e59789b50e6034866e823b7d4a5c7eaedad7bfd0bba42f2aa9d/robotframework-3.1.2-py2.py3-none-any.whl
+ERROR: robotframework-aws 0.0.3 requires boto3>=1.9.1, which is not installed.
+Installing collected packages: robotframework
+Successfully installed robotframework-3.1.2
