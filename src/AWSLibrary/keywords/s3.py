@@ -1,6 +1,7 @@
 from robot.api import logger
 from robot import utils
 from botocore.exceptions import ClientError
+from .session import SessionManager
 
 
 class FatalError(RuntimeError):
@@ -19,16 +20,17 @@ class S3Manager(object):
         self.bucket = None
         self.access_key = access_key
         self.secret_key = secret_key
+        self.client = SessionManager(self.access_key, self.secret_key).get_client()
 
     def list_buckets(self):
-        s3 = self.get_client()
+        s3 = self.client
         response = s3.list_buckets()
         if response:
             for _object in response.get('Buckets', []):
                 yield _object['Name']
 
     def list_objects(self, bucket_name):
-        s3 = self.get_client()
+        s3 = self.client
         response = s3.list_objects(Bucket=bucket_name)
         if response:
             for _object in response.get('Contents', []):
