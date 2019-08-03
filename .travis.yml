@@ -22,6 +22,7 @@ deploy:
   on:
     repo: teaglebuilt/robotframework-aws
     tags: true
+    branch: master
   - provider: releases
     api_key:
       secure: "H63IHezVevRXwljreTYSaxsAlrgSpKm7kj9yRidx5H+HRXfogpG7REpuzF8MCfrmYz4HWoTUb99KtCZOXdL7Owcs7TNPrc99iPFY+B6ry99sQ126KU6Wr344vScC/K0fdVyCZ6b2gmcpR45r/hYWRfz0ADJU7jmw+S0iuvLwWfa3gLRFJpbozmPdOuerJHMM1eJcBZIbxCdC66xDKNH4cHCOg/uM0RNXyX08hmQaUOUzTtrtgFy4ubKquQonYHlqbid89b9OLhSiTdyoLwSreQ0BahPswLff4cnuFxslPBmEdZMyADRIsun0pgjougYoI0FEzdDjVLz1uBe7lO3ZJX0+vAmCepWUCr/zouYdJDfv8S4Khbp/xcYUJ99uxt+3APYyfoJUJ7pLB4+0t831PbkbkYdhcpkZL07wXofL8WNYMZyH7DK2l7Owv0bCiD8jQGYsbmcpr+YEaBWhpbCNoRVtYNfx4UVDtxD8AMFXnNC1RAQUZCNJuuSLJvoluWxIQ1ZA4CqfwByn2sVelIJJGq2L13ZZzHEK6Mp4tVAmaPPuqvdG+JwfrJ34B/kJY/A0gAo81E81pPOZRJonf4xjURyhJSNSJakBhVxuUEneHNVLUm7lPD7FGGCK3cJUyDlmXQYBWBke88org4vpZTC7PwoDq8ZqAR4MiMttJ4ylo18="
@@ -31,5 +32,4 @@ deploy:
     on:
       repo: teaglebuilt/robotframework-aws
       tags: true
-      branch: master
       python: "3.7"
