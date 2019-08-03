@@ -1,0 +1,32 @@
+action: robot, msg: installpkg
+cwd: /Users/dillanteagle/workspace/rb_aws
+cmd: /Users/dillanteagle/workspace/rb_aws/.tox/robot/bin/python -m pip install --exists-action w .tox/.tmp/package/1/robotframework-aws-0.0.3.zip
+Processing ./.tox/.tmp/package/1/robotframework-aws-0.0.3.zip
+Collecting boto3>=1.9.1 (from robotframework-aws==0.0.3)
+  Using cached https://files.pythonhosted.org/packages/72/1a/97ca7494fd268835f2d2ea2c6b6ea3b7cfe271f22c2adb1ef45cf007d7f3/boto3-1.9.199-py2.py3-none-any.whl
+Requirement already satisfied: robotframework>=3.1.2 in ./.tox/robot/lib/python3.7/site-packages (from robotframework-aws==0.0.3) (3.1.2)
+Collecting botocore<1.13.0,>=1.12.199 (from boto3>=1.9.1->robotframework-aws==0.0.3)
+  Using cached https://files.pythonhosted.org/packages/50/f8/dbe656ee191c2d8b471a86fa07f0d37515611d865deaa034fc2b71dd71e4/botocore-1.12.199-py2.py3-none-any.whl
+Collecting s3transfer<0.3.0,>=0.2.0 (from boto3>=1.9.1->robotframework-aws==0.0.3)
+  Using cached https://files.pythonhosted.org/packages/16/8a/1fc3dba0c4923c2a76e1ff0d52b305c44606da63f718d14d3231e21c51b0/s3transfer-0.2.1-py2.py3-none-any.whl
+Collecting jmespath<1.0.0,>=0.7.1 (from boto3>=1.9.1->robotframework-aws==0.0.3)
+  Using cached https://files.pythonhosted.org/packages/83/94/7179c3832a6d45b266ddb2aac329e101367fbdb11f425f13771d27f225bb/jmespath-0.9.4-py2.py3-none-any.whl
+Collecting python-dateutil<3.0.0,>=2.1; python_version >= "2.7" (from botocore<1.13.0,>=1.12.199->boto3>=1.9.1->robotframework-aws==0.0.3)
+  Using cached https://files.pythonhosted.org/packages/41/17/c62faccbfbd163c7f57f3844689e3a78bae1f403648a6afb1d0866d87fbb/python_dateutil-2.8.0-py2.py3-none-any.whl
+Collecting docutils<0.15,>=0.10 (from botocore<1.13.0,>=1.12.199->boto3>=1.9.1->robotframework-aws==0.0.3)
+  Using cached https://files.pythonhosted.org/packages/36/fa/08e9e6e0e3cbd1d362c3bbee8d01d0aedb2155c4ac112b19ef3cae8eed8d/docutils-0.14-py3-none-any.whl
+Collecting urllib3<1.26,>=1.20; python_version >= "3.4" (from botocore<1.13.0,>=1.12.199->boto3>=1.9.1->robotframework-aws==0.0.3)
+  Using cached https://files.pythonhosted.org/packages/e6/60/247f23a7121ae632d62811ba7f273d0e58972d75e58a94d329d51550a47d/urllib3-1.25.3-py2.py3-none-any.whl
+Collecting six>=1.5 (from python-dateutil<3.0.0,>=2.1; python_version >= "2.7"->botocore<1.13.0,>=1.12.199->boto3>=1.9.1->robotframework-aws==0.0.3)
+  Using cached https://files.pythonhosted.org/packages/73/fb/00a976f728d0d1fecfe898238ce23f502a721c0ac0ecfedb80e0d88c64e9/six-1.12.0-py2.py3-none-any.whl
+Building wheels for collected packages: robotframework-aws
+  Building wheel for robotframework-aws (setup.py): started
+  Building wheel for robotframework-aws (setup.py): finished with status 'done'
+  Created wheel for robotframework-aws: filename=robotframework_aws-0.0.3-cp37-none-any.whl size=17914 sha256=50b325f9afaebbf1ced7016d13d65d6930a44770f88ad28f74fd716edeadc3cb
+  Stored in directory: /Users/dillanteagle/Library/Caches/pip/wheels/52/57/82/5107fec9abdd004ad4e2ee7f14c5574949d80fa7e859c7c552
+Successfully built robotframework-aws
+Installing collected packages: jmespath, six, python-dateutil, docutils, urllib3, botocore, s3transfer, boto3, robotframework-aws
+  Found existing installation: robotframework-aws 0.0.3
+    Not uninstalling robotframework-aws at /Users/dillanteagle/workspace/rb_aws, outside environment /Users/dillanteagle/workspace/rb_aws/.tox/robot/bin/..
+    Can't uninstall 'robotframework-aws'. No files were found to uninstall.
+Successfully installed boto3-1.9.199 botocore-1.12.199 docutils-0.14 jmespath-0.9.4 python-dateutil-2.8.0 robotframework-aws-0.0.3 s3transfer-0.2.1 six-1.12.0 urllib3-1.25.3

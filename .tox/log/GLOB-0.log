@@ -1,0 +1,64 @@
+action: GLOB, msg: packaging
+cwd: /Users/dillanteagle/workspace/rb_aws
+cmd: /Users/dillanteagle/workspace/rb_aws/env/bin/python3.7 setup.py sdist --formats=zip --dist-dir .tox/dist
+running sdist
+running egg_info
+writing src/robotframework_aws.egg-info/PKG-INFO
+writing dependency_links to src/robotframework_aws.egg-info/dependency_links.txt
+writing requirements to src/robotframework_aws.egg-info/requires.txt
+writing top-level names to src/robotframework_aws.egg-info/top_level.txt
+reading manifest file 'src/robotframework_aws.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching '*.py' under directory 'AWSLibrary'
+writing manifest file 'src/robotframework_aws.egg-info/SOURCES.txt'
+running check
+creating robotframework-aws-0.0.3
+creating robotframework-aws-0.0.3/src
+creating robotframework-aws-0.0.3/src/AWSLibrary
+creating robotframework-aws-0.0.3/src/AWSLibrary/keywords
+creating robotframework-aws-0.0.3/src/robotframework_aws.egg-info
+copying files to robotframework-aws-0.0.3...
+copying CONTRIBUTING.md -> robotframework-aws-0.0.3
+copying LICENSE -> robotframework-aws-0.0.3
+copying MANIFEST.in -> robotframework-aws-0.0.3
+copying README.md -> robotframework-aws-0.0.3
+copying requirements.txt -> robotframework-aws-0.0.3
+copying setup.py -> robotframework-aws-0.0.3
+copying src/AWSLibrary/__init__.py -> robotframework-aws-0.0.3/src/AWSLibrary
+copying src/AWSLibrary/version.py -> robotframework-aws-0.0.3/src/AWSLibrary
+copying src/AWSLibrary/keywords/__init__.py -> robotframework-aws-0.0.3/src/AWSLibrary/keywords
+copying src/AWSLibrary/keywords/resources.py -> robotframework-aws-0.0.3/src/AWSLibrary/keywords
+copying src/AWSLibrary/keywords/s3.py -> robotframework-aws-0.0.3/src/AWSLibrary/keywords
+copying src/AWSLibrary/keywords/session.py -> robotframework-aws-0.0.3/src/AWSLibrary/keywords
+copying src/robotframework_aws.egg-info/PKG-INFO -> robotframework-aws-0.0.3/src/robotframework_aws.egg-info
+copying src/robotframework_aws.egg-info/SOURCES.txt -> robotframework-aws-0.0.3/src/robotframework_aws.egg-info
+copying src/robotframework_aws.egg-info/dependency_links.txt -> robotframework-aws-0.0.3/src/robotframework_aws.egg-info
+copying src/robotframework_aws.egg-info/requires.txt -> robotframework-aws-0.0.3/src/robotframework_aws.egg-info
+copying src/robotframework_aws.egg-info/top_level.txt -> robotframework-aws-0.0.3/src/robotframework_aws.egg-info
+Writing robotframework-aws-0.0.3/setup.cfg
+creating '.tox/dist/robotframework-aws-0.0.3.zip' and adding 'robotframework-aws-0.0.3' to it
+adding 'robotframework-aws-0.0.3'
+adding 'robotframework-aws-0.0.3/src'
+adding 'robotframework-aws-0.0.3/PKG-INFO'
+adding 'robotframework-aws-0.0.3/LICENSE'
+adding 'robotframework-aws-0.0.3/requirements.txt'
+adding 'robotframework-aws-0.0.3/MANIFEST.in'
+adding 'robotframework-aws-0.0.3/README.md'
+adding 'robotframework-aws-0.0.3/setup.py'
+adding 'robotframework-aws-0.0.3/CONTRIBUTING.md'
+adding 'robotframework-aws-0.0.3/setup.cfg'
+adding 'robotframework-aws-0.0.3/src/robotframework_aws.egg-info'
+adding 'robotframework-aws-0.0.3/src/AWSLibrary'
+adding 'robotframework-aws-0.0.3/src/robotframework_aws.egg-info/PKG-INFO'
+adding 'robotframework-aws-0.0.3/src/robotframework_aws.egg-info/SOURCES.txt'
+adding 'robotframework-aws-0.0.3/src/robotframework_aws.egg-info/requires.txt'
+adding 'robotframework-aws-0.0.3/src/robotframework_aws.egg-info/top_level.txt'
+adding 'robotframework-aws-0.0.3/src/robotframework_aws.egg-info/dependency_links.txt'
+adding 'robotframework-aws-0.0.3/src/AWSLibrary/keywords'
+adding 'robotframework-aws-0.0.3/src/AWSLibrary/version.py'
+adding 'robotframework-aws-0.0.3/src/AWSLibrary/__init__.py'
+adding 'robotframework-aws-0.0.3/src/AWSLibrary/keywords/session.py'
+adding 'robotframework-aws-0.0.3/src/AWSLibrary/keywords/__init__.py'
+adding 'robotframework-aws-0.0.3/src/AWSLibrary/keywords/resources.py'
+adding 'robotframework-aws-0.0.3/src/AWSLibrary/keywords/s3.py'
+removing 'robotframework-aws-0.0.3' (and everything under it)

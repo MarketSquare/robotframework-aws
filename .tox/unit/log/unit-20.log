@@ -1,0 +1,15 @@
+action: unit, msg: installpkg
+cwd: /Users/dillanteagle/workspace/rb_aws
+cmd: /Users/dillanteagle/workspace/rb_aws/.tox/unit/bin/python -m pip install --no-deps -U .tox/.tmp/package/1/robotframework-aws-0.0.3.zip
+Processing ./.tox/.tmp/package/1/robotframework-aws-0.0.3.zip
+Building wheels for collected packages: robotframework-aws
+  Building wheel for robotframework-aws (setup.py): started
+  Building wheel for robotframework-aws (setup.py): finished with status 'done'
+  Created wheel for robotframework-aws: filename=robotframework_aws-0.0.3-cp37-none-any.whl size=17951 sha256=793bc1dec83be3d7b575bfa1d2840346116a2065fc6c3da2605b30d619470866
+  Stored in directory: /Users/dillanteagle/Library/Caches/pip/wheels/52/57/82/5107fec9abdd004ad4e2ee7f14c5574949d80fa7e859c7c552
+Successfully built robotframework-aws
+Installing collected packages: robotframework-aws
+  Found existing installation: robotframework-aws 0.0.3
+    Not uninstalling robotframework-aws at /Users/dillanteagle/workspace/rb_aws, outside environment /Users/dillanteagle/workspace/rb_aws/.tox/unit/bin/..
+    Can't uninstall 'robotframework-aws'. No files were found to uninstall.
+Successfully installed robotframework-aws-0.0.3

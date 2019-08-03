@@ -1,0 +1,24 @@
+action: unit, msg: installpkg
+cwd: /Users/dillanteagle/workspace/rb_aws
+cmd: /Users/dillanteagle/workspace/rb_aws/.tox/unit/bin/python -m pip install --exists-action w .tox/.tmp/package/1/robotframework-aws-0.0.3.zip
+Processing ./.tox/.tmp/package/1/robotframework-aws-0.0.3.zip
+Requirement already satisfied: boto3>=1.9.1 in ./.tox/unit/lib/python3.7/site-packages (from robotframework-aws==0.0.3) (1.9.199)
+Requirement already satisfied: robotframework>=3.1.2 in ./.tox/unit/lib/python3.7/site-packages (from robotframework-aws==0.0.3) (3.1.2)
+Requirement already satisfied: botocore<1.13.0,>=1.12.199 in ./.tox/unit/lib/python3.7/site-packages (from boto3>=1.9.1->robotframework-aws==0.0.3) (1.12.199)
+Requirement already satisfied: jmespath<1.0.0,>=0.7.1 in ./.tox/unit/lib/python3.7/site-packages (from boto3>=1.9.1->robotframework-aws==0.0.3) (0.9.4)
+Requirement already satisfied: s3transfer<0.3.0,>=0.2.0 in ./.tox/unit/lib/python3.7/site-packages (from boto3>=1.9.1->robotframework-aws==0.0.3) (0.2.1)
+Requirement already satisfied: urllib3<1.26,>=1.20; python_version >= "3.4" in ./.tox/unit/lib/python3.7/site-packages (from botocore<1.13.0,>=1.12.199->boto3>=1.9.1->robotframework-aws==0.0.3) (1.25.3)
+Requirement already satisfied: docutils<0.15,>=0.10 in ./.tox/unit/lib/python3.7/site-packages (from botocore<1.13.0,>=1.12.199->boto3>=1.9.1->robotframework-aws==0.0.3) (0.14)
+Requirement already satisfied: python-dateutil<3.0.0,>=2.1; python_version >= "2.7" in ./.tox/unit/lib/python3.7/site-packages (from botocore<1.13.0,>=1.12.199->boto3>=1.9.1->robotframework-aws==0.0.3) (2.8.0)
+Requirement already satisfied: six>=1.5 in ./.tox/unit/lib/python3.7/site-packages (from python-dateutil<3.0.0,>=2.1; python_version >= "2.7"->botocore<1.13.0,>=1.12.199->boto3>=1.9.1->robotframework-aws==0.0.3) (1.12.0)
+Building wheels for collected packages: robotframework-aws
+  Building wheel for robotframework-aws (setup.py): started
+  Building wheel for robotframework-aws (setup.py): finished with status 'done'
+  Created wheel for robotframework-aws: filename=robotframework_aws-0.0.3-cp37-none-any.whl size=17946 sha256=fcb30733a1e5e3f990ed9639173c5eb53960814ca33cc10acbd327b3d02d0376
+  Stored in directory: /Users/dillanteagle/Library/Caches/pip/wheels/52/57/82/5107fec9abdd004ad4e2ee7f14c5574949d80fa7e859c7c552
+Successfully built robotframework-aws
+Installing collected packages: robotframework-aws
+  Found existing installation: robotframework-aws 0.0.3
+    Not uninstalling robotframework-aws at /Users/dillanteagle/workspace/rb_aws, outside environment /Users/dillanteagle/workspace/rb_aws/.tox/unit/bin/..
+    Can't uninstall 'robotframework-aws'. No files were found to uninstall.
+Successfully installed robotframework-aws-0.0.3
