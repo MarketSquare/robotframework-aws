@@ -3,6 +3,7 @@
 #### Contributors are welcome. This package is at the beginning of development.
  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
  ![PyPI](https://img.shields.io/pypi/v/robotframework-aws.svg)
+ [![Build Status](https://travis-ci.com/teaglebuilt/robotframework-AWS.svg?branch=master)](https://travis-ci.com/teaglebuilt/robotframework-AWS)
 
 A library of keywords for interacting with AWS services in your robot tests. This library covers a variety of AWS services.
 
@@ -33,6 +34,10 @@ Library  AWSLibrary  ${access_key}  ${secret_key}
         Key Should Exist  bucky static/test.html  test.html
         Delete Session  us-east-1
    ```
+
+#### Attention Contributors
+  Please refer to development.md for instructions on setting up for development.
+
 
 > ## Session
 ####  A session is created to use AWS services as a user defining the region and profile is optional.
