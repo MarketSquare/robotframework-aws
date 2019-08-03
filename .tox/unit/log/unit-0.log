@@ -1,9 +1,0 @@
-action: unit, msg: getenv
-cwd: /Users/dillanteagle/workspace/rb_aws/.tox
-cmd: /Users/dillanteagle/workspace/rb_aws/env/bin/python3.7 -m virtualenv --no-download --python /Users/dillanteagle/workspace/rb_aws/env/bin/python3.7 unit
-Already using interpreter /Users/dillanteagle/workspace/rb_aws/env/bin/python3.7
-Using real prefix '/Library/Frameworks/Python.framework/Versions/3.7'
-New python executable in /Users/dillanteagle/workspace/rb_aws/.tox/unit/bin/python3.7
-Also creating executable in /Users/dillanteagle/workspace/rb_aws/.tox/unit/bin/python
-Installing setuptools, pip, wheel...
-done.
