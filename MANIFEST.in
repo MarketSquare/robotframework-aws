@@ -1,3 +1,4 @@
-include *.rst LICENSE
-recursive-include doc *.html
-recursive-include src *.py
+include *.md
+include *.txt
+include LICENSE
+recursive-include AWSLibrary *.py
