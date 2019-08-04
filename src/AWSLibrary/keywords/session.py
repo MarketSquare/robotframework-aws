@@ -3,12 +3,13 @@ from robot.libraries.String import String
 from robot.utils import ConnectionCache
 from robot.utils.dotdict import DotDict
 from robot.api import logger
-import boto3
+import boto3, logging
 
 
 class SessionManager(object):
     
     def __init__(self, access_key, secret_key):
+        boto3.set_stream_logger('boto3', logging.INFO)
         self._builtin       = BuiltIn()
         self._cache         = ConnectionCache('No sessions.')
         self.access_key     = access_key
@@ -20,22 +21,18 @@ class SessionManager(object):
     
 
     def create_session(self, region, profile=None):
-        # creds = dict(enumerate(args))
-        # region = creds.get(0, kwargs.pop('region', None))
-
-        if self.session == None:
-            session = boto3.Session(
-                aws_access_key_id=self.access_key,
-                aws_secret_access_key=self.secret_key,
-                region_name=region
-                )
-            self.region = region
-            self.session = session
+        session = boto3.Session(
+            aws_access_key_id=self.access_key,
+            aws_secret_access_key=self.secret_key,
+            region_name=region
+        )
+        self.region = region
+        self.session = session
         
         self._builtin.log("Creating Session: %s" % region)
         self._cache.register(session, alias=region)
         return self.session
-
+        
     def delete_session(self, region):
         """Removes session.
         Arguments:
@@ -48,7 +45,7 @@ class SessionManager(object):
         index = self._cache.current_index
         self._cache.current = self._cache._no_current
         self._cache._connections[index - 1] = None
-        self._cache._aliases['x-%s-x' % region] = self._cache._aliases.pop(region)
+        self._cache._aliases.pop(region)
 
     def delete_all_sessions(self):
         """ Delete All Sessions """
@@ -66,9 +63,8 @@ class SessionManager(object):
 
     def get_resource(self, resource='s3'):
         session = self.session
-
         if self.session == None:
-            session = self.create_session()
+            session = self.create_session(self.region)
 
         r_session = session.resource(resource)
         self.r_session = r_session

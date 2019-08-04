@@ -1,17 +1,27 @@
 *** Settings ***
-Library  AWSLibrary  ${ACCESS}  ${SECRET}
 Library  Collections
+Library  AWSLibrary  ${ACCESS_KEY}  ${SECRET_KEY}
+
 
 
 *** Test Case ***
-Create Session
+Test Create Session
     Create Session  us-east-1
 
-Delete Session
+Test Delete Session
     Delete Session  us-east-1
 
-Delete All Sessions
+Test Delete All Sessions
     Delete All Sessions
+
+Test Get Client
+    Get Client
+
+Test Get Resource
+    Get Resource
+
+
+
 
 
     # Download File  zappastaticbin  test.html  static/test.html
