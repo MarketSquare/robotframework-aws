@@ -21,6 +21,7 @@ class S3Manager(object):
         self.access_key = access_key
         self.secret_key = secret_key
         self.client = SessionManager(self.access_key, self.secret_key).get_client()
+        self.resource = SessionManager(self.access_key, self.secret_key).get_resource()
 
     def list_buckets(self):
         s3 = self.client
@@ -37,7 +38,6 @@ class S3Manager(object):
                 yield _object['Key']
 
     def get_bucket(self, bucket_name):
-        logger.console(self.access_key)
         s3 = self.r_session
         if s3 == None:
             s3 = self.get_resource()
@@ -48,17 +48,14 @@ class S3Manager(object):
         
     def get_object(self, bucket_name, obj):
         client = self.get_client()
-        if self.client == None:
-            client = self.get_client()
         resp = client.get_object(Bucket=bucket_name, Key=obj) 
         self._builtin.log("Returned Object: %s" % resp['Body'].read()) 
 
     def read_s3_object(self, bucket_name, key):
-        if self.client() is None:
-            s3 = get_client()
-        s3 = self.client()
-        response = s3.get_object(Bucket=bucket_name, Key=key)
+        client = self.client
+        response = client.get_object(Bucket=bucket_name, Key=key)
         if response:
+            logger.console(response['Body'])
             return response['Body']
 
     def key_should_not_exist(self, bucket, key):
@@ -114,4 +111,7 @@ class S3Manager(object):
         except ClientError as e:
             raise KeywordError("Error: " + e)
 
+    def delete_object(self, bucket, key):
+        s3 = self.resource
+        s3.Object(bucket, key).delete()
 
