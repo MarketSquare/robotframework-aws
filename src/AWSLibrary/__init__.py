@@ -4,7 +4,17 @@ from AWSLibrary.version import get_version
 __version__ = get_version()
 
 
-class AWSLibrary(SessionManager, S3Manager, ResourceManager):
+class FatalError(RuntimeError):
+    ROBOT_EXIT_ON_FAILURE = True
+
+class KeywordError(RuntimeError):
+    ROBOT_SUPPRESS_NAME = True
+
+class ContinuableError(RuntimeError):
+    ROBOT_CONTINUE_ON_FAILURE = True
+
+
+class AWSLibrary(SessionManager):
 
     ROBOT_EXIT_ON_FAILURE = True
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
@@ -19,13 +29,14 @@ class AWSLibrary(SessionManager, S3Manager, ResourceManager):
     """
 
 
-    def __init__(self, access_key, secret_key):
+    def __init__(self):
         """AWSLibrary requires access and secret key as params.
         Examples:
         | Library `|` AWSLibrary | ACCESS_KEY |  SECRET_KEY
         """
-        self.access_key = access_key
-        self.secret_key = secret_key
-        super(AWSLibrary, self).__init__(access_key, secret_key)
+        for base in AWSLibrary.__bases__:
+            print(base)
+            base.__init__(self)
+
 
 
