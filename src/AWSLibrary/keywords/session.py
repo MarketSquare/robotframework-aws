@@ -3,39 +3,30 @@ from robot.libraries.String import String
 from robot.utils import ConnectionCache
 from robot.utils.dotdict import DotDict
 from robot.api import logger
+from os import getenv
 import boto3, logging
+
 
 
 class SessionManager(object):
     
     def __init__(self):
-        boto3.set_stream_logger('boto3', logging.INFO)
         self._builtin       = BuiltIn()
+        self.logger         = logging.getLogger(__name__)
         self._cache         = ConnectionCache('No sessions.')
         self.session        = None
 
-    def create_session_with_keys(self, region, access_key, secret_key):
+    def create_session_with_keys(self, region):
+        self.logger.debug("Starting Create session with keys")
         session = boto3.Session(
-            aws_access_key_id=access_key,
-            aws_secret_access_key=secret_key,
+            aws_access_key_id=getenv('AWS_ACCESS_KEY_ID'),
+            aws_secret_access_key=getenv('AWS_SECRET_ACCESS_KEY'),
             region_name=region
         )
-
         self._builtin.log("Creating Session: %s" % region)
         self._cache.register(session, alias=region)
         self.session = session
         return session
-        
-    def create_session_with_profile(self, profile):
-        session = boto3.Session(
-            profile_name=profile
-        )
-        logger.console(session)
-        self._builtin.log("Creating Session with Profile: %s" % profile)
-        self._cache.register(session, alias=session.region_name)
-        self.session = session
-        return session
-
 
     def delete_session(self, region, profile=None):
         """Removes session.
@@ -54,14 +45,10 @@ class SessionManager(object):
     def delete_all_sessions(self):
         """ Delete All Sessions """
         self._cache.empty_cache()
+        logger.console(self._cache._connections)
 
-    def get_client(self, service):
-        if self.session == None:
-            raise Exception("No Session")
-        client = self.session.client('s3')
-        return client
+    def _get_client(self, session, service):
+        return session.client(service)
 
-    def get_resource(self, service='s3'):
-        resource = self.session.resource(service)
-        self.resource = resource
-        return resource
+    def _get_resource(self, session, service):
+        return session.resource(service)

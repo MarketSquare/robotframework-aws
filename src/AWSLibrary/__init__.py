@@ -1,7 +1,14 @@
-from AWSLibrary.keywords import SessionManager, S3Manager, ResourceManager
+import logging
+import logging.config
+import yaml
+from AWSLibrary.keywords import SessionManager
 from AWSLibrary.version import get_version
 
-__version__ = get_version()
+with open('logger_config.yaml', 'r') as f:
+    config = yaml.safe_load(f.read())
+    logging.config.dictConfig(config)
+    
+
 
 
 class FatalError(RuntimeError):
@@ -13,6 +20,7 @@ class KeywordError(RuntimeError):
 class ContinuableError(RuntimeError):
     ROBOT_CONTINUE_ON_FAILURE = True
 
+__version__ = get_version()
 
 class AWSLibrary(SessionManager):
 
@@ -34,8 +42,9 @@ class AWSLibrary(SessionManager):
         Examples:
         | Library `|` AWSLibrary | ACCESS_KEY |  SECRET_KEY
         """
+        logger = logging.getLogger(__name__)
+        logger.info('Completed configuring logger()!')
         for base in AWSLibrary.__bases__:
-            print(base)
             base.__init__(self)
 
 

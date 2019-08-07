@@ -3,16 +3,19 @@
 from robot.utils import ConnectionCache
 import os
 from AWSLibrary import AWSLibrary
+import configparser
+import boto3
 
-a = os.environ["ACCESS_KEY"]
-b = os.environ["SECRET_KEY"]
+
+a = os.environ.get("AWS_ACCESS_KEY_ID")
+b = os.environ.get("AWS_SECRET_ACCESS_KEY")
 
 
 def main():
     lib = AWSLibrary()
-    session = lib.create_session_with_keys('us-east-1', a, b)
-    lib._cache.register(session, alias=session.region_name)
-    lib._cache.switch(session.region_name)
+    session = lib.create_session_with_keys('us-east-1')
+    print(session, "--")
+   
 
 if __name__ == "__main__":
     main()
