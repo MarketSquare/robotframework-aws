@@ -7,8 +7,8 @@ ${REGION}=  us-east-1
 
 
 *** Keywords ***
-Suite Setup
-    Create Session With Keys  ${REGION}  ${ACCESS_KEY}  ${SECRET_KEY}
+Test Setup
+    Create Session With Keys  ${REGION}
 
-Suite Teardown
+Test Teardown
     Delete All Sessions

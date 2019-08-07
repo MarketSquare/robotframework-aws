@@ -27,6 +27,7 @@ entrypoints==0.3
 filelock==3.0.12
 flake8==3.7.8
 future==0.17.1
+ghp-import==0.5.5
 idna==2.8
 imagesize==1.1.0
 importlib-metadata==0.18
@@ -59,19 +60,21 @@ python-dateutil==2.8.0
 python-dotenv==0.10.3
 python-jose==3.0.1
 pytz==2019.1
-PyYAML==5.1.1
+PyYAML==5.1.2
 readme-renderer==24.0
 requests==2.22.0
 requests-toolbelt==0.9.1
 responses==0.10.6
 robot==20071211
+robotbackgroundlogger==1.2
 robotframework==3.1.2
--e git+https://github.com/teaglebuilt/robotframework-AWS.git@7258114d56521734b4c0e8c6b722460a00ceefd1#egg=robotframework_aws
+-e git+https://github.com/teaglebuilt/robotframework-AWS.git@c337fd0f66f5d944a753c3f5cb125b5e143d2778#egg=robotframework_aws
 rsa==4.0
 s3transfer==0.2.1
 six==1.12.0
 snowballstemmer==1.9.0
 Sphinx==2.1.2
+sphinx-rtd-theme==0.4.3
 sphinxcontrib-applehelp==1.0.1
 sphinxcontrib-devhelp==1.0.1
 sphinxcontrib-htmlhelp==1.0.2
@@ -83,6 +86,7 @@ toml==0.10.0
 tox==3.13.2
 tqdm==4.32.2
 travis==0.0.3
+travis-sphinx==2.2.1
 twine==1.13.0
 urllib3==1.25.3
 virtualenv==16.7.2
