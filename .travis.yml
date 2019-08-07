@@ -21,3 +21,6 @@ deploy:
   on:
     tags: true
     branch: master
+
+after_success:
+  - python deploy-ghpages.py
