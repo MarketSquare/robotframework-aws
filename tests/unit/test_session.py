@@ -17,8 +17,7 @@ class SessionManagerTests(unittest.TestCase):
 
     def setUp(self):
         self.library = AWSLibrary() 
-        self.access_key = os.environ.get('ACCESS_KEY')
-        self.secret_key = os.environ.get('SECRET_KEY')
+        self.aws_profile = 'default'
         """Instantiate the session manager class."""
         self.region = 'us-east-1'
         self.session_class = SessionManager()    
@@ -29,29 +28,19 @@ class SessionManagerTests(unittest.TestCase):
         self.assertIsInstance(self.library._cache, ConnectionCache)
 
     def test_create_session_with_keys(self):
-        session = self.library.create_session_with_keys(self.region, self.access_key, self.secret_key)
+        session = self.library.create_session_with_keys(self.region)
         self.assertEqual(session.region_name, self.region)
         try:
             self.library._cache.switch(session.region_name)
         except RuntimeError as e:
             self.fail(e)
         self.library.delete_all_sessions()
-    
-    def test_create_session_with_profile(self):
-        profile_region = 'us-east-1'
-        session = self.library.create_session_with_profile("Terraform_User")
-        self.assertEqual(session.region_name, profile_region)
 
     def test_delete_all_sessions(self):
-        session = self.library.create_session_with_profile("Terraform_User")
+        session = self.library.create_session_with_keys(self.region)
         self.library.delete_all_sessions()
         with self.assertRaises(RuntimeError):
-            self.library._cache.switch(session.region_name)
+            self.library._cache.get_connection('us-east-1')
         self.assertTrue("Non existing index or alias '%s'." % session.region_name)
-
-    def test_get_client(self):
-        session = self.library.create_session_with_profile("Terraform_User")
-        s3 = self.library.get_client('s3')
-        self.assertEqual(s3._endpoint.host, "https://s3.amazonaws.com")
 
     
