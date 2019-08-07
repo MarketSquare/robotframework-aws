@@ -4,7 +4,7 @@ import yaml
 from AWSLibrary.keywords import SessionManager
 from AWSLibrary.version import get_version
 
-with open('../../logger_config.yaml', 'r') as f:
+with open('logger_config.yaml', 'r') as f:
     config = yaml.safe_load(f.read())
     logging.config.dictConfig(config)
     

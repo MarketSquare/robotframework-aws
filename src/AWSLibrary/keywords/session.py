@@ -3,7 +3,8 @@ from robot.libraries.String import String
 from robot.utils import ConnectionCache
 from robot.utils.dotdict import DotDict
 from robot.api import logger
-import boto3, logging, os
+from os import getenv
+import boto3, logging
 
 
 
@@ -18,8 +19,8 @@ class SessionManager(object):
     def create_session_with_keys(self, region):
         self.logger.debug("Starting Create session with keys")
         session = boto3.Session(
-            aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
-            aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
+            aws_access_key_id=getenv('AWS_ACCESS_KEY_ID'),
+            aws_secret_access_key=getenv('AWS_SECRET_ACCESS_KEY'),
             region_name=region
         )
         self._builtin.log("Creating Session: %s" % region)
