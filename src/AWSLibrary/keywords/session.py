@@ -17,6 +17,12 @@ class SessionManager(object):
         self.session        = None
 
     def create_session_with_keys(self, region):
+        """Takes Region as an argument and creates as session with your access key
+        and secret key stored at ~/.aws/credentials. Will throw error if not configured
+
+        Examples:
+        | Create Session With Keys | us-west-1 |
+        """
         self.logger.debug("Starting Create session with keys")
         session = boto3.Session(
             aws_access_key_id=getenv('AWS_ACCESS_KEY_ID'),
