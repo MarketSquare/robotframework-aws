@@ -27,5 +27,5 @@ setup(
     ],
     packages=find_packages('src'),
     package_dir={'': 'src'},
-    install_requires=['boto3 >= 1.9.2', 'robotframework >= 3.1.2', 'PyYAML >= 5.1.2']
+    install_requires=['boto3 >= 1.9.2', 'robotframework >= 3.1.2']
 )
