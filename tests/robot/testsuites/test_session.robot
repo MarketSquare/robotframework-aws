@@ -1,14 +1,18 @@
 *** Settings ***
 Library  Collections
 Library  AWSLibrary
-Resource  ../resources.robot
+
 
 
 *** Variable ***
 ${REGION}=  us-east-1
+${BUCKET}=  zappastaticbin
+${KEY}=  test.html
+${PATH}=  downloaded_test_file.html
 
 
 *** Test Case ***
-Session Exists
-    Test Setup
-    Test Teardown
+Download File
+    Create Session With Keys  ${REGION}
+    Download File  ${BUCKET}  ${KEY}  ${PATH}
+    Delete All Sessions
