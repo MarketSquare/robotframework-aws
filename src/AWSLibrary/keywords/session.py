@@ -1,4 +1,3 @@
-from robot.libraries.BuiltIn import BuiltIn
 from robot.libraries.String import String
 from robot.utils import ConnectionCache
 from robot.utils.dotdict import DotDict
@@ -13,8 +12,6 @@ class SessionKeywords(LibraryComponent):
 
     def __init__(self, state):
         LibraryComponent.__init__(self, state)
-        self._builtin       = BuiltIn()
-        self.logger         = logging.getLogger(__name__)
         self._cache         = ConnectionCache('No sessions.')
 
     @keyword
@@ -25,7 +22,7 @@ class SessionKeywords(LibraryComponent):
         Examples:
         | Create Session With Keys | us-west-1 |
         """
-        # self.logger.debug("Starting Create session with keys")
+        self.logger.debug("Starting Create session with keys")
         session = boto3.Session(
             aws_access_key_id=getenv('ACCESS_KEY'),
             aws_secret_access_key=getenv('SECRET_KEY'),

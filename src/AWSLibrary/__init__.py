@@ -1,14 +1,13 @@
 from AWSLibrary.base import DynamicCore
 from AWSLibrary.keywords import (
     SessionKeywords,
-    S3Keywords
+    S3Keywords,
+    ResourceKeywords
 )
 from AWSLibrary.version import get_version  
-from robot.api import logger
-from os import getenv
-import boto3, logging, os 
 
 __version__ = get_version()
+
 
 class AWSLibrary(DynamicCore):
 
@@ -33,6 +32,7 @@ class AWSLibrary(DynamicCore):
         libraries = [
             SessionKeywords(self),
             S3Keywords(self),
+            ResourceKeywords(self)
         ]
         DynamicCore.__init__(self, libraries)
         
