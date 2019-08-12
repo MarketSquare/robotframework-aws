@@ -1,28 +1,16 @@
-import logging
-import logging.config
-import yaml
-from AWSLibrary.keywords import SessionManager
-from AWSLibrary.version import get_version
-
-with open('logger_config.yaml', 'r') as f:
-    config = yaml.safe_load(f.read())
-    logging.config.dictConfig(config)
-    
-
-
-
-class FatalError(RuntimeError):
-    ROBOT_EXIT_ON_FAILURE = True
-
-class KeywordError(RuntimeError):
-    ROBOT_SUPPRESS_NAME = True
-
-class ContinuableError(RuntimeError):
-    ROBOT_CONTINUE_ON_FAILURE = True
+from AWSLibrary.base import DynamicCore
+from AWSLibrary.keywords import (
+    SessionKeywords,
+    S3Keywords
+)
+from AWSLibrary.version import get_version  
+from robot.api import logger
+from os import getenv
+import boto3, logging, os 
 
 __version__ = get_version()
 
-class AWSLibrary(SessionManager):
+class AWSLibrary(DynamicCore):
 
     ROBOT_EXIT_ON_FAILURE = True
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
@@ -42,10 +30,11 @@ class AWSLibrary(SessionManager):
         Examples:
         | Library `|` AWSLibrary | ACCESS_KEY |  SECRET_KEY
         """
-        logger = logging.getLogger(__name__)
-        logger.info('Completed configuring logger()!')
-        for base in AWSLibrary.__bases__:
-            base.__init__(self)
-
+        libraries = [
+            SessionKeywords(self),
+            S3Keywords(self),
+        ]
+        DynamicCore.__init__(self, libraries)
+        
 
 

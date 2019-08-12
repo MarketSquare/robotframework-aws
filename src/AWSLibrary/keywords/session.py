@@ -3,19 +3,21 @@ from robot.libraries.String import String
 from robot.utils import ConnectionCache
 from robot.utils.dotdict import DotDict
 from robot.api import logger
+from AWSLibrary.base import LibraryComponent
+from AWSLibrary.base.robotlibcore import keyword
 from os import getenv
-import boto3, logging
+import boto3, logging, os
 
 
+class SessionKeywords(LibraryComponent):
 
-class SessionManager(object):
-    
-    def __init__(self):
+    def __init__(self, state):
+        LibraryComponent.__init__(self, state)
         self._builtin       = BuiltIn()
         self.logger         = logging.getLogger(__name__)
         self._cache         = ConnectionCache('No sessions.')
-        self.session        = None
 
+    @keyword
     def create_session_with_keys(self, region):
         """Takes Region as an argument and creates as session with your access key
         and secret key stored at ~/.aws/credentials. Will throw error if not configured
@@ -23,17 +25,17 @@ class SessionManager(object):
         Examples:
         | Create Session With Keys | us-west-1 |
         """
-        self.logger.debug("Starting Create session with keys")
+        # self.logger.debug("Starting Create session with keys")
         session = boto3.Session(
-            aws_access_key_id=getenv('AWS_ACCESS_KEY_ID'),
-            aws_secret_access_key=getenv('AWS_SECRET_ACCESS_KEY'),
+            aws_access_key_id=getenv('ACCESS_KEY'),
+            aws_secret_access_key=getenv('SECRET_KEY'),
             region_name=region
         )
         self._builtin.log("Creating Session: %s" % region)
         self._cache.register(session, alias=region)
-        self.session = session
-        return session
+        self.state.session = session
 
+    @keyword
     def delete_session(self, region, profile=None):
         """Removes session.
         Arguments:
@@ -48,13 +50,8 @@ class SessionManager(object):
         self._cache._connections[index - 1] = None
         self._cache._aliases.pop(region)    
 
+    @keyword
     def delete_all_sessions(self):
         """ Delete All Sessions """
         self._cache.empty_cache()
         logger.console(self._cache._connections)
-
-    def _get_client(self, session, service):
-        return session.client(service)
-
-    def _get_resource(self, session, service):
-        return session.resource(service)
