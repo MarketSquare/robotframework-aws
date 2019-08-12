@@ -6,10 +6,8 @@ class LibraryComponent(object):
     def __init__(self, state):
         self.state = state
         
-    @property
-    def aws_session(self):
-        return self.state.session
+    def info(self, msg, html=False):
+        logger.info(msg, html)
 
-    @aws_session.setter
-    def aws_session(self, value):
-        self.state.session = value
+    def debug(self, msg, html=False):
+        logger.debug(msg, html)

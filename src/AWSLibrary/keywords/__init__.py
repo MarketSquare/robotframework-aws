@@ -1,9 +1,5 @@
-from AWSLibrary.keywords.session import SessionManager
-from AWSLibrary.keywords.s3 import S3Manager
+from AWSLibrary.keywords.session import SessionKeywords
+from AWSLibrary.keywords.s3 import S3Keywords
 
 
-__all__ = [
-    'SessionManager',
-    'S3Manager'
-]
 

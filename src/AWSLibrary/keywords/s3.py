@@ -1,23 +1,16 @@
-from robot.libraries.BuiltIn import BuiltIn
-from robot.libraries.String import String
-from robot.utils import ConnectionCache
-from robot.utils.dotdict import DotDict
-from robot.api.deco import keyword
-from robot.api import logger
-from os import getenv
-import boto3, logging, botocore
-from AWSLibrary.keywords import SessionManager
 from AWSLibrary.base.robotlibcore import keyword
 from AWSLibrary.base import LibraryComponent
 from AWSLibrary.exceptions import KeywordError, ContinuableError, FatalError
-import botocore.session
-session = botocore.session
+from robot.api import logger
+import boto3, logging, botocore
 
-class S3Manager(LibraryComponent):
+
+class S3Keywords(LibraryComponent):
 
     @keyword
     def create_bucket(self, bucket, region=None):
-        client = self.state.session.client('s3')
+        # print(self.state)
+        # client = self.state.session.client('s3')
         self.logger.debug("Running Create Bucket")
         try:
             client.create_bucket(Bucket=bucket)
@@ -40,9 +33,8 @@ class S3Manager(LibraryComponent):
             Example:
             | Download File | bucket | path | key |
         """
-        # print(self.state)
-        print(self.aws_session)
-        self.logger.debug("Starting Download")
+        client = self.state.session.client("s3")
+        logger.debug("Starting Download")
         try:
             client.download_file(bucket, key, path)
         except botocore.exceptions.ClientError as e:

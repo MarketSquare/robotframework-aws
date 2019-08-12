@@ -1,18 +1,12 @@
-from robot.libraries.BuiltIn import BuiltIn
-from robot.libraries.String import String
-from robot.utils import ConnectionCache
-from robot.utils.dotdict import DotDict
+from AWSLibrary.base import DynamicCore
+from AWSLibrary.keywords import (
+    SessionKeywords,
+    S3Keywords
+)
+from AWSLibrary.version import get_version  
 from robot.api import logger
 from os import getenv
-import boto3, logging, os
-from AWSLibrary.base import DynamicCore
-import logging
-import logging.config
-from AWSLibrary.keywords import (
-    SessionManager,
-    S3Manager
-)
-from AWSLibrary.version import get_version   
+import boto3, logging, os 
 
 __version__ = get_version()
 
@@ -36,16 +30,11 @@ class AWSLibrary(DynamicCore):
         Examples:
         | Library `|` AWSLibrary | ACCESS_KEY |  SECRET_KEY
         """
-        logger = logging.getLogger(__name__)
-        logger.info('Completed configuring logger()!')
         libraries = [
-            SessionManager(self),
-            S3Manager(self),
+            SessionKeywords(self),
+            S3Keywords(self),
         ]
-        self._builtin       = BuiltIn()
-        self.logger         = logging.getLogger(__name__)
-        self._cache         = ConnectionCache('No sessions.')
         DynamicCore.__init__(self, libraries)
-
+        
 
 

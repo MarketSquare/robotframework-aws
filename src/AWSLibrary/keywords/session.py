@@ -3,17 +3,19 @@ from robot.libraries.String import String
 from robot.utils import ConnectionCache
 from robot.utils.dotdict import DotDict
 from robot.api import logger
-from os import getenv
-import boto3, logging, os
 from AWSLibrary.base import LibraryComponent
 from AWSLibrary.base.robotlibcore import keyword
+from os import getenv
+import boto3, logging, os
 
 
-
-class SessionManager(LibraryComponent):
+class SessionKeywords(LibraryComponent):
 
     def __init__(self, state):
         LibraryComponent.__init__(self, state)
+        self._builtin       = BuiltIn()
+        self.logger         = logging.getLogger(__name__)
+        self._cache         = ConnectionCache('No sessions.')
 
     @keyword
     def create_session_with_keys(self, region):
@@ -29,10 +31,9 @@ class SessionManager(LibraryComponent):
             aws_secret_access_key=getenv('SECRET_KEY'),
             region_name=region
         )
-        print(os.environ.get('AWS_ACCESS_KEY_ID'))
         self._builtin.log("Creating Session: %s" % region)
         self._cache.register(session, alias=region)
-        self.aws_session(session)
+        self.state.session = session
 
     @keyword
     def delete_session(self, region, profile=None):
