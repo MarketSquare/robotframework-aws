@@ -14,7 +14,7 @@ class SessionKeywords(LibraryComponent):
         LibraryComponent.__init__(self, state)
         self._cache         = ConnectionCache('No sessions.')
 
-    @keyword
+    @keyword('Create Session With Keys')
     def create_session_with_keys(self, region):
         """Takes Region as an argument and creates as session with your access key
         and secret key stored at ~/.aws/credentials. Will throw error if not configured
@@ -32,7 +32,7 @@ class SessionKeywords(LibraryComponent):
         self._cache.register(session, alias=region)
         self.state.session = session
 
-    @keyword
+    @keyword('Delete Session')
     def delete_session(self, region, profile=None):
         """Removes session.
         Arguments:
@@ -47,7 +47,7 @@ class SessionKeywords(LibraryComponent):
         self._cache._connections[index - 1] = None
         self._cache._aliases.pop(region)    
 
-    @keyword
+    @keyword('Delete All Sessions')
     def delete_all_sessions(self):
         """ Delete All Sessions """
         self._cache.empty_cache()

@@ -19,4 +19,6 @@ Download File
     Delete All Sessions
 
 Upload File
+    Create Session With Keys  ${REGION}
     Upload File  ${BUCKET}  ${KEY}  ${PATH}
+    Key Should Exist  ${BUCKET}  ${KEY}
