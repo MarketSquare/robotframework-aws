@@ -21,7 +21,7 @@ if getenv('TRAVIS_PULL_REQUEST') != 'false':
     exit()
 
 repo = check_output("git config remote.origin.url", shell=True)
-repo = sub(r'^git:', 'https:', repo).strip()
+repo = sub(r'^git:', 'https:', repo.decode()).strip()
 deploy_url = sub(r'https://', 'https://%s@' % getenv('GIT_TOKEN'), repo)
 deploy_branch = 'gh-pages'
 rev = check_output("git rev-parse HEAD", shell=True).strip()
