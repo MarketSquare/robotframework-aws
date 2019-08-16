@@ -1,5 +1,5 @@
 """
-Travis CI Script for generating libdoc for robotpageobjects.Page and publishing it
+Travis CI Script For generating libdoc for robotpageobjects.Page and publishing it
 """
 from os import getenv, chdir
 from re import sub
