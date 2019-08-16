@@ -25,9 +25,15 @@ class AWSLibrary(DynamicCore):
 
 
     def __init__(self):
-        """AWSLibrary requires access and secret key as params.
+        """
+        Initialization:
+        AWSLibrary requires access and secret key to currently be stored as environment variables.
         Examples:
-        | Library `|` AWSLibrary | ACCESS_KEY |  SECRET_KEY
+        | Library `|` AWSLibrary |
+
+        Inheritance:
+        You can directly access all keywords from this class.
+        Class state is transfered with LibraryComponent
         """
         libraries = [
             SessionKeywords(self),
