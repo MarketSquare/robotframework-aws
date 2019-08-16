@@ -6,7 +6,7 @@ from re import sub
 from subprocess import check_output, check_call
 from tempfile import mkdtemp
 from shutil import rmtree
-
+import os
 
 if getenv('TRAVIS_REPO_SLUG') != 'teaglebuilt/robotframework-AWS':
     print("Repo is a fork, not building docs")
