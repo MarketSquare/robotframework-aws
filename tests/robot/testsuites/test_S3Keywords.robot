@@ -22,3 +22,7 @@ Upload File
     Create Session With Keys  ${REGION}
     Upload File  ${BUCKET}  ${KEY}  ${PATH}
     Key Should Exist  ${BUCKET}  ${KEY}
+
+Bucket Permissions
+    ${CRUD}=  Create List  GET
+    Allowed Methods  ${BUCKET}  ${CRUD}

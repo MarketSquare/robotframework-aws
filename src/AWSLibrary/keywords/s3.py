@@ -65,7 +65,7 @@ class S3Keywords(LibraryComponent):
             if e.response['Error']['Code'] == '404':
                 raise KeywordError(f"Keyword: {bucket} does not exist")
             else:
-                self.logger.debug(e)
+                raise ContinuableError(e)
 
     @keyword('Key Should Exist')
     def key_should_exist(self, bucket, key):
@@ -82,8 +82,7 @@ class S3Keywords(LibraryComponent):
             if res['ResponseMetadata']['HTTPStatusCode'] == 404:
                 raise KeywordError("Key: {}, does not exist".format(key))
         except ClientError as e:
-            self._builtin.log(e.response['Error']) 
-            logger.console(e.response['Error'])
+            raise ContinuableError(e.response['Error'])
         return True
 
     @keyword('Key Should Not Exist')         
@@ -96,11 +95,23 @@ class S3Keywords(LibraryComponent):
             | Key Should Not Exist | bucket | key |
         """
         client = self.state.session.client('s3')
+        self.rb_logger.info(f"Retrieve Client Hanlder: {client}")
         try:
             res = client.head_object(Bucket=bucket, Key=key)
             if res['ResponseMetadata']['HTTPStatusCode'] == 200:
                 raise KeywordError("Key: {}, already exists".format(key))
         except ClientError as e:
-            self._builtin.log(e.response['Error']) 
-            logger.console(e.response['Error'])
+            raise ContinuableError(e.response['Error'])
         return True
+
+    @keyword('Allowed Methods')
+    def allowed_methods(self, bucket, methods=[]):
+        client = self.state.session.client("s3")
+        self.rb_logger.info(f"Retrieve Client Hanlder: {client}")
+        try:
+            response = client.get_bucket_cors(Bucket=bucket)
+            obj = response['CORSRules'][0]
+            aws_methods = obj['AllowedMethods']
+            assert set(aws_methods) == set(methods)
+        except ClientError as e:
+            raise KeywordError(e)

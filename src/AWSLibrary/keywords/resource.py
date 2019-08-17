@@ -15,7 +15,7 @@ class ResourceKeywords(LibraryComponent):
         """
         try:
             if os.path.exists(path) == 1:
-                self._builtin.log("File exists at {}".format(path)) 
+                self.rb_logger.info("File exists at {}".format(path)) 
                 return True
         except FileNotFoundError:
             raise KeywordError("File does not exist at {}".format(path))
@@ -29,7 +29,7 @@ class ResourceKeywords(LibraryComponent):
         """
         try:
             if os.path.exists(path) == 0:
-                self._builtin.log("File does not exist at {}".format(path)) 
+                self.rb_logger.info("File does not exist at {}".format(path)) 
                 return True
         except FileNotFoundError:
             raise KeywordError("File does exist at {}".format(path))

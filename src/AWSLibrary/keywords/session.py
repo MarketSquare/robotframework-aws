@@ -22,13 +22,12 @@ class SessionKeywords(LibraryComponent):
         Examples:
         | Create Session With Keys | us-west-1 |
         """
-        self.logger.debug("Starting Create session with keys")
+        self.rb_logger.info("Creating Session: %s" % region)
         session = boto3.Session(
             aws_access_key_id=getenv('ACCESS_KEY'),
             aws_secret_access_key=getenv('SECRET_KEY'),
             region_name=region
         )
-        self._builtin.log("Creating Session: %s" % region)
         self._cache.register(session, alias=region)
         self.state.session = session
 
@@ -51,4 +50,4 @@ class SessionKeywords(LibraryComponent):
     def delete_all_sessions(self):
         """ Delete All Sessions """
         self._cache.empty_cache()
-        logger.console(self._cache._connections)
+        
