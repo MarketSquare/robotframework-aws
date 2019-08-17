@@ -7,7 +7,7 @@
 
 A library of keywords for interacting with AWS services in your robot tests. This library covers a variety of AWS services.
 
-[Documentation for Keywords](documentation.html)
+[Documentation for Keywords](https://teaglebuilt.github.io/robotframework-AWS/)
 
 #### Attention Contributors
   [Contribution guidelines for this project](CONTRIBUTING.md)
