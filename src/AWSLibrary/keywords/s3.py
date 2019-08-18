@@ -1,8 +1,7 @@
 from AWSLibrary.base.robotlibcore import keyword
-from AWSLibrary.base import LibraryComponent, KeywordError, ContinuableError, FatalError
-from AWSLibrary.keywords import SessionKeywords
+from AWSLibrary.base import LibraryComponent, KeywordError, ContinuableError
 from robot.api import logger
-import boto3, logging, botocore
+import botocore
 
 
 class S3Keywords(LibraryComponent):

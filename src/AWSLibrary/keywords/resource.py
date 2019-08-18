@@ -1,6 +1,6 @@
 from AWSLibrary.base import LibraryComponent
 from AWSLibrary.base.robotlibcore import keyword
-from botocore.exceptions import ClientError
+from AWSLibrary.base.exceptions import KeywordError
 import os
 
 

@@ -1,18 +1,15 @@
-from robot.libraries.String import String
 from robot.utils import ConnectionCache
-from robot.utils.dotdict import DotDict
-from robot.api import logger
 from AWSLibrary.base import LibraryComponent
 from AWSLibrary.base.robotlibcore import keyword
 from os import getenv
-import boto3, logging, os
+import boto3
 
 
 class SessionKeywords(LibraryComponent):
 
     def __init__(self, state):
         LibraryComponent.__init__(self, state)
-        self._cache         = ConnectionCache('No sessions.')
+        self._cache = ConnectionCache('No sessions.')
 
     @keyword('Create Session With Keys')
     def create_session_with_keys(self, region):
@@ -50,4 +47,3 @@ class SessionKeywords(LibraryComponent):
     def delete_all_sessions(self):
         """ Delete All Sessions """
         self._cache.empty_cache()
-        
