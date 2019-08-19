@@ -23,4 +23,5 @@ deploy:
     branch: master
 
 after_success:
+  - coveralls
   - python deploy-ghpages.py
