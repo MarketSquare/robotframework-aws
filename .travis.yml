@@ -10,9 +10,9 @@ install:
   - pip install -r requirements_dev.txt
 script:
   - tox -v -e py  
-  - coverage run tests/robot/testsuites
+  - coverage run -m robot tests/robot/testsuites
   - coverage report --include="*src*"
-  
+
 deploy:
   provider: pypi
   user: teaglebuilt
