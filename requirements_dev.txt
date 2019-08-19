@@ -5,18 +5,21 @@ atomicwrites==1.3.0
 attrs==19.1.0
 aws-sam-translator==1.13.0
 aws-xray-sdk==2.4.2
+awscli==1.16.214
 Babel==2.7.0
 black==19.3b0
 bleach==3.1.0
 boto==2.49.0
 boto3==1.9.188
-botocore==1.12.188
+botocore==1.12.204
 certifi==2019.6.16
 cffi==1.12.3
 cfn-lint==0.23.0
 chardet==3.0.4
 check-manifest==0.39
 Click==7.0
+colorama==0.3.9
+coverage==4.5.4
 cryptography==2.7
 DateTime==4.3
 docker==4.0.2
@@ -45,6 +48,7 @@ mock==3.0.5
 more-itertools==7.2.0
 moto==1.3.13
 packaging==19.0
+pep8==1.7.1
 pkginfo==1.5.0.1
 pluggy==0.12.0
 py==1.8.0
@@ -56,10 +60,13 @@ Pygments==2.4.2
 pyparsing==2.4.1.1
 pyperclip==1.7.0
 pyrsistent==0.15.4
+pytest==5.0.1
+python-coveralls==2.9.3
 python-dateutil==2.8.0
 python-dotenv==0.10.3
 python-jose==3.0.1
 pytz==2019.1
+PyYAML==5.1.2
 readme-renderer==24.0
 requests==2.22.0
 requests-toolbelt==0.9.1
@@ -67,8 +74,8 @@ responses==0.10.6
 robot==20071211
 robotbackgroundlogger==1.2
 robotframework==3.1.2
--e git+https://github.com/teaglebuilt/robotframework-AWS.git@c337fd0f66f5d944a753c3f5cb125b5e143d2778#egg=robotframework_aws
-rsa==4.0
+-e git+https://github.com/teaglebuilt/robotframework-AWS.git@226d3b33a858c6c99adac29a55dd51a18d5e642f#egg=robotframework_aws
+rsa==3.4.2
 s3transfer==0.2.1
 six==1.12.0
 snowballstemmer==1.9.0
