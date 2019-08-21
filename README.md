@@ -4,12 +4,18 @@
  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
  ![PyPI](https://img.shields.io/pypi/v/robotframework-aws.svg)
  [![Build Status](https://travis-ci.com/teaglebuilt/robotframework-AWS.svg?branch=master)](https://travis-ci.com/teaglebuilt/robotframework-AWS)
+ 
 ![Last Commit](https://img.shields.io/github/last-commit/teaglebuilt/robotframework-AWS)
 ![License](https://img.shields.io/pypi/l/robotframework-aws)
-A library of keywords for interacting with AWS services in your robot tests. This library covers a variety of AWS services.
 ![Downloads](https://img.shields.io/pypi/dm/robotframework-aws)
+
+---------------
+A library of keywords for interacting with AWS services in your robot tests. This library covers a variety of AWS services.
+
 [Documentation for Keywords](https://teaglebuilt.github.io/robotframework-AWS/)
 
+____________
+___________
 #### Attention Contributors
   [Contribution guidelines for this project](CONTRIBUTING.md)
 
