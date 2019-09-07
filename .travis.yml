@@ -15,10 +15,10 @@ script:
   - coverage run --source tests -m pytest
   - coverage report
 
-  after_success:
+after_success:
   - coveralls
   - python deploy-ghpages.py
-  
+
 deploy:
   provider: pypi
   user: teaglebuilt
