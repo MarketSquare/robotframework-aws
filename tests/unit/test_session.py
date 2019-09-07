@@ -1,23 +1,30 @@
-import sys, os, unittest
+import unittest
+import os
+import sys
+from unittest.mock import patch, MagicMock
 testdir = os.path.dirname(__file__)
 srcdir = '../src'
 sys.path.insert(0, os.path.abspath(os.path.join(testdir, srcdir)))
-from robot.libraries.BuiltIn import BuiltIn
-from robot.libraries.String import String
-from robot.utils import ConnectionCache
-from moto import mock_s3
+from AWSLibrary import AWSLibrary
 from AWSLibrary.keywords import SessionKeywords
+from AWSLibrary.base import LibraryComponent, DynamicCore
+from os import getenv
+from boto3.session import Session
 
 
+class TestSession(unittest.TestCase):
 
-class SessionKeywordsTests(unittest.TestCase): 
+    def test_create_session_with_keys(self):
+        mock_gobject = MagicMock()
+        mock_gobject.LibraryComponent.__bases__ = (object,)
+        with patch.dict('sys.modules', gobject=mock_gobject):
+            kw = SessionKeywords(mock_gobject)
+            lib_session = kw.create_session_with_keys(
+                'us-east-1',
+                getenv('ACCESS_KEY'),
+                getenv('ACCESS_KEY'))
 
-    def setUp(self):
-        self.state = None
-        self.session_keywords = SessionKeywords(self.state)
-        self.region = "us-east-1"
+        with patch('AWSLibrary.keywords.session.boto3') as mock_session:
+            ms = mock_session.Session = Session(region_name='us-east-1')
 
-    def test_class_should_initiate(self):
-        """Class init should instantiate required classes."""
-        self.assertIsInstance(self.session_keywords._builtin, BuiltIn)
-        self.assertIsInstance(self.session_keywords._cache, ConnectionCache)
+        self.assertEquals(str(lib_session), str(ms))

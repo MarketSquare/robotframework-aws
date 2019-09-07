@@ -65,18 +65,10 @@ Library  AWSLibrary  ${access_key}  ${secret_key}
  - | `Allowed Methods` | array of methods |
 
 
- > ### DynamoDB
-#####  Keywords to interact with Dynamo Database
-
- - | `Dynamo Query` | region | sql-command |
- - | `Table Should Exist` | region |
-
-
 
 > ### Resources
 ####  Keywords can be used for local functionality that can be used with all services. These are helper methods to validate functionality, existence, and so on.
 
  - | `Local File Should Exist` | path |
  - | `Local File Should Not Exist` | path |
- - | `List And JSON String Should Be Equal` | region | array |
 

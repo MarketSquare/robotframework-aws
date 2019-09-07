@@ -1,5 +1,6 @@
 from AWSLibrary.base.robotlibcore import keyword
 from AWSLibrary.base import LibraryComponent, KeywordError, ContinuableError
+from botocore.exceptions import ClientError
 from robot.api import logger
 import botocore
 
@@ -84,7 +85,7 @@ class S3Keywords(LibraryComponent):
             raise ContinuableError(e.response['Error'])
         return True
 
-    @keyword('Key Should Not Exist')         
+    @keyword('Key Should Not Exist')    
     def key_should_not_exist(self, bucket, key):
         """ Verifies Key on S3 Bucket Does Not Exist
         Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will fail.
@@ -114,3 +115,5 @@ class S3Keywords(LibraryComponent):
             assert set(aws_methods) == set(methods)
         except ClientError as e:
             raise KeywordError(e)
+        
+    
