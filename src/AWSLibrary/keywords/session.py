@@ -45,7 +45,8 @@ class SessionKeywords(LibraryComponent):
         )
         self._cache.register(session, alias=region)
         self.state.session = session
-
+        return session
+        
     @keyword('Delete Session')
     def delete_session(self, region, profile=None):
         """Removes session.

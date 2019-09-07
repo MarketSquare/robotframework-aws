@@ -8,6 +8,7 @@ python:
 
 install:
   - pip install -r requirements_dev.txt
+  
 script:
   - tox -v -e py  
 
@@ -23,4 +24,4 @@ deploy:
     branch: master
 
 after_success:
-  - python deploy-ghpages.py
+  - coveralls

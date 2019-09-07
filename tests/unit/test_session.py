@@ -28,3 +28,17 @@ class TestSession(unittest.TestCase):
             ms = mock_session.Session = Session(region_name='us-east-1')
 
         self.assertEquals(str(lib_session), str(ms))
+
+    def test_create_session_with_profile(self):
+        mock_gobject = MagicMock()
+        mock_gobject.LibraryComponent.__bases__ = (object,)
+        with patch.dict('sys.modules', gobject=mock_gobject):
+            kw = SessionKeywords(mock_gobject)
+            lib_session = kw.create_session_with_profile(
+                'us-east-1',
+                getenv('PROFILE'))
+                
+        with patch('AWSLibrary.keywords.session.boto3') as mock_session:
+            ms = mock_session.Session = Session(region_name='us-east-1')
+
+        self.assertEquals(str(lib_session), str(ms))
