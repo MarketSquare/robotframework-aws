@@ -8,11 +8,16 @@ python:
 
 install:
   - pip install -r requirements_dev.txt
+  - pip install tox-travis
 
 script:
-  - tox -v -e py  
+  - tox -v -e py
   - coverage run --source tests -m pytest
   - coverage report
+
+  after_success:
+  - coveralls
+  - python deploy-ghpages.py
   
 deploy:
   provider: pypi
@@ -24,7 +29,3 @@ deploy:
   on:
     tags: true
     branch: master
-
-after_success:
-  - python deploy-ghpages.py
-  - coveralls
