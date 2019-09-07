@@ -8,10 +8,12 @@ python:
 
 install:
   - pip install -r requirements_dev.txt
-  
+
 script:
   - tox -v -e py  
-
+  - coverage run --source tests -m pytest
+  - coverage report
+  
 deploy:
   provider: pypi
   user: teaglebuilt
@@ -24,4 +26,5 @@ deploy:
     branch: master
 
 after_success:
+  - python deploy-ghpages.py
   - coveralls
