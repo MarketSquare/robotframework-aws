@@ -8,7 +8,7 @@
 ![Last Commit](https://img.shields.io/github/last-commit/teaglebuilt/robotframework-AWS)
 ![License](https://img.shields.io/pypi/l/robotframework-aws)
 ![Downloads](https://img.shields.io/pypi/dm/robotframework-aws)
-![Coverage](https://img.shields.io/coveralls/github/teaglebuilt/robotframework-AWS)
+[![Coverage Status](https://coveralls.io/repos/github/teaglebuilt/robotframework-AWS/badge.svg?branch=master)](https://coveralls.io/github/teaglebuilt/robotframework-AWS?branch=master)
 ---------------
 A library of keywords for interacting with AWS services in your robot tests. This library covers a variety of AWS services.
 
