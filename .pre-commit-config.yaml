@@ -7,7 +7,3 @@ repos:
       - id: flake8
       - id: check-merge-conflict
       - id: detect-aws-credentials
-
-  - repo: git://github.com/guykisel/pre-commit-robotframework-tidy
-    hooks:
-    -   id: robotframework-tidy-wrapper
