@@ -4,11 +4,13 @@
  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
  ![PyPI](https://img.shields.io/pypi/v/robotframework-aws.svg)
  [![Build Status](https://travis-ci.com/teaglebuilt/robotframework-AWS.svg?branch=master)](https://travis-ci.com/teaglebuilt/robotframework-AWS)
- 
+
 ![Last Commit](https://img.shields.io/github/last-commit/teaglebuilt/robotframework-AWS)
 ![License](https://img.shields.io/pypi/l/robotframework-aws)
 ![Downloads](https://img.shields.io/pypi/dm/robotframework-aws)
-[![Coverage Status](https://coveralls.io/repos/github/teaglebuilt/robotframework-AWS/badge.svg?branch=master)](https://coveralls.io/github/teaglebuilt/robotframework-AWS?branch=master)
+![Coverage](https://img.shields.io/coveralls/github/teaglebuilt/robotframework-AWS)
+
+# KEYWORD DOCUMENTATION
 ---------------
 A library of keywords for interacting with AWS services in your robot tests. This library covers a variety of AWS services.
 
@@ -53,7 +55,7 @@ Library  AWSLibrary  ${access_key}  ${secret_key}
  - | `Delete Session` | region | profile=optional |
  - | `Delete All Sessions` |
 
- > ### S3 
+ > ### S3
 #####  A key represents the path of the file located in the S3 bucket and Object Path represents the local path of the file on your host.
 
  - | `Get Bucket` | bucket_name |
