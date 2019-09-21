@@ -1,5 +1,8 @@
 # robotframework-aws
 
+If there is functionality that should be included in this library please email me or feel free to contribute. As of right now, I am focusing on other packages until I find better use cases for for test automation in AWS services.
+
+
 #### Contributors are welcome. This package is at the beginning of development.
  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
  ![PyPI](https://img.shields.io/pypi/v/robotframework-aws.svg)
