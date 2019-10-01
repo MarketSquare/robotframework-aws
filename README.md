@@ -36,7 +36,7 @@ pip install robotframework-aws
   ##### Pass in your AWS Credentials as parameters as shown below.
 ```
 *** Settings ***
-Library  AWSLibrary  ${access_key}  ${secret_key}
+Library  AWSLibrary
 ```
 
 3. Creating a Test Case
