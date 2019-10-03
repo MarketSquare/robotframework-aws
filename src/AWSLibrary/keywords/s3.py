@@ -31,6 +31,25 @@ class S3Keywords(LibraryComponent):
             else:
                 self.logger.debug(f"Error Code: {e.response['Error']['Code']}")
 
+    @keyword('Delete File')
+    def delete_file(self, bucket, key):
+        """ Delete File
+        Requires:   @param ```bucket``` which is the bucket name:
+                    @param: ```key``` which is the bucket location/path name.
+            Example:
+            | Delete File | bucket | key |
+        """
+        client = self.state.session.client('s3')
+        try:
+            response = client.delete_object(
+                Bucket=bucket,
+                Key=key
+            )
+            if response['ResponseMetadata']['HTTPStatusCode'] != 204:
+                raise ContinuableError(f"Error {response['ResponseMetadata']}")
+        except botocore.exceptions.ClientError as e:
+            raise KeywordError(e)
+
     @keyword('Download File')
     def download_file_from_s3(self, bucket, key, path):
         """ Downloads File from S3 Bucket
@@ -65,11 +84,10 @@ class S3Keywords(LibraryComponent):
                 Bucket=bucket,
                 Key=key
             )
-            self.rb_logger.console(response)
-            self.rb_logger.info(response)
+            self.logger.info(response)
         except botocore.exceptions.ClientError as e:
-            if e.response['Error']['Code'] == '404':
-                raise KeywordError(f"Keyword: {bucket} does not exist")
+            if e.response['Error']:
+                raise KeywordError(e)
             else:
                 raise ContinuableError(e)
 
