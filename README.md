@@ -63,6 +63,7 @@ Library  AWSLibrary
 
  - | `Get Bucket` | bucket_name |
  - | `Get Object` | bucket_name | object_path |
+ - | `Delete File` | bucket | key |
  - | `Upload File` | bucket_name | object_path | key |
  - | `Download File` | bucket_name | object_path | key |
  - | `Key Should Exist` | bucket_name | object_path | key |
