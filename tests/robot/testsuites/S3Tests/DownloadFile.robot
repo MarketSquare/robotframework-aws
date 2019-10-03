@@ -14,15 +14,7 @@ ${PATH}=  downloaded_test_file.html
 *** Test Case ***
 Download File
     Create Session With Keys  ${REGION}  ${ACCESS_KEY}  ${SECRET_KEY}
+    Upload File  ${BUCKET}  ${KEY}  ${PATH}
     Download File  ${BUCKET}  ${KEY}  ${PATH}
     Local File Should Exist  ${PATH}
     Delete All Sessions
-
-Upload File
-    Upload File  ${BUCKET}  ${KEY}  ${PATH}
-    Key Should Exist  ${BUCKET}  ${KEY}
-
-
-Bucket Permissions
-    ${CRUD}=  Create List  GET
-    Allowed Methods  ${BUCKET}  ${CRUD}
