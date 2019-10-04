@@ -1,7 +1,4 @@
 from setuptools import setup, find_packages
-from os.path import abspath, dirname, join
-import codecs
-
 
 
 def readme():
@@ -12,7 +9,7 @@ def readme():
 
 setup(
     name='robotframework-aws',
-    version='0.0.3',
+    version='0.0.4',
     author="Dillan Teagle",
     author_email="softwaredeveloper@dillanteagle.me",
     description="A python package to test AWS services in Robot Framework",
