@@ -1,22 +1,95 @@
-Contributing
+Thankyou for considering contributing to a library for interacting with AWS Services in robotframework for Test Automation.
 
-This project is at the beginning stages of development. We are looking for individuals who have or want to gain exposure to AWS boto3 api to create keywords for all services that have use cases for test automation.
 
-When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
+Lets go over setting up the development environment.
 
-Please note we have a code of conduct, please follow it in all your interactions with the project.
 
-Pull Request Process
-Ensure any dependencies have been updated in the requirements file and explain reasoning behind the additional dependency.
-Update the README.md with details of changes to the interface, this includes new environment variables, exposed ports, useful file locations and container parameters.
-Increase the version numbers in any examples files and the README.md to the new version that this Pull Request would represent. 
+Setup virtualenvironment:
+```
+python -m venv venv
+```
 
-You may merge the Pull Request in once you have the sign-off with a maintainer of the repository.
+activate
+```
+source venv/bin/activate
+```
 
-Testing your branch
-We use Travis CI and Tox to automate unit tests when you push your changes. Every method that is written needs to be followed with a unit test, located in the tests directory. Every file represents a class and will begin with test_{name}.py After pushing your changes. Tox will run all unit tests and travis ci will show a pass/fail build.
+install dependencies
+```
+pip install -r requirements-dev.txt
+```
 
-Deploying to Pypi is automated on a successful merge.
+set environment variables for aws ass ACCESS_KEY and SECRET_KEY
 
-Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
 
+install package development setup from root directory where setup.py is
+```
+pip install -e .
+```
+
+####  TESTING
+
+For every keyword or method created, will be followed with two different tests. Unit and Robot tests.
+Located in the tests directory are seperated tests by type unit/robot.
+
+Robot Tests will need a configuration file added to the root of robot/ for tests to run.
+
+run_arguments.robot
+```
+## SUITE NAME
+--name AWS Library Testing
+
+## SETTINGS
+# tools must be in same directory as run_arguments.robot
+--pythonpath ./AWSLibrary
+--pythonpath .
+
+# LOG LEVEL
+# --loglevel DEBUG
+--loglevel INFO
+
+# put all logs into directory
+--outputdir reports
+# --timestampoutputs
+--debugfile debug.log
+
+## VIRTUAL DISPLAY
+-v USE_XVFB:True
+
+## PROXY
+-v USE_PROXY:False
+-v PROXY_TYPE:socks
+-v PROXY_HOST:localhost
+-v PROXY_PORT:9999
+
+## VARIABLES
+-v ACCESS_KEY:
+-v SECRET_KEY:
+
+testsuites/
+```
+
+make sure and add your aws credentials in the variables section.
+
+
+Unit tests and Robot Tests are automated with tox. You can run tox to test your build before committing your changes
+```
+tox
+```
+
+Upon pushing your branch. Tox will run and travis ci will run the reports
+
+Tox will grab the AWS environment variables that you set. which you can see in tox.ini
+
+
+### Pre Commit
+
+We use flake8 for checking for linting errors
+
+Git Secrets will run on commit to make sure there are no hardcoded credentials in any files
+
+Upon pushing your branch. Tox will run and travis ci will run the reports
+
+
+### Issues
+Feel free to create issues for ideas for new functionality with other aws services
