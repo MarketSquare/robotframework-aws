@@ -19,6 +19,7 @@ A library of keywords for interacting with AWS services in your robot tests. Thi
 
 [Documentation for Keywords](https://teaglebuilt.github.io/robotframework-AWS/)
 
+[Pypi](https://pypi.org/project/robotframework-aws/)
 ____________
 ___________
 #### Attention Contributors
