@@ -20,5 +20,5 @@ deploy:
   user: teaglebuilt
   password:
     secure: "lOVVg02Ipe1sSvWQG3CxOyLKnaYR7MvUXEhT7aB8DhvdA9jf2hDlKrdsYDkj6usr7nHQPvKU+k4Cayqo1cE6L1gnvpgCCdolOgXzBP6mF12+PL0eTw5U4F3J4XuOgCziZJpFARDILjR2r34t1ZgWEvv/DpXbufuIGapNumS5TMuB9sbRWReBfil8z7bepytBVoJbR20cpdhgLvL/bp79OOcKZxPlLDU0X36HkXLsBRahWDgTopfsJzPao+YD2n9NmAcKrzAxt3Xv6Es4AiTLBErdQSUAnCv0OfQTkjLTAYp6cflpK64CLUVLLqjqmWt3Hn/PjOsgvkEoc4aolQZQfCruPIwpc2M61vY/sC1egj1Hof+btBNpGO2F1UrUHHLaIX/se/XPwb9lo3tgeViNxI3Ef4o5MS3Lc7kpJnechg/y5zKn85t5dp9vEKQFirKO7l68xeuHQYdupD8/uvOAed9YsMTWOLsaY/YkXDtJFI9q8UDVvi5amEtoPvv+lWeD+FJDz7vXe8JEGvSh2+iU7j/MoG3Fru4tKdhm4+1V/qNDJqs8Sl13A8EJ0bP0L0cgNz18tfPg1PXfpUvQAF2ZQ3UHUO48qtHQ1gtdNCnsWBr4PFpHyJOQ9GzeeJVZB6eKw3+7b6668l+OTLTj6QJq128CD3zIOMNhx15G7oUll3I="
-  distributions: "sdist bdist_wheel"
-  skip_cleanup: true
+  on:
+    branch: master
