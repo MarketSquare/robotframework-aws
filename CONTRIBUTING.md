@@ -69,6 +69,16 @@ run_arguments.robot
 testsuites/
 ```
 
+
+# Local AWS Services with Localstack
+
+```
+docker-compose up -d
+
+```
+
+http://localhost:8055/
+
 make sure and add your aws credentials in the variables section.
 
 

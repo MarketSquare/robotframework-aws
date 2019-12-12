@@ -1,0 +1,4 @@
+* THUR Dec 12 Dillan Teagle <dillan.teagle.va@gmail.com>
+- added localstack for local aws services for developing the library
+- added instructions to CONTRIBUTING.md
+- organize dependencies with pip-tools
