@@ -37,8 +37,6 @@ class TestSession(unittest.TestCase):
             lib_session = kw.create_session_with_profile(
                 'us-east-1',
                 getenv('PROFILE'))
-                
         with patch('AWSLibrary.keywords.session.boto3') as mock_session:
             ms = mock_session.Session = Session(region_name='us-east-1')
-
-        self.assertEquals(str(lib_session), str(ms))
+            self.assertEquals(str(lib_session), str(ms))

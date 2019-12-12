@@ -1,7 +1,7 @@
 from AWSLibrary.base.robotlibcore import keyword
 from AWSLibrary.base import LibraryComponent, KeywordError, ContinuableError
-from botocore.exceptions import ClientError
 from robot.api import logger
+import pathlib
 import botocore
 
 
@@ -19,7 +19,7 @@ class S3Keywords(LibraryComponent):
         client = self.state.session.client('s3')
         try:
             client.create_bucket(Bucket=bucket)
-            self.logger.debug(f"Created new bucket: {bucket}")
+            self.rb_logger.debug(f"Created new bucket: {bucket}")
         except botocore.exceptions.ClientError as e:
             error_code = e.response["Error"]["Code"]
             if error_code == "BucketAlreadyExists":
@@ -29,7 +29,7 @@ class S3Keywords(LibraryComponent):
                 self.logger.debug("Bucket Already Exists")
                 raise ContinuableError("Bucket Already Exists")
             else:
-                self.logger.debug(f"Error Code: {e.response['Error']['Code']}")
+                self.rb_logger.debug(f"Error Code: {e.response['Error']['Code']}")
 
     @keyword('Delete File')
     def delete_file(self, bucket, key):
@@ -66,7 +66,7 @@ class S3Keywords(LibraryComponent):
             if e.response['Error']['Code'] == '404':
                 raise KeywordError(f"Keyword: {bucket} does not exist")
             else:
-                logger.debug(e)
+                self.rb_logger.debug(e)
 
     @keyword('Upload File')
     def upload_file(self, bucket, key, path):
@@ -84,8 +84,8 @@ class S3Keywords(LibraryComponent):
                 Bucket=bucket,
                 Key=key
             )
-            self.logger.info(response)
-        except botocore.exceptions.ClientError as e:
+            self.rb_logger.info(response)
+        except botocore.exceptions.S3 as e:
             if e.response['Error']:
                 raise KeywordError(e)
             else:
@@ -105,7 +105,7 @@ class S3Keywords(LibraryComponent):
         try:
             if res['ResponseMetadata']['HTTPStatusCode'] == 404:
                 raise KeywordError("Key: {}, does not exist".format(key))
-        except ClientError as e:
+        except ClientError as e: # noqa
             raise ContinuableError(e.response['Error'])
         return True
 
@@ -124,7 +124,7 @@ class S3Keywords(LibraryComponent):
             res = client.head_object(Bucket=bucket, Key=key)
             if res['ResponseMetadata']['HTTPStatusCode'] == 200:
                 raise KeywordError("Key: {}, already exists".format(key))
-        except ClientError as e:
+        except ClientError as e: # noqa
             raise ContinuableError(e.response['Error'])
         return True
 
@@ -137,5 +137,5 @@ class S3Keywords(LibraryComponent):
             obj = response['CORSRules'][0]
             aws_methods = obj['AllowedMethods']
             assert set(aws_methods) == set(methods)
-        except ClientError as e:
+        except ClientError as e:  # noqa
             raise KeywordError(e)
