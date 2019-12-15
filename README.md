@@ -57,7 +57,8 @@ Library  AWSLibrary
 > ## Session
 ####  A session is created to use AWS services as a user defining the region and profile is optional.
 
- - | `Create Session` | region | profile=optional |
+-  | `Create Session With Keys` | region | access_key | secret_key |
+ - | `Create Session With Profile` | region | profile |
  - | `Delete Session` | region | profile=optional |
  - | `Delete All Sessions` |
 

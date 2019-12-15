@@ -52,6 +52,8 @@ Unit tests and Robot Tests are automated with tox. You can run tox to test your 
 tox
 ```
 
+```
+
 Upon pushing your branch. Tox will run and travis ci will run the reports
 
 ### Pre Commit Checks
@@ -78,7 +80,7 @@ dependency==0.0.1
 Then run to compile into requirements.txt
 
 ```
-pip-compile output-file=requirements.txt requirements.in
+pip-compile --output-file=requirements.txt requirements.in
 ```
 
 
