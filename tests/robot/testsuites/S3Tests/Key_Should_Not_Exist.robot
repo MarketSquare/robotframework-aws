@@ -3,11 +3,10 @@ Library  Collections
 Library  AWSLibrary
 
 
-
 *** Variable ***
-${REGION}=  us-east-1
-${BUCKET}=  zappastaticbin
-${KEY}=  fail_test.html
+${REGION}  us-east-1
+${BUCKET}  zappastaticbin
+${KEY}  fail_test.html
 
 
 *** Test Case ***

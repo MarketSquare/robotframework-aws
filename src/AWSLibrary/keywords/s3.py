@@ -105,7 +105,7 @@ class S3Keywords(LibraryComponent):
         try:
             if res['ResponseMetadata']['HTTPStatusCode'] == 404:
                 raise KeywordError("Key: {}, does not exist".format(key))
-        except ClientError as e: # noqa
+        except botocore.exceptions.ClientError as e:
             raise ContinuableError(e.response['Error'])
         return True
 
@@ -126,7 +126,7 @@ class S3Keywords(LibraryComponent):
                 raise KeywordError("Key: {}, already exists".format(key))
         except botocore.exceptions.ClientError as e: # noqa
             if e.response['ResponseMetadata']['HTTPStatusCode'] != 404:
-                raise ContinuableError(f"Error at: {e.operation_name} with data {e.response}")
+                raise ContinuableError("Error at: {} with data {}".format(e.operation_name, e.response))
 
     @keyword('Allowed Methods')
     def allowed_methods(self, bucket, methods=[]):
@@ -137,5 +137,5 @@ class S3Keywords(LibraryComponent):
             obj = response['CORSRules'][0]
             aws_methods = obj['AllowedMethods']
             assert set(aws_methods) == set(methods)
-        except ClientError as e:  # noqa
+        except botocore.exceptions.ClientError as e:
             raise KeywordError(e)

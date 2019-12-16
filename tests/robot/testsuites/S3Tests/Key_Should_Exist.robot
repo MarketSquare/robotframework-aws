@@ -5,9 +5,9 @@ Library  AWSLibrary
 
 
 *** Variable ***
-${REGION}=  us-east-1
-${BUCKET}=  zappastaticbin
-${KEY}=  path_test.html
+${REGION}  us-east-1
+${BUCKET}  zappastaticbin
+${KEY}  path_test.html
 
 
 
