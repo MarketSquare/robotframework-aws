@@ -10,3 +10,11 @@ logger.setLevel(logging.DEBUG)
 sh = logging.StreamHandler()
 sh.setFormatter(logging.Formatter(FORMAT))
 logger.addHandler(sh)
+
+
+__all__ = [
+    LibraryComponent,
+    KeywordError,
+    ContinuableError,
+    FatalError
+]

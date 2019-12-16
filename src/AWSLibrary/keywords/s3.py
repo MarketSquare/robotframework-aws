@@ -124,9 +124,9 @@ class S3Keywords(LibraryComponent):
             res = client.head_object(Bucket=bucket, Key=key)
             if res['ResponseMetadata']['HTTPStatusCode'] == 200:
                 raise KeywordError("Key: {}, already exists".format(key))
-        except ClientError as e: # noqa
-            raise ContinuableError(e.response['Error'])
-        return True
+        except botocore.exceptions.ClientError as e: # noqa
+            if e.response['ResponseMetadata']['HTTPStatusCode'] != 404:
+                raise ContinuableError(f"Error at: {e.operation_name} with data {e.response}")
 
     @keyword('Allowed Methods')
     def allowed_methods(self, bucket, methods=[]):
