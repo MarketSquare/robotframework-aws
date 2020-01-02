@@ -38,7 +38,7 @@ class SessionKeywords(LibraryComponent):
         Examples:
         | Create Session With Profile | us-west-1 |  profile name |
         """
-        self.rb_logger.info("Creating Session: %s" % region)
+        self.rb_logger.info(f"Creating Session: {region}, {profile}")
         session = boto3.Session(
             profile_name=profile,
             region_name=region
