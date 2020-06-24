@@ -8,15 +8,15 @@ import botocore
 class S3Keywords(LibraryComponent):
 
     @keyword('Create Bucket')
-    def create_bucket(self, bucket, region=None):
+    def create_bucket(self, bucket, region=None, endpoint_url=None):
         """ Creates S3 Bucket with the name given @param: ```bucket```
-        in the specified @param: ```region```.
+            and uses the optionally provided @param: ```endpoint_url```.
             If Bucket already exists, an exception will be thrown.
 
         Example:
-        | Create Bucket | randomBucketName | us-west-2 |
+        | Create Bucket | randomBucketName |
         """
-        client = self.state.session.client('s3')
+        client = self.state.session.client('s3', endpoint_url=endpoint_url)
         try:
             client.create_bucket(Bucket=bucket)
             self.rb_logger.debug(f"Created new bucket: {bucket}")
@@ -32,14 +32,15 @@ class S3Keywords(LibraryComponent):
                 self.rb_logger.debug(f"Error Code: {e.response['Error']['Code']}")
 
     @keyword('Delete File')
-    def delete_file(self, bucket, key):
+    def delete_file(self, bucket, key, endpoint_url=None):
         """ Delete File
         Requires:   @param ```bucket``` which is the bucket name:
                     @param: ```key``` which is the bucket location/path name.
+                    @param: ```endpoint_url``` optionally override the s3 endpoint url
             Example:
             | Delete File | bucket | key |
         """
-        client = self.state.session.client('s3')
+        client = self.state.session.client('s3', endpoint_url=endpoint_url)
         try:
             response = client.delete_object(
                 Bucket=bucket,
@@ -51,15 +52,16 @@ class S3Keywords(LibraryComponent):
             raise KeywordError(e)
 
     @keyword('Download File')
-    def download_file_from_s3(self, bucket, key, path):
+    def download_file_from_s3(self, bucket, key, path, endpoint_url=None):
         """ Downloads File from S3 Bucket
         Requires:   @param ```bucket``` which is the bucket name:
                     @param: ```key``` which is the bucket location/path name.
                     @param: ```path``` which is the local path of file.
+                    @param: ```endpoint_url``` optionally override the s3 endpoint url
             Example:
             | Download File | bucket | path | key |
         """
-        client = self.state.session.client('s3')
+        client = self.state.session.client('s3', endpoint_url=endpoint_url)
         try:
             client.download_file(bucket, key, path)
         except botocore.exceptions.ClientError as e:
@@ -69,15 +71,16 @@ class S3Keywords(LibraryComponent):
                 self.rb_logger.debug(e)
 
     @keyword('Upload File')
-    def upload_file(self, bucket, key, path):
+    def upload_file(self, bucket, key, path, endpoint_url=None):
         """ Uploads File from S3 Bucket
         Requires:   @param ```bucket``` which is the bucket name:
                     @param: ```key``` which is the bucket location/path name.
                     @param: ```path``` which is the local path of file.
+                    @param: ```endpoint_url``` optionally override the s3 endpoint url
             Example:
             | Upload File | bucket | path | key |
         """
-        client = self.state.session.client('s3')
+        client = self.state.session.client('s3', endpoint_url=endpoint_url)
         try:
             client.upload_file(path, bucket, key)
             response = client.head_object(
@@ -92,15 +95,16 @@ class S3Keywords(LibraryComponent):
                 raise ContinuableError(e)
 
     @keyword('Key Should Exist')
-    def key_should_exist(self, bucket, key):
+    def key_should_exist(self, bucket, key, endpoint_url=None):
         """ Key Should Exist
         Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will not fail.
         Requires:   @param ```bucket``` which is the bucket name:
                     @param: ```key``` which is the bucket location/path name.
+                    @param: ```endpoint_url``` optionally override the s3 endpoint url
             Example:
             | Key Should Exist | bucket | key |
         """
-        client = self.state.session.client("s3")
+        client = self.state.session.client("s3", endpoint_url=endpoint_url)
         res = client.head_object(Bucket=bucket, Key=key)
         try:
             if res['ResponseMetadata']['HTTPStatusCode'] == 404:
@@ -110,15 +114,16 @@ class S3Keywords(LibraryComponent):
         return True
 
     @keyword('Key Should Not Exist')
-    def key_should_not_exist(self, bucket, key):
+    def key_should_not_exist(self, bucket, key, endpoint_url=None):
         """ Verifies Key on S3 Bucket Does Not Exist
         Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will fail.
         Requires:   @param ```bucket``` which is the bucket name:
                     @param: ```key``` which is the bucket location/path name.
+                    @param: ```endpoint_url``` optionally override the s3 endpoint url
             Example:
             | Key Should Not Exist | bucket | key |
         """
-        client = self.state.session.client('s3')
+        client = self.state.session.client('s3', endpoint_url=endpoint_url)
         self.rb_logger.info(f"Retrieve Client Hanlder: {client}")
         try:
             res = client.head_object(Bucket=bucket, Key=key)
@@ -129,8 +134,8 @@ class S3Keywords(LibraryComponent):
                 raise ContinuableError("Error at: {} with data {}".format(e.operation_name, e.response))
 
     @keyword('Allowed Methods')
-    def allowed_methods(self, bucket, methods=[]):
-        client = self.state.session.client("s3")
+    def allowed_methods(self, bucket, methods=[], endpoint_url=None):
+        client = self.state.session.client("s3", endpoint_url=endpoint_url)
         self.rb_logger.info(f"Retrieve Client Hanlder: {client}")
         try:
             response = client.get_bucket_cors(Bucket=bucket)
