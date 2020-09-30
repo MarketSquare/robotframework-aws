@@ -31,6 +31,27 @@ class S3Keywords(LibraryComponent):
             else:
                 self.rb_logger.debug(f"Error Code: {e.response['Error']['Code']}")
 
+    @keyword('List Objects')
+    def list_objects(self, bucket, prefix=""):
+        """ List Objects
+        Requires:   @param: ```bucket``` which is the bucket name
+        Optional:   @param: ```prefix``` which limits the response to keys that begin with the specified prefix.
+            Example:
+            | List Objects | bucket | key |
+        """
+        client = self.state.session.client('s3')
+        try:
+            response = client.list_objects(
+                Bucket=bucket,
+                Prefix=prefix
+            )
+            if 'Contents' in response:
+                return [key['Key'] for key in response['Contents']]
+            else:
+                return []
+        except botocore.exceptions.ClientError as e:
+            raise KeywordError(e)
+
     @keyword('Delete File')
     def delete_file(self, bucket, key, endpoint_url=None):
         """ Delete File
