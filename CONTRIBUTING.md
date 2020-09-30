@@ -16,10 +16,10 @@ source venv/bin/activate
 
 install dependencies
 ```
-pip install -r requirements-dev.txt
+pip install -r requirements.txt
 ```
 
-set environment variables for aws ass ACCESS_KEY and SECRET_KEY
+set environment variables for aws as ACCESS_KEY and SECRET_KEY
 
 
 install package development setup from root directory where setup.py is
@@ -30,7 +30,7 @@ pip install -e .
 ####  TESTING
 
 For every keyword or method created, will be followed with two different tests. Unit and Robot tests.
-Located in the tests directory are seperated tests by type unit/robot.
+Located in the tests directory are separated tests by type unit/robot.
 
 Robot Tests will need a configuration file added to the root of robot/ for tests to run.
 

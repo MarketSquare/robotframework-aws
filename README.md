@@ -65,8 +65,7 @@ Library  AWSLibrary
  > ### S3
 #####  A key represents the path of the file located in the S3 bucket and Object Path represents the local path of the file on your host.
 
- - | `Get Bucket` | bucket_name |
- - | `Get Object` | bucket_name | object_path |
+ - | `List Objects` | bucket_name | prefix |
  - | `Delete File` | bucket | key |
  - | `Upload File` | bucket_name | object_path | key |
  - | `Download File` | bucket_name | object_path | key |

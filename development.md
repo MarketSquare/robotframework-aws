@@ -5,7 +5,7 @@
 ####  TESTING
 
 For every keyword or method created, will be followed with two different tests. Unit and Robot tests.
-Located in the tests directory are seperated tests by type unit/robot.
+Located in the tests directory are separated tests by type unit/robot.
 
 Robot Tests will need a configuration file added to the root of robot/ for tests to run.
 
