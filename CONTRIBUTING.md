@@ -1,41 +1,45 @@
-Thankyou for considering contributing to a library for interacting with AWS Services in robotframework for Test Automation.
+# Contributing to RobotFramework-AWS
 
+Thank you for considering contributing to a library for interacting with AWS Services in RobotFramework for Test Automation.
 
-Lets go over setting up the development environment.
-
+Let's go over setting up the development environment.
 
 Setup virtualenvironment:
-```
+
+```sh
 python -m venv venv
 ```
 
 activate
-```
+
+```sh
 source venv/bin/activate
 ```
 
 install dependencies
-```
+
+```sh
 pip install -r requirements.txt
 ```
 
 set environment variables for aws as ACCESS_KEY and SECRET_KEY
 
-
 install package development setup from root directory where setup.py is
-```
+
+```sh
 pip install -e .
 ```
 
-####  TESTING
+## TESTING
 
 For every keyword or method created, will be followed with two different tests. Unit and Robot tests.
 Located in the tests directory are separated tests by type unit/robot.
 
 Robot Tests will need a configuration file added to the root of robot/ for tests to run.
 
-run_arguments.robot
-```
+`run_arguments.robot`
+
+```robotframework
 ## SUITE NAME
 --name AWS Library Testing
 
@@ -69,28 +73,26 @@ run_arguments.robot
 testsuites/
 ```
 
+## Local AWS Services with Localstack
 
-# Local AWS Services with Localstack
-
-```
+```sh
 docker-compose up -d
 
 ```
 
-http://localhost:8055/
+<http://localhost:8055/>
 
-make sure and add your aws credentials in the variables section.
-
+Make sure and add your aws credentials in the variables section.
 
 Unit tests and Robot Tests are automated with tox. You can run tox to test your build before committing your changes
-```
+
+```sh
 tox
 ```
 
 Upon pushing your branch. Tox will run and travis ci will run the reports
 
 Tox will grab the AWS environment variables that you set. which you can see in tox.ini
-
 
 ### Pre Commit
 
@@ -100,6 +102,6 @@ Git Secrets will run on commit to make sure there are no hardcoded credentials i
 
 Upon pushing your branch. Tox will run and travis ci will run the reports
 
-
 ### Issues
+
 Feel free to create issues for ideas for new functionality with other aws services

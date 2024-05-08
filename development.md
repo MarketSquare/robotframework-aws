@@ -1,16 +1,15 @@
 # GUIDE FOR DEVELOPMENT WORKFLOW
 
-
-
-####  TESTING
+## TESTING
 
 For every keyword or method created, will be followed with two different tests. Unit and Robot tests.
 Located in the tests directory are separated tests by type unit/robot.
 
 Robot Tests will need a configuration file added to the root of robot/ for tests to run.
 
-run_arguments.robot
-```
+`run_arguments.robot`
+
+```robotframework
 ## SUITE NAME
 --name AWS Library Testing
 
@@ -44,14 +43,12 @@ run_arguments.robot
 testsuites/
 ```
 
-make sure and add your aws credentials in the variables section.
-
+Make sure and add your aws credentials in the variables section.
 
 Unit tests and Robot Tests are automated with tox. You can run tox to test your build before committing your changes
-```
-tox
-```
 
+```sh
+tox
 ```
 
 Upon pushing your branch. Tox will run and travis ci will run the reports
@@ -60,12 +57,9 @@ Upon pushing your branch. Tox will run and travis ci will run the reports
 
 Flake8
 
-Git Secrets - No hardcoded AWS Credentials
-
-Trailing White Spaces
-
-Check YAML syntax
-
+- Git Secrets - No hardcoded AWS Credentials
+- Trailing White Spaces
+- Check YAML syntax
 
 ### Dependency Management
 
@@ -73,14 +67,13 @@ pip tools
 
 add dependency to requirements.in like so
 
-```
+```sh
 dependency==0.0.1
+
 ```
 
 Then run to compile into requirements.txt
 
-```
+```sh
 pip-compile --output-file=requirements.txt requirements.in
 ```
-
-
