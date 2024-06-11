@@ -133,3 +133,4 @@ dmypy.json
 #Pycharm
 .idea
 tests/robot/new_tests.robot
+log/
