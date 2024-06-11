@@ -18,7 +18,7 @@ If there is functionality that should be included in this library please create 
 
 A library of keywords for interacting with AWS services in your robot tests. This library covers a variety of AWS services.
 
-[Documentation for Keywords](https://teaglebuilt.github.io/robotframework-aws/)
+[Documentation for Keywords](https://raw.githack.com/MarketSquare/robotframework-aws/master/docs/AWSLibrary.html)
 
 [Pypi](https://pypi.org/project/robotframework-aws/)
 
