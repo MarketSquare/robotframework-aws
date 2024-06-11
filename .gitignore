@@ -1,4 +1,5 @@
 tests/robot/reports
+tests/robot/log
 tests/robot/output
 tests/robot/run_arguments.robot
 tests/unit/test_playground.py
@@ -131,3 +132,4 @@ dmypy.json
 
 #Pycharm
 .idea
+tests/robot/new_tests.robot

@@ -1,4 +1,5 @@
 from robot.utils import ConnectionCache
+from robot.api import logger
 from AWSLibrary.base import LibraryComponent
 from AWSLibrary.base.robotlibcore import keyword
 import boto3
@@ -25,7 +26,31 @@ class SessionKeywords(LibraryComponent):
             aws_secret_access_key=secret_key,
             region_name=region
         )
-        print(session)
+        logger.info(f"Session created: {str(session)} using access key: {access_key}")
+        self._cache.register(session, alias=region)
+        self.state.session = session
+        return session
+
+    @keyword('Create Session With Token')
+    def create_session_with_token(self, region, access_key, secret_key, token):
+        """ Create an AWS session with region, access key, secret key and token. Suitable for nominal users.
+
+        Documentation:
+        - ``region``: string to identify the region
+        - ``access_key``: string to identify the access key
+        - ``secret_key``: string to identify the secret key
+        - ``token``: string to identify the user token
+
+        Examples:
+        | Create Session With Token | eu-west-1 | access key | secret key | token |
+        """
+        session = boto3.Session(
+            aws_access_key_id=access_key,
+            aws_secret_access_key=secret_key,
+            aws_session_token=token,
+            region_name=region
+        )
+        logger.info(f"Session created: {str(session)} using access key: {access_key} and corresponding token")
         self._cache.register(session, alias=region)
         self.state.session = session
         return session
@@ -48,21 +73,32 @@ class SessionKeywords(LibraryComponent):
         return session
 
     @keyword('Delete Session')
-    def delete_session(self, region, profile=None):
-        """Removes session.
+    def delete_session(self, region):
+        """ Delete session by entering the region.
+
         Arguments:
-        - ``region``: A case and space insensitive string to identify the session.
-                     (Default ``region``)
+        - ``region``: string to identify the region
+
         Examples:
-        | Delete Session | REGION |
+        | Delete Session | us-west-1 |
         """
-        self._cache.switch(region)
-        index = self._cache.current_index
-        self._cache.current = self._cache._no_current
-        self._cache._connections[index - 1] = None
-        self._cache._aliases.pop(region)
+        if self._cache.current_index is None:
+            logger.info("There is no active session to delete.")
+        else:
+            self._cache.switch(region)
+            index = self._cache.current_index
+            self._cache.current = self._cache._no_current
+            self._cache._connections[index - 1] = None
+            self._cache._aliases.pop(region)
 
     @keyword('Delete All Sessions')
     def delete_all_sessions(self):
-        """ Delete All Sessions """
-        self._cache.empty_cache()
+        """ Delete all sessions.
+
+        Examples:
+        | Delete All Sessions |
+        """
+        if self._cache.current_index is None:
+            logger.info("There is no active session to delete.")
+        else:
+            self._cache.empty_cache()

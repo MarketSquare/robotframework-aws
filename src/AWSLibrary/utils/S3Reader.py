@@ -7,8 +7,8 @@ class S3Reader(object):
 
     def __init__(self, Bucket="", Key=""):
         self.client = boto3.client("s3")
-        self.BucketName = bucket
-        self.Key = key
+        # self.BucketName = bucket
+        # self.Key = key
         self.response = self.client.list_objects(Bucket=self.BucketName)
 
     @property

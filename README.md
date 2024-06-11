@@ -8,7 +8,8 @@ If there is functionality that should be included in this library please email m
 #### Contributors are welcome. This package is at the beginning of development.
  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
  ![PyPI](https://img.shields.io/pypi/v/robotframework-aws.svg)
- [![Build Status](https://travis-ci.com/teaglebuilt/robotframework-AWS.svg?branch=master)](https://travis-ci.com/teaglebuilt/robotframework-AWS)
+
+[//]: # ( [![Build Status]&#40;https://travis-ci.com/teaglebuilt/robotframework-AWS.svg?branch=master&#41;]&#40;https://travis-ci.com/teaglebuilt/robotframework-AWS&#41;)
 
 ![Last Commit](https://img.shields.io/github/last-commit/teaglebuilt/robotframework-AWS)
 ![License](https://img.shields.io/pypi/l/robotframework-aws)
@@ -80,4 +81,3 @@ Library  AWSLibrary
 
  - | `Local File Should Exist` | path |
  - | `Local File Should Not Exist` | path |
-

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-11T12:20:45+00:00" specversion="6" source="C:\Merkle\repositories\RobotFramework-AWS\src\AWSLibrary\__init__.py" lineno="13">
+<version>0.0.2</version>
+<doc>Documentation for library ``AWSLibrary``.</doc>
+<tags>
+</tags>
+<inits>
+</inits>
+<keywords>
+<kw name="Allowed Methods">
+<arguments repr="bucket, methods=[], endpoint_url=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="methods=[]">
+<name>methods</name>
+<default>[]</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="endpoint_url=None">
+<name>endpoint_url</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc/>
+<shortdoc/>
+</kw>
+<kw name="Create Bucket">
+<arguments repr="bucket, region=None, endpoint_url=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="region=None">
+<name>region</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="endpoint_url=None">
+<name>endpoint_url</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>Creates S3 Bucket with the name given @param: ```bucket```
+    and uses the optionally provided @param: ```endpoint_url```.
+    If Bucket already exists, an exception will be thrown.
+
+Example:
+| Create Bucket | randomBucketName |</doc>
+<shortdoc>Creates S3 Bucket with the name given @param: ```bucket```     and uses the optionally provided @param: ```endpoint_url```.     If Bucket already exists, an exception will be thrown.</shortdoc>
+</kw>
+<kw name="Create Session With Keys">
+<arguments repr="region, access_key, secret_key">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="region">
+<name>region</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="access_key">
+<name>access_key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="secret_key">
+<name>secret_key</name>
+</arg>
+</arguments>
+<doc>Takes Region as an argument and creates as session with your access key
+and secret key stored at ~/.aws/credentials.
+Will throw error if not configured.
+
+Examples:
+| Create Session With Keys | us-west-1 | access key | secret key |</doc>
+<shortdoc>Takes Region as an argument and creates as session with your access key and secret key stored at ~/.aws/credentials. Will throw error if not configured.</shortdoc>
+</kw>
+<kw name="Create Session With Profile">
+<arguments repr="region, profile">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="region">
+<name>region</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="profile">
+<name>profile</name>
+</arg>
+</arguments>
+<doc>Takes Region as an argument and creates as session with your profile
+ stored at ~/.aws/config. Will throw error if not configured
+
+Examples:
+| Create Session With Profile | us-west-1 |  profile name |</doc>
+<shortdoc>Takes Region as an argument and creates as session with your profile  stored at ~/.aws/config. Will throw error if not configured</shortdoc>
+</kw>
+<kw name="Create Session With Token">
+<arguments repr="region, access_key, secret_key, token">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="region">
+<name>region</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="access_key">
+<name>access_key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="secret_key">
+<name>secret_key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="token">
+<name>token</name>
+</arg>
+</arguments>
+<doc>Create an AWS session with region, access key, secret key and token. Suitable for nominal users.
+
+Documentation:
+- ``region``: string to identify the region
+- ``access_key``: string to identify the access key
+- ``secret_key``: string to identify the secret key
+- ``token``: string to identify the user token
+
+Examples:
+| Create Session With Token | eu-west-1 | access key | secret key | token |</doc>
+<shortdoc>Create an AWS session with region, access key, secret key and token. Suitable for nominal users.</shortdoc>
+</kw>
+<kw name="Database Exists">
+<arguments repr="">
+</arguments>
+<doc/>
+<shortdoc/>
+</kw>
+<kw name="Delete All Sessions">
+<arguments repr="">
+</arguments>
+<doc>Delete all sessions.
+
+Examples:
+| Delete All Sessions |</doc>
+<shortdoc>Delete all sessions.</shortdoc>
+</kw>
+<kw name="Delete File">
+<arguments repr="bucket, key, endpoint_url=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="key">
+<name>key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="endpoint_url=None">
+<name>endpoint_url</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>Delete File
+Requires:   @param ```bucket``` which is the bucket name:
+            @param: ```key``` which is the bucket location/path name.
+            @param: ```endpoint_url``` optionally override the s3 endpoint url
+    Example:
+    | Delete File | bucket | key |</doc>
+<shortdoc>Delete File Requires:   @param ```bucket``` which is the bucket name:             @param: ```key``` which is the bucket location/path name.             @param: ```endpoint_url``` optionally override the s3 endpoint url     Example:     | Delete File | bucket | key |</shortdoc>
+</kw>
+<kw name="Delete Session">
+<arguments repr="region">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="region">
+<name>region</name>
+</arg>
+</arguments>
+<doc>Delete session by entering the region.
+
+Arguments:
+- ``region``: string to identify the region
+
+Examples:
+| Delete Session | us-west-1 |</doc>
+<shortdoc>Delete session by entering the region.</shortdoc>
+</kw>
+<kw name="Download File">
+<arguments repr="bucket, key, path, endpoint_url=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="key">
+<name>key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="path">
+<name>path</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="endpoint_url=None">
+<name>endpoint_url</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>Downloads File from S3 Bucket
+Requires:   @param ```bucket``` which is the bucket name:
+            @param: ```key``` which is the bucket location/path name.
+            @param: ```path``` which is the local path of file.
+            @param: ```endpoint_url``` optionally override the s3 endpoint url
+    Example:
+    | Download File | bucket | path | key |</doc>
+<shortdoc>Downloads File from S3 Bucket Requires:   @param ```bucket``` which is the bucket name:             @param: ```key``` which is the bucket location/path name.             @param: ```path``` which is the local path of file.             @param: ```endpoint_url``` optionally override the s3 endpoint url     Example:     | Download File | bucket | path | key |</shortdoc>
+</kw>
+<kw name="Key Should Exist">
+<arguments repr="bucket, key, endpoint_url=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="key">
+<name>key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="endpoint_url=None">
+<name>endpoint_url</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>Key Should Exist
+Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will not fail.
+Requires:   @param ```bucket``` which is the bucket name:
+            @param: ```key``` which is the bucket location/path name.
+            @param: ```endpoint_url``` optionally override the s3 endpoint url
+    Example:
+    | Key Should Exist | bucket | key |</doc>
+<shortdoc>Key Should Exist Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will not fail. Requires:   @param ```bucket``` which is the bucket name:             @param: ```key``` which is the bucket location/path name.             @param: ```endpoint_url``` optionally override the s3 endpoint url     Example:     | Key Should Exist | bucket | key |</shortdoc>
+</kw>
+<kw name="Key Should Not Exist">
+<arguments repr="bucket, key, endpoint_url=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="key">
+<name>key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="endpoint_url=None">
+<name>endpoint_url</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>Verifies Key on S3 Bucket Does Not Exist
+Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will fail.
+Requires:   @param ```bucket``` which is the bucket name:
+            @param: ```key``` which is the bucket location/path name.
+            @param: ```endpoint_url``` optionally override the s3 endpoint url
+    Example:
+    | Key Should Not Exist | bucket | key |</doc>
+<shortdoc>Verifies Key on S3 Bucket Does Not Exist Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will fail. Requires:   @param ```bucket``` which is the bucket name:             @param: ```key``` which is the bucket location/path name.             @param: ```endpoint_url``` optionally override the s3 endpoint url     Example:     | Key Should Not Exist | bucket | key |</shortdoc>
+</kw>
+<kw name="List Objects">
+<arguments repr="bucket, prefix=">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="prefix=">
+<name>prefix</name>
+<default/>
+</arg>
+</arguments>
+<doc>List Objects
+Requires:   @param: ```bucket``` which is the bucket name
+Optional:   @param: ```prefix``` which limits the response to keys that begin with the specified prefix.
+    Example:
+    | List Objects | bucket | key |</doc>
+<shortdoc>List Objects Requires:   @param: ```bucket``` which is the bucket name Optional:   @param: ```prefix``` which limits the response to keys that begin with the specified prefix.     Example:     | List Objects | bucket | key |</shortdoc>
+</kw>
+<kw name="Local File Should Exist">
+<arguments repr="path">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="path">
+<name>path</name>
+</arg>
+</arguments>
+<doc>Verifies Local File at the given path does exist
+Requires:   @param: ```path``` which is the bucket location/path name.
+    Example:
+    | Local File Should Exist | bucket | path |</doc>
+<shortdoc>Verifies Local File at the given path does exist Requires:   @param: ```path``` which is the bucket location/path name.     Example:     | Local File Should Exist | bucket | path |</shortdoc>
+</kw>
+<kw name="Local File Should Not Exist">
+<arguments repr="path">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="path">
+<name>path</name>
+</arg>
+</arguments>
+<doc>Verifies Local File at the given path does not exist
+Requires:   @param: ```path``` which is the bucket location/path name.
+    Example:
+    | Local File Should Not Exist | bucket | path |</doc>
+<shortdoc>Verifies Local File at the given path does not exist Requires:   @param: ```path``` which is the bucket location/path name.     Example:     | Local File Should Not Exist | bucket | path |</shortdoc>
+</kw>
+<kw name="Upload File">
+<arguments repr="bucket, key, path, endpoint_url=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="key">
+<name>key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="path">
+<name>path</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="endpoint_url=None">
+<name>endpoint_url</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>Uploads File from S3 Bucket
+Requires:   @param ```bucket``` which is the bucket name:
+            @param: ```key``` which is the bucket location/path name.
+            @param: ```path``` which is the local path of file.
+            @param: ```endpoint_url``` optionally override the s3 endpoint url
+    Example:
+    | Upload File | bucket | path | key |</doc>
+<shortdoc>Uploads File from S3 Bucket Requires:   @param ```bucket``` which is the bucket name:             @param: ```key``` which is the bucket location/path name.             @param: ```path``` which is the local path of file.             @param: ```endpoint_url``` optionally override the s3 endpoint url     Example:     | Upload File | bucket | path | key |</shortdoc>
+</kw>
+</keywords>
+<typedocs>
+</typedocs>
+</keywordspec>

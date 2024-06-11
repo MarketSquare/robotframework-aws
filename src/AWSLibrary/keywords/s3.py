@@ -1,7 +1,6 @@
 from AWSLibrary.base.robotlibcore import keyword
 from AWSLibrary.base import LibraryComponent, KeywordError, ContinuableError
 from robot.api import logger
-import pathlib
 import botocore
 
 
@@ -50,7 +49,7 @@ class S3Keywords(LibraryComponent):
             else:
                 return []
         except botocore.exceptions.ClientError as e:
-            raise KeywordError(e)
+            raise AssertionError(e)
 
     @keyword('Delete File')
     def delete_file(self, bucket, key, endpoint_url=None):
@@ -126,12 +125,10 @@ class S3Keywords(LibraryComponent):
             | Key Should Exist | bucket | key |
         """
         client = self.state.session.client("s3", endpoint_url=endpoint_url)
-        res = client.head_object(Bucket=bucket, Key=key)
         try:
-            if res['ResponseMetadata']['HTTPStatusCode'] == 404:
-                raise KeywordError("Key: {}, does not exist".format(key))
-        except botocore.exceptions.ClientError as e:
-            raise ContinuableError(e.response['Error'])
+            client.head_object(Bucket=bucket, Key=key)
+        except botocore.exceptions.ClientError:
+            raise Exception(f"Key: {key} does not exist inside {bucket}")
         return True
 
     @keyword('Key Should Not Exist')
