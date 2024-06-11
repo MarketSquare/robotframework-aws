@@ -8,11 +8,9 @@ If there is functionality that should be included in this library please create 
 
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 ![PyPI](https://img.shields.io/pypi/v/robotframework-aws.svg)
-[//]: # ( [![Build Status]&#40;https://travis-ci.com/teaglebuilt/robotframework-AWS.svg?branch=master&#41;]&#40;https://travis-ci.com/teaglebuilt/robotframework-AWS&#41;)
 ![Last Commit](https://img.shields.io/github/last-commit/MarketSquare/robotframework-aws)
 ![License](https://img.shields.io/pypi/l/robotframework-aws)
 ![Downloads](https://img.shields.io/pypi/dm/robotframework-aws)
-![Coverage](https://img.shields.io/coveralls/github/MarketSquare/robotframework-aws)
 
 ## Keyword Documentation
 
