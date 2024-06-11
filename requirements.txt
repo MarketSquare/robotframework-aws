@@ -132,7 +132,7 @@ tqdm==4.40.2
     # via twine
 twine==1.13.0
     # via -r requirements.in
-urllib3==1.25.7
+urllib3==1.25.8
     # via
     #   botocore
     #   requests
