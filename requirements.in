@@ -4,7 +4,7 @@ botocore==1.12.204
 flake8==3.7.8
 pre-commit==1.18.3
 PyYAML==5.4
-requests==2.22.0
+requests==2.32.2
 robotframework==3.1.2
 tox==3.13.2
 twine==1.13.0
