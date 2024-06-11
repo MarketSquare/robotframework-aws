@@ -18,11 +18,11 @@ botocore==1.12.204
     #   -r requirements.in
     #   boto3
     #   s3transfer
-certifi==2019.11.28
+certifi==2023.7.22
     # via requests
 cfgv==2.0.1
     # via pre-commit
-chardet==3.0.4
+charset-normalizer==3.3.2
     # via requests
 dnslib==0.9.10
     # via localstack-ext
@@ -76,7 +76,7 @@ pluggy==0.13.1
     # via tox
 pre-commit==1.18.3
     # via -r requirements.in
-py==1.8.0
+py==1.10.0
     # via tox
 pyaes==1.6.0
     # via localstack-ext
@@ -90,14 +90,14 @@ pyparsing==2.4.5
     # via packaging
 python-dateutil==2.8.1
     # via botocore
-pyyaml==5.1.2
+pyyaml==5.4
     # via
     #   -r requirements.in
     #   aspy-yaml
     #   pre-commit
 readme-renderer==24.0
     # via twine
-requests==2.22.0
+requests==2.32.2
     # via
     #   -r requirements.in
     #   localstack
@@ -128,11 +128,11 @@ toml==0.10.0
     #   tox
 tox==3.13.2
     # via -r requirements.in
-tqdm==4.40.2
+tqdm==4.66.3
     # via twine
 twine==1.13.0
     # via -r requirements.in
-urllib3==1.25.7
+urllib3==1.25.8
     # via
     #   botocore
     #   requests
