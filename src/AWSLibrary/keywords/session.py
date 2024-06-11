@@ -20,7 +20,6 @@ class SessionKeywords(LibraryComponent):
         Examples:
         | Create Session With Keys | us-west-1 | access key | secret key |
         """
-        self.rb_logger.info("Creating Session: %s" % region)
         session = boto3.Session(
             aws_access_key_id=access_key,
             aws_secret_access_key=secret_key,
