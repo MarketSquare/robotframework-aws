@@ -128,7 +128,7 @@ toml==0.10.0
     #   tox
 tox==3.13.2
     # via -r requirements.in
-tqdm==4.40.2
+tqdm==4.66.3
     # via twine
 twine==1.13.0
     # via -r requirements.in
