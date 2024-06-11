@@ -17,7 +17,7 @@ botocore==1.12.204
     #   s3transfer
 cachetools==5.3.3
     # via localstack-core
-certifi==2019.11.28
+certifi==2023.7.22
     # via requests
 cffi==1.16.0
     # via cryptography
@@ -180,7 +180,7 @@ toml==0.10.0
     #   tox
 tox==3.13.2
     # via -r requirements.in
-tqdm==4.40.2
+tqdm==4.66.3
     # via twine
 twine==1.13.0
     # via -r requirements.in
