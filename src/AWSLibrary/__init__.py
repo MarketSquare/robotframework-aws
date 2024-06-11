@@ -3,7 +3,7 @@ from AWSLibrary.keywords import (
     SessionKeywords,
     S3Keywords,
     ResourceKeywords,
-    RDSKeywords
+    # RDSKeywords
 )
 from AWSLibrary.version import get_version
 
@@ -39,6 +39,6 @@ class AWSLibrary(DynamicCore):
             SessionKeywords(self),
             S3Keywords(self),
             ResourceKeywords(self),
-            RDSKeywords(self)
+            # RDSKeywords(self)
         ]
         DynamicCore.__init__(self, libraries)

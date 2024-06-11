@@ -11,7 +11,8 @@ class S3Keywords(LibraryComponent):
     @keyword('Create Bucket')
     def create_bucket(self, bucket, endpoint_url=None):
         """
-        * DEPRECATED * this keyword will be removed in version 2.0.0
+        *DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Create Bucket` instead
+
         Creates S3 Bucket with the name given @param: ```bucket```
             and uses the optionally provided @param: ```endpoint_url```.
             If Bucket already exists, an exception will be thrown.
@@ -38,7 +39,8 @@ class S3Keywords(LibraryComponent):
     @keyword('List Objects')
     def list_objects(self, bucket, prefix=""):
         """
-        * DEPRECATED * this keyword will be removed in version 2.0.0
+        *DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 List Objects` instead
+
         List Objects
         Requires:   @param: ```bucket``` which is the bucket name
         Optional:   @param: ```prefix``` which limits the response to keys that begin with the specified prefix.
@@ -62,7 +64,8 @@ class S3Keywords(LibraryComponent):
     @keyword('Delete File')
     def delete_file(self, bucket, key, endpoint_url=None):
         """
-        * DEPRECATED * this keyword will be removed in version 2.0.0
+        *DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Delete File` instead
+
         Delete File
         Requires:   @param ```bucket``` which is the bucket name:
                     @param: ```key``` which is the bucket location/path name.
@@ -84,7 +87,8 @@ class S3Keywords(LibraryComponent):
     @keyword('Download File')
     def download_file_from_s3(self, bucket, key, path, endpoint_url=None):
         """
-        * DEPRECATED * this keyword will be removed in version 2.0.0
+        *DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Download File` instead
+
         Downloads File from S3 Bucket
         Requires:   @param ```bucket``` which is the bucket name:
                     @param: ```key``` which is the bucket location/path name.
@@ -103,7 +107,8 @@ class S3Keywords(LibraryComponent):
     @keyword('Upload File')
     def upload_file(self, bucket, key, path, endpoint_url=None):
         """
-        * DEPRECATED * this keyword will be removed in version 2.0.0
+        *DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Upload File` instead
+
         Uploads File from S3 Bucket
         Requires:   @param ```bucket``` which is the bucket name:
                     @param: ```key``` which is the bucket location/path name.
@@ -127,7 +132,8 @@ class S3Keywords(LibraryComponent):
     @keyword('Key Should Exist')
     def key_should_exist(self, bucket, key, endpoint_url=None):
         """
-        * DEPRECATED * this keyword will be removed in version 2.0.0
+        *DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Key Should Exist` instead
+
         Key Should Exist
         Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will not fail.
         Requires:   @param ```bucket``` which is the bucket name:
@@ -147,7 +153,8 @@ class S3Keywords(LibraryComponent):
     @keyword('Key Should Not Exist')
     def key_should_not_exist(self, bucket, key, endpoint_url=None):
         """
-        * DEPRECATED * this keyword will be removed in version 2.0.0
+        *DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Key Should Not Exist` instead
+
         Verifies Key on S3 Bucket Does Not Exist
         Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will fail.
         Requires:   @param ```bucket``` which is the bucket name:

@@ -1,6 +1,9 @@
 # robotframework-aws
 
-AWSLibrary is a testing library for Robot Framework that gives you the ability to use many of the AWS services in your tests. This library directly interacts with [Boto 3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html).  Boto is the Amazon Web Services (AWS) SDK for Python. It enables Python developers to create, configure, and manage AWS services, such as EC2 and S3.
+AWSLibrary is a testing library for Robot Framework that gives you the ability to use many of the AWS services in your tests. 
+This library directly interacts with [Boto 3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html).  
+Boto is the Amazon Web Services (AWS) SDK for Python. It enables Python developers to create, configure, and manage 
+AWS services.
 
 If there is functionality that should be included in this library please create an issue or feel free to contribute.
 
@@ -54,9 +57,9 @@ When creating a test case, start with creating a session in AWS for your test
 ***Test Case***
 Example Test Case
     Create Session  us-east-1
-    Key Should Not Exist  bucky  static/test.html  test.html
+    Key Should Not Exist  bucky  static/test.html
     Upload File  bucky  static/test.html  test.html
-    Key Should Exist  bucky static/test.html  test.html
+    Key Should Exist  bucky static/test.html
     Delete Session  us-east-1
 ```
 
