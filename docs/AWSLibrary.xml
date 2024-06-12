@@ -1,50 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-11T12:20:45+00:00" specversion="6" source="C:\Merkle\repositories\RobotFramework-AWS\src\AWSLibrary\__init__.py" lineno="13">
-<version>0.0.2</version>
+<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-12T17:06:40+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="13">
+<version>0.0.4</version>
 <doc>Documentation for library ``AWSLibrary``.</doc>
 <tags>
 </tags>
 <inits>
 </inits>
 <keywords>
-<kw name="Allowed Methods">
-<arguments repr="bucket, methods=[], endpoint_url=None">
+<kw name="Create Bucket" deprecated="true">
+<arguments repr="bucket, endpoint_url=None">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
 <name>bucket</name>
-</arg>
-<arg kind="POSITIONAL_OR_NAMED" required="false" repr="methods=[]">
-<name>methods</name>
-<default>[]</default>
 </arg>
 <arg kind="POSITIONAL_OR_NAMED" required="false" repr="endpoint_url=None">
 <name>endpoint_url</name>
 <default>None</default>
 </arg>
 </arguments>
-<doc/>
-<shortdoc/>
-</kw>
-<kw name="Create Bucket">
-<arguments repr="bucket, region=None, endpoint_url=None">
-<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
-<name>bucket</name>
-</arg>
-<arg kind="POSITIONAL_OR_NAMED" required="false" repr="region=None">
-<name>region</name>
-<default>None</default>
-</arg>
-<arg kind="POSITIONAL_OR_NAMED" required="false" repr="endpoint_url=None">
-<name>endpoint_url</name>
-<default>None</default>
-</arg>
-</arguments>
-<doc>Creates S3 Bucket with the name given @param: ```bucket```
-    and uses the optionally provided @param: ```endpoint_url```.
-    If Bucket already exists, an exception will be thrown.
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Create Bucket` instead
 
-Example:
-| Create Bucket | randomBucketName |</doc>
-<shortdoc>Creates S3 Bucket with the name given @param: ```bucket```     and uses the optionally provided @param: ```endpoint_url```.     If Bucket already exists, an exception will be thrown.</shortdoc>
+Creates S3 Bucket with the given bucket name
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+
+*Examples:*
+| Create bucket _name | bucket_name |</doc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Create Bucket` instead</shortdoc>
 </kw>
 <kw name="Create Session With Keys">
 <arguments repr="region, access_key, secret_key">
@@ -58,13 +40,16 @@ Example:
 <name>secret_key</name>
 </arg>
 </arguments>
-<doc>Takes Region as an argument and creates as session with your access key
-and secret key stored at ~/.aws/credentials.
-Will throw error if not configured.
+<doc>Create an AWS session in region using your access key and secret key.
 
-Examples:
-| Create Session With Keys | us-west-1 | access key | secret key |</doc>
-<shortdoc>Takes Region as an argument and creates as session with your access key and secret key stored at ~/.aws/credentials. Will throw error if not configured.</shortdoc>
+| =Arguments= | =Description= |
+| ``region`` | &lt;str&gt; The AWS region name. |
+| ``access_key`` | &lt;str&gt; the access key. |
+| ``secret_key`` | &lt;str&gt; the secret key. |
+
+*Examples:*
+| Create Session With Keys | eu-west-1 | access_key | secret_key |</doc>
+<shortdoc>Create an AWS session in region using your access key and secret key.</shortdoc>
 </kw>
 <kw name="Create Session With Profile">
 <arguments repr="region, profile">
@@ -75,12 +60,16 @@ Examples:
 <name>profile</name>
 </arg>
 </arguments>
-<doc>Takes Region as an argument and creates as session with your profile
- stored at ~/.aws/config. Will throw error if not configured
+<doc>Create an AWS session in region with your profile
+ stored at ~/.aws/config.
 
-Examples:
-| Create Session With Profile | us-west-1 |  profile name |</doc>
-<shortdoc>Takes Region as an argument and creates as session with your profile  stored at ~/.aws/config. Will throw error if not configured</shortdoc>
+| =Arguments= | =Description= |
+| ``region`` | &lt;str&gt; The AWS region name. |
+| ``profile`` | &lt;str&gt; the profile name. |
+
+*Examples:*
+| Create Session With Profile | us-west-1 | profile_name |</doc>
+<shortdoc>Create an AWS session in region with your profile  stored at ~/.aws/config.</shortdoc>
 </kw>
 <kw name="Create Session With Token">
 <arguments repr="region, access_key, secret_key, token">
@@ -97,34 +86,28 @@ Examples:
 <name>token</name>
 </arg>
 </arguments>
-<doc>Create an AWS session with region, access key, secret key and token. Suitable for nominal users.
+<doc>Create an AWS session in region using access key, secret key and token.
 
-Documentation:
-- ``region``: string to identify the region
-- ``access_key``: string to identify the access key
-- ``secret_key``: string to identify the secret key
-- ``token``: string to identify the user token
+| =Arguments= | =Description= |
+| ``region`` | &lt;str&gt; The AWS region name. |
+| ``access_key`` | &lt;str&gt; the access key. |
+| ``secret_key`` | &lt;str&gt; the secret key. |
+| ``token`` | &lt;str&gt; the user token. |
 
-Examples:
-| Create Session With Token | eu-west-1 | access key | secret key | token |</doc>
-<shortdoc>Create an AWS session with region, access key, secret key and token. Suitable for nominal users.</shortdoc>
-</kw>
-<kw name="Database Exists">
-<arguments repr="">
-</arguments>
-<doc/>
-<shortdoc/>
+*Examples:*
+| Create Session With Token | eu-west-1 | access_key | secret_key | token |</doc>
+<shortdoc>Create an AWS session in region using access key, secret key and token.</shortdoc>
 </kw>
 <kw name="Delete All Sessions">
 <arguments repr="">
 </arguments>
-<doc>Delete all sessions.
+<doc>Delete all current sessions.
 
-Examples:
+*Examples:*
 | Delete All Sessions |</doc>
-<shortdoc>Delete all sessions.</shortdoc>
+<shortdoc>Delete all current sessions.</shortdoc>
 </kw>
-<kw name="Delete File">
+<kw name="Delete File" deprecated="true">
 <arguments repr="bucket, key, endpoint_url=None">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
 <name>bucket</name>
@@ -137,13 +120,18 @@ Examples:
 <default>None</default>
 </arg>
 </arguments>
-<doc>Delete File
-Requires:   @param ```bucket``` which is the bucket name:
-            @param: ```key``` which is the bucket location/path name.
-            @param: ```endpoint_url``` optionally override the s3 endpoint url
-    Example:
-    | Delete File | bucket | key |</doc>
-<shortdoc>Delete File Requires:   @param ```bucket``` which is the bucket name:             @param: ```key``` which is the bucket location/path name.             @param: ```endpoint_url``` optionally override the s3 endpoint url     Example:     | Delete File | bucket | key |</shortdoc>
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Delete File` instead
+
+Deletes the file from a bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete filepath. |
+
+*Examples:*
+| Delete File | bucket_name | file.txt |
+| Delete File | bucket_name | folder/file.txt |</doc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Delete File` instead</shortdoc>
 </kw>
 <kw name="Delete Session">
 <arguments repr="region">
@@ -153,14 +141,14 @@ Requires:   @param ```bucket``` which is the bucket name:
 </arguments>
 <doc>Delete session by entering the region.
 
-Arguments:
-- ``region``: string to identify the region
+| =Arguments= | =Description= |
+| ``region`` | &lt;str&gt; The AWS region name. |
 
-Examples:
+*Examples:*
 | Delete Session | us-west-1 |</doc>
 <shortdoc>Delete session by entering the region.</shortdoc>
 </kw>
-<kw name="Download File">
+<kw name="Download File" deprecated="true">
 <arguments repr="bucket, key, path, endpoint_url=None">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
 <name>bucket</name>
@@ -176,16 +164,21 @@ Examples:
 <default>None</default>
 </arg>
 </arguments>
-<doc>Downloads File from S3 Bucket
-Requires:   @param ```bucket``` which is the bucket name:
-            @param: ```key``` which is the bucket location/path name.
-            @param: ```path``` which is the local path of file.
-            @param: ```endpoint_url``` optionally override the s3 endpoint url
-    Example:
-    | Download File | bucket | path | key |</doc>
-<shortdoc>Downloads File from S3 Bucket Requires:   @param ```bucket``` which is the bucket name:             @param: ```key``` which is the bucket location/path name.             @param: ```path``` which is the local path of file.             @param: ```endpoint_url``` optionally override the s3 endpoint url     Example:     | Download File | bucket | path | key |</shortdoc>
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Download File` instead
+
+Download file from a bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete filepath. |
+| ``path`` | &lt;str&gt; Complete local filepath. |
+
+*Examples:*
+| Download File | bucket_name | s3_file.txt | ${OUTPUTDIR}/file.txt |
+| Download File | bucket_name | folder/s3_file.txt | ${OUTPUTDIR}/file.txt |</doc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Download File` instead</shortdoc>
 </kw>
-<kw name="Key Should Exist">
+<kw name="Key Should Exist" deprecated="true">
 <arguments repr="bucket, key, endpoint_url=None">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
 <name>bucket</name>
@@ -198,16 +191,20 @@ Requires:   @param ```bucket``` which is the bucket name:
 <default>None</default>
 </arg>
 </arguments>
-<doc>Key Should Exist
-Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will not fail.
-Requires:   @param ```bucket``` which is the bucket name:
-            @param: ```key``` which is the bucket location/path name.
-            @param: ```endpoint_url``` optionally override the s3 endpoint url
-    Example:
-    | Key Should Exist | bucket | key |</doc>
-<shortdoc>Key Should Exist Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will not fail. Requires:   @param ```bucket``` which is the bucket name:             @param: ```key``` which is the bucket location/path name.             @param: ```endpoint_url``` optionally override the s3 endpoint url     Example:     | Key Should Exist | bucket | key |</shortdoc>
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Key Should Exist` instead
+
+Check if the s3 object exist inside the bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+
+*Examples:*
+| Key Should Exist | bucket_name | s3_file.txt |
+| Key Should Exist | bucket_name | folder/s3_file.txt |</doc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Key Should Exist` instead</shortdoc>
 </kw>
-<kw name="Key Should Not Exist">
+<kw name="Key Should Not Exist" deprecated="true">
 <arguments repr="bucket, key, endpoint_url=None">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
 <name>bucket</name>
@@ -220,16 +217,20 @@ Requires:   @param ```bucket``` which is the bucket name:
 <default>None</default>
 </arg>
 </arguments>
-<doc>Verifies Key on S3 Bucket Does Not Exist
-Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will fail.
-Requires:   @param ```bucket``` which is the bucket name:
-            @param: ```key``` which is the bucket location/path name.
-            @param: ```endpoint_url``` optionally override the s3 endpoint url
-    Example:
-    | Key Should Not Exist | bucket | key |</doc>
-<shortdoc>Verifies Key on S3 Bucket Does Not Exist Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will fail. Requires:   @param ```bucket``` which is the bucket name:             @param: ```key``` which is the bucket location/path name.             @param: ```endpoint_url``` optionally override the s3 endpoint url     Example:     | Key Should Not Exist | bucket | key |</shortdoc>
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Key Should Not Exist` instead
+
+Check if the s3 object not exist inside the bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+
+*Examples:*
+| Key Should Not Exist | bucket_name | s3_file.txt |
+| Key Should Not Exist | bucket_name | folder/s3_file.txt |</doc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Key Should Not Exist` instead</shortdoc>
 </kw>
-<kw name="List Objects">
+<kw name="List Objects" deprecated="true">
 <arguments repr="bucket, prefix=">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
 <name>bucket</name>
@@ -239,38 +240,200 @@ Requires:   @param ```bucket``` which is the bucket name:
 <default/>
 </arg>
 </arguments>
-<doc>List Objects
-Requires:   @param: ```bucket``` which is the bucket name
-Optional:   @param: ```prefix``` which limits the response to keys that begin with the specified prefix.
-    Example:
-    | List Objects | bucket | key |</doc>
-<shortdoc>List Objects Requires:   @param: ```bucket``` which is the bucket name Optional:   @param: ```prefix``` which limits the response to keys that begin with the specified prefix.     Example:     | List Objects | bucket | key |</shortdoc>
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 List Objects` instead
+
+List objects in a bucket. (up to 1,000) each request
+
+If prefix is informed will list only the files that start with this string,
+could be used to list only the files inside a folder for example.
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``Prefix`` | &lt;str&gt; prefix of the filepath. |
+
+*Examples:*
+| List Objects | bucket_name |
+| List Objects | bucket_name | folder_name |
+| List Objects | bucket_name | folder_name/start_of_the_filename |</doc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 List Objects` instead</shortdoc>
 </kw>
-<kw name="Local File Should Exist">
+<kw name="Local File Should Exist" deprecated="true">
 <arguments repr="path">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="path">
 <name>path</name>
 </arg>
 </arguments>
-<doc>Verifies Local File at the given path does exist
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0*
+
+Verifies Local File at the given path does exist
 Requires:   @param: ```path``` which is the bucket location/path name.
     Example:
     | Local File Should Exist | bucket | path |</doc>
-<shortdoc>Verifies Local File at the given path does exist Requires:   @param: ```path``` which is the bucket location/path name.     Example:     | Local File Should Exist | bucket | path |</shortdoc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0*</shortdoc>
 </kw>
-<kw name="Local File Should Not Exist">
+<kw name="Local File Should Not Exist" deprecated="true">
 <arguments repr="path">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="path">
 <name>path</name>
 </arg>
 </arguments>
-<doc>Verifies Local File at the given path does not exist
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0*
+
+Verifies Local File at the given path does not exist
 Requires:   @param: ```path``` which is the bucket location/path name.
     Example:
     | Local File Should Not Exist | bucket | path |</doc>
-<shortdoc>Verifies Local File at the given path does not exist Requires:   @param: ```path``` which is the bucket location/path name.     Example:     | Local File Should Not Exist | bucket | path |</shortdoc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0*</shortdoc>
 </kw>
-<kw name="Upload File">
+<kw name="S3 Create Bucket">
+<arguments repr="bucket">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+</arguments>
+<doc>Creates S3 Bucket with the given bucket name
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+
+*Examples:*
+| S3 Create bucket | bucket_name |</doc>
+<shortdoc>Creates S3 Bucket with the given bucket name</shortdoc>
+</kw>
+<kw name="S3 Delete File">
+<arguments repr="bucket, key">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="key">
+<name>key</name>
+</arg>
+</arguments>
+<doc>Deletes the file from a bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+
+*Examples:*
+| S3 Delete File | bucket_name | file.txt |
+| S3 Delete File | bucket_name | folder/file.txt |</doc>
+<shortdoc>Deletes the file from a bucket</shortdoc>
+</kw>
+<kw name="S3 Download File">
+<arguments repr="bucket, key, local_filepath">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="key">
+<name>key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="local_filepath">
+<name>local_filepath</name>
+</arg>
+</arguments>
+<doc>Download file from a bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+| ``local_path`` | &lt;str&gt; Complete local filepath. |
+
+*Examples:*
+| S3 Download File | bucket_name | s3_file.txt | ${OUTPUTDIR}/file.txt |
+| S3 Download File | bucket_name | folder/s3_file.txt | ${OUTPUTDIR}/file.txt |</doc>
+<shortdoc>Download file from a bucket</shortdoc>
+</kw>
+<kw name="S3 Key Should Exist">
+<arguments repr="bucket, key">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="key">
+<name>key</name>
+</arg>
+</arguments>
+<doc>Check if the s3 object exist inside the bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+
+*Examples:*
+| S3 Key Should Exist | bucket_name | s3_file.txt |
+| S3 Key Should Exist | bucket_name | folder/s3_file.txt |</doc>
+<shortdoc>Check if the s3 object exist inside the bucket</shortdoc>
+</kw>
+<kw name="S3 Key Should Not Exist">
+<arguments repr="bucket, key">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="key">
+<name>key</name>
+</arg>
+</arguments>
+<doc>Check if the s3 object not exist inside the bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+
+*Examples:*
+| S3 Key Should Not Exist | bucket_name | s3_file.txt |
+| S3 Key Should Not Exist | bucket_name | folder/s3_file.txt |</doc>
+<shortdoc>Check if the s3 object not exist inside the bucket</shortdoc>
+</kw>
+<kw name="S3 List Objects">
+<arguments repr="bucket, prefix=">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="prefix=">
+<name>prefix</name>
+<default/>
+</arg>
+</arguments>
+<doc>List objects in a bucket. (up to 1,000) each request
+
+If prefix is informed will list only the files that start with this string,
+could be used to list only the files inside a folder for example.
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``Prefix`` | &lt;str&gt; prefix of the filepath. |
+
+*Examples:*
+| S3 List Objects | bucket_name |
+| S3 List Objects | bucket_name | folder_name |
+| S3 List Objects | bucket_name | folder_name/start_of_the_filename |</doc>
+<shortdoc>List objects in a bucket. (up to 1,000) each request</shortdoc>
+</kw>
+<kw name="S3 Upload File">
+<arguments repr="bucket, key, local_path">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="key">
+<name>key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="local_path">
+<name>local_path</name>
+</arg>
+</arguments>
+<doc>Upload a file to the bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+| ``local_path`` | &lt;str&gt; Complete local filepath. |
+
+*Examples:*
+| S3 Upload File | bucket_name | s3_file.txt | ${CURDIR}/file.txt |
+| S3 Upload File | bucket_name | folder/s3_file.txt | ${CURDIR}/file.txt |</doc>
+<shortdoc>Upload a file to the bucket</shortdoc>
+</kw>
+<kw name="Upload File" deprecated="true">
 <arguments repr="bucket, key, path, endpoint_url=None">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
 <name>bucket</name>
@@ -286,14 +449,19 @@ Requires:   @param: ```path``` which is the bucket location/path name.
 <default>None</default>
 </arg>
 </arguments>
-<doc>Uploads File from S3 Bucket
-Requires:   @param ```bucket``` which is the bucket name:
-            @param: ```key``` which is the bucket location/path name.
-            @param: ```path``` which is the local path of file.
-            @param: ```endpoint_url``` optionally override the s3 endpoint url
-    Example:
-    | Upload File | bucket | path | key |</doc>
-<shortdoc>Uploads File from S3 Bucket Requires:   @param ```bucket``` which is the bucket name:             @param: ```key``` which is the bucket location/path name.             @param: ```path``` which is the local path of file.             @param: ```endpoint_url``` optionally override the s3 endpoint url     Example:     | Upload File | bucket | path | key |</shortdoc>
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Upload File` instead
+
+Upload a file to the bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+| ``path`` | &lt;str&gt; Complete local filepath. |
+
+*Examples:*
+| Upload File | bucket_name | s3_file.txt | ${CURDIR}/file.txt |
+| Upload File | bucket_name | folder/s3_file.txt | ${CURDIR}/file.txt |</doc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Upload File` instead</shortdoc>
 </kw>
 </keywords>
 <typedocs>
