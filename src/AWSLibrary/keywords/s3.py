@@ -1,5 +1,5 @@
+from AWSLibrary.librarycomponent import LibraryComponent
 from robot.api.deco import keyword
-from AWSLibrary.base import LibraryComponent
 from robot.api import logger
 import botocore
 

@@ -11,6 +11,7 @@ If there is functionality that should be included in this library please create 
 ![Last Commit](https://img.shields.io/github/last-commit/MarketSquare/robotframework-aws)
 ![License](https://img.shields.io/pypi/l/robotframework-aws)
 ![Downloads](https://img.shields.io/pypi/dm/robotframework-aws)
+![Total downloads](https://static.pepy.tech/personalized-badge/robotframework-aws?period=total&units=international_system&left_color=lightgrey&right_color=yellow&left_text=Total)
 
 ## Keyword Documentation
 
@@ -32,9 +33,15 @@ This library covers the AWS services listed in the keywords:
 pip install robotframework-aws
 ```
 
+#### Update the package
+
+```sh
+pip install robotframework-aws --updagrade
+```
+
 #### Creating a Test Case
 
-When creating a test case, start by creating an AWS session for your test and end by deleting it
+When creating a test case, start by creating an AWS session for your test and end by deleting it.
 
 ```robotframework
 *** Settings ***
@@ -47,7 +54,7 @@ ${BUCKET}    some-bucket-name
 
 
 *** Test Cases ***
-Test Open Connection
+Test Case
     [Setup]    Create Session With Keys    ${REGION}    %{AWS_USER_NAME}    %{AWS_USER_PASS}
     S3 Upload File    ${BUCKET}    new_file.json    ${CURDIR}/local_file.json
     S3 Key Should Exist    ${BUCKET}    new_file.json

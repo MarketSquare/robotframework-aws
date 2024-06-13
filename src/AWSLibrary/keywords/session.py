@@ -1,6 +1,6 @@
+from AWSLibrary.librarycomponent import LibraryComponent
 from robot.utils import ConnectionCache
 from robot.api import logger
-from AWSLibrary.base import LibraryComponent
 from robot.api.deco import keyword
 import boto3
 

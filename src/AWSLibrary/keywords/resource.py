@@ -1,4 +1,4 @@
-from AWSLibrary.base import LibraryComponent
+from AWSLibrary.librarycomponent import LibraryComponent
 from robot.api.deco import keyword
 from robot.api import logger
 import os
@@ -16,10 +16,10 @@ class ResourceKeywords(LibraryComponent):
             Example:
             | Local File Should Exist | bucket | path |
         """
-        logger.warn("This Keyword 'Local File Should Exist' is deprecated. Use Library 'OperatingSystem' instead")
+        logger.warn("This Keyword 'Local File Should Exist' is deprecated. Use Robot Library 'OperatingSystem' instead")
         try:
             if os.path.exists(path) == 1:
-                self.rb_logger.info("File exists at {}".format(path))
+                logger.info("File exists at {}".format(path))
                 return True
         except FileNotFoundError:
             raise Exception("File does not exist at {}".format(path))
@@ -34,10 +34,10 @@ class ResourceKeywords(LibraryComponent):
             Example:
             | Local File Should Not Exist | bucket | path |
         """
-        logger.warn("This Keyword 'Local File Should Not Exist' is deprecated. Use Library 'OperatingSystem' instead")
+        logger.warn("This Keyword 'Local File Should Not Exist' is deprecated. Use Robot Library 'OperatingSystem' instead")
         try:
             if os.path.exists(path) == 0:
-                self.rb_logger.info("File does not exist at {}".format(path))
+                logger.info("File does not exist at {}".format(path))
                 return True
         except FileNotFoundError:
             raise Exception("File does exist at {}".format(path))
