@@ -1,5 +1,5 @@
 from AWSLibrary.base import LibraryComponent
-from AWSLibrary.base.robotlibcore import keyword
+from robot.api.deco import keyword
 from robot.api import logger
 import os
 

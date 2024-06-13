@@ -1,4 +1,4 @@
-from AWSLibrary.base.robotlibcore import keyword
+from robot.api.deco import keyword
 from AWSLibrary.base import LibraryComponent
 from robot.api import logger
 import botocore
@@ -29,10 +29,10 @@ class S3Keywords(LibraryComponent):
         except botocore.exceptions.ClientError as e:
             error_code = e.response["Error"]["Code"]
             if error_code == "BucketAlreadyExists":
-                self.logger.debug(f"Keyword Failed: {error_code}")
+                logger.debug(f"Keyword Failed: {error_code}")
                 raise Exception(f"Keyword Failed: {error_code}")
             elif error_code == 'BucketAlreadyOwnedByYou':
-                self.logger.debug("Bucket Already Exists")
+                logger.debug("Bucket Already Exists")
                 raise Exception("Bucket Already Exists")
             else:
                 Exception(f"Error Code: {e.response['Error']['Code']}")

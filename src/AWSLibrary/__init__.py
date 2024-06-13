@@ -1,4 +1,4 @@
-from AWSLibrary.base import DynamicCore
+from robotlibcore import DynamicCore
 from AWSLibrary.keywords import (
     SessionKeywords,
     S3Keywords,
