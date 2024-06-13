@@ -1,12 +1,12 @@
 from .librarycomponent import LibraryComponent
 from robotlibcore import DynamicCore
-from AWSLibrary.version import get_version
 from AWSLibrary.keywords import (
     SessionKeywords,
     S3Keywords,
-    ResourceKeywords
+    ResourceKeywords,
+    DynamoKeywords
 )
-
+from AWSLibrary.version import get_version
 __version__ = get_version()
 
 
@@ -44,5 +44,6 @@ class AWSLibrary(DynamicCore):
             SessionKeywords(self),
             S3Keywords(self),
             ResourceKeywords(self),
+            DynamoKeywords(self),
         ]
         DynamicCore.__init__(self, libraries)

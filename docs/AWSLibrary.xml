@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-13T12:46:19+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="13">
+<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-13T14:55:30+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="13">
 <version>1.0.0</version>
 <doc>AWSLibrary is a testing library for Robot Framework that gives you the ability to use some of the AWS
 services in your tests. This robot library is made from Boto3 SDK
@@ -199,6 +199,142 @@ Download file from a bucket
 | Download File | bucket_name | s3_file.txt | ${OUTPUTDIR}/file.txt |
 | Download File | bucket_name | folder/s3_file.txt | ${OUTPUTDIR}/file.txt |</doc>
 <shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Download File` instead</shortdoc>
+</kw>
+<kw name="Dynamo Delete Item" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\dynamo.py" lineno="77">
+<arguments repr="table_name, partition_key, partition_value, sort_key=None, sort_value=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="table_name">
+<name>table_name</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="partition_key">
+<name>partition_key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="partition_value">
+<name>partition_value</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="sort_key=None">
+<name>sort_key</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="sort_value=None">
+<name>sort_value</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>Deletes a single item in a table by partition key (primary key) and sort key if provided.
+
+| =Arguments= | =Description= |
+| ``table_name`` | &lt;str&gt; Name of the DynamoDB table. |
+| ``partition_key`` | &lt;str&gt; The key to search. |
+| ``partition_value`` | &lt;str&gt; Value of the partition key. |
+| ``sort_key`` | &lt;str&gt; (optional) The sort key to search. |
+| ``sort_value`` | &lt;str&gt; (optional) Value of the sort key. |
+
+*Examples:*
+| Dynamo Delete Item | library-books | book_id | 123 |
+| Dynamo Delete Item | library-books | book_id | 123 | book_code | abc001 |</doc>
+<shortdoc>Deletes a single item in a table by partition key (primary key) and sort key if provided.</shortdoc>
+</kw>
+<kw name="Dynamo Put Item" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\dynamo.py" lineno="60">
+<arguments repr="table_name, json_dict">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="table_name">
+<name>table_name</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="json_dict">
+<name>json_dict</name>
+</arg>
+</arguments>
+<doc>Creates a new item, or replaces an old item with a new item. If an item that has the same partition key
+(primary key) as the new item already exists in the specified table, the new item completely replaces the
+existing item.
+
+| =Arguments= | =Description= |
+| ``table_name`` | &lt;str&gt; Name of the DynamoDB table. |
+| ``table_name`` | &lt;dict&gt; JSON dictionary representing the dynamo item. |
+
+*Examples:*
+| Update Item | library-books | {"key": "value"} |</doc>
+<shortdoc>Creates a new item, or replaces an old item with a new item. If an item that has the same partition key (primary key) as the new item already exists in the specified table, the new item completely replaces the existing item.</shortdoc>
+</kw>
+<kw name="Dynamo Query Table" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\dynamo.py" lineno="13">
+<arguments repr="table_name, partition_key, partition_value, sort_key=None, sort_value=None, projection=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="table_name">
+<name>table_name</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="partition_key">
+<name>partition_key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="partition_value">
+<name>partition_value</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="sort_key=None">
+<name>sort_key</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="sort_value=None">
+<name>sort_value</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="projection=None">
+<name>projection</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>Queries a DynamoDB table based on the partition_key and his value. returns all the information found in a
+list of dictionaries.
+
+The result deserializes DynamoDB types to Python types:
+https://boto3.amazonaws.com/v1/documentation/api/latest/_modules/boto3/dynamodb/types.html
+
+| =Arguments= | =Description= |
+| ``table_name`` | &lt;str&gt; Name of the DynamoDB table. |
+| ``partition_key`` | &lt;str&gt; The key to search. |
+| ``partition_value`` | &lt;str&gt; Value of the partition key. |
+| ``sort_key`` | &lt;str&gt; (optional) The sort key to search. |
+| ``sort_value`` | &lt;str&gt; (optional) Value of the sort key. |
+| ``projection`` | &lt;str&gt; (optional) A string specifying the attributes to retrieve. |
+
+*Examples:*
+| Dynamo Query Table | library-books | book_id | 123 |
+| Dynamo Query Table | library-books | book_id | 123 | sort_key=book_code | sort_value=abc001 |
+| Dynamo Query Table | library-books | book_id | 123 | projection=value |</doc>
+<shortdoc>Queries a DynamoDB table based on the partition_key and his value. returns all the information found in a list of dictionaries.</shortdoc>
+</kw>
+<kw name="Dynamo Remove Key" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\dynamo.py" lineno="97">
+<arguments repr="table_name, partition_key, partition_value, attribute_name, sort_key=None, sort_value=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="table_name">
+<name>table_name</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="partition_key">
+<name>partition_key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="partition_value">
+<name>partition_value</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="attribute_name">
+<name>attribute_name</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="sort_key=None">
+<name>sort_key</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="sort_value=None">
+<name>sort_value</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>Removes a specific key in a DynamoDB item based on partition_key and sort key, if provided.
+
+| =Arguments= | =Description= |
+| ``table_name`` | &lt;str&gt; Name of the DynamoDB table. |
+| ``partition_key`` | &lt;str&gt; The key to search. |
+| ``partition_value`` | &lt;str&gt; Value of the partition key. |
+| ``attribute_name`` | &lt;str&gt; Key to remove, for nested keys use . to compose the path. |
+
+*Examples:*
+| Dynamo Remove Key | library-books | book_id | 123 | quantity |
+| Dynamo Remove Key | library-books | book_id | 123 | book.value |
+| Dynamo Remove Key | library-books | book_id | 123 | book | sort_key=book_code | sort_value=abc001 |</doc>
+<shortdoc>Removes a specific key in a DynamoDB item based on partition_key and sort key, if provided.</shortdoc>
 </kw>
 <kw name="Key Should Exist" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="151">
 <arguments repr="bucket, key, endpoint_url=None">

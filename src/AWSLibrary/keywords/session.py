@@ -7,8 +7,8 @@ import boto3
 
 class SessionKeywords(LibraryComponent):
 
-    def __init__(self, state):
-        LibraryComponent.__init__(self, state)
+    def __init__(self, library):
+        LibraryComponent.__init__(self, library)
         self._cache = ConnectionCache('No sessions.')
 
     @keyword('Create Session With Keys')
