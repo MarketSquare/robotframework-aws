@@ -1,15 +1,12 @@
 # robotframework-aws
 
-AWSLibrary is a testing library for Robot Framework that gives you the ability to use many of the AWS services in your tests. 
-This library directly interacts with [Boto 3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html).  
+AWSLibrary is a testing library for Robot Framework that gives you the ability to use many of the AWS services in your 
+tests. This library directly interacts with [Boto 3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html).  
 Boto is the Amazon Web Services (AWS) SDK for Python. It enables Python developers to create, configure, and manage 
 AWS services.
 
 If there is functionality that should be included in this library please create an issue or feel free to contribute.
 
-## Contributors are welcome. This package is at the beginning of development
-
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 ![PyPI](https://img.shields.io/pypi/v/robotframework-aws.svg)
 ![Last Commit](https://img.shields.io/github/last-commit/MarketSquare/robotframework-aws)
 ![License](https://img.shields.io/pypi/l/robotframework-aws)
@@ -37,7 +34,7 @@ pip install robotframework-aws
 
 #### Creating a Test Case
 
-When creating a test case, start with creating a session in AWS for your test
+When creating a test case, start by creating an AWS session for your test and end by deleting it
 
 ```robotframework
 *** Settings ***
@@ -63,5 +60,8 @@ Test Open Connection
 ```
 
 ### Attention Contributors
+
+The project development contribution session and local testing with "localstack" is under construction and needs to be 
+reviewed, contributions are welcome.
 
   [Contribution guidelines for this project](CONTRIBUTING.md)

@@ -1,4 +1,6 @@
-# Contributing to RobotFramework-AWS
+# ***** UNDER CONSTRUCTION *****
+
+## Contributing to RobotFramework-AWS
 
 Thank you for considering contributing to a library for interacting with AWS Services in RobotFramework for Test Automation.
 

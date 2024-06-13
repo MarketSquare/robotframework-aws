@@ -2,8 +2,7 @@ from AWSLibrary.base import DynamicCore
 from AWSLibrary.keywords import (
     SessionKeywords,
     S3Keywords,
-    ResourceKeywords,
-    # RDSKeywords
+    ResourceKeywords
 )
 from AWSLibrary.version import get_version
 
