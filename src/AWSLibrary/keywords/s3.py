@@ -22,7 +22,7 @@ class S3Keywords(LibraryComponent):
         | Create bucket _name | bucket_name |
         """
         logger.warn("Keyword 'Create Bucket' is deprecated. Use keyword 'S3 Create Bucket' instead")
-        client = self.state.session.client('s3', endpoint_url=endpoint_url)
+        client = self.library.session.client('s3', endpoint_url=endpoint_url)
         try:
             client.create_bucket(Bucket=bucket)
             logger.debug(f"Created new bucket: {bucket}")
@@ -57,7 +57,7 @@ class S3Keywords(LibraryComponent):
         | List Objects | bucket_name | folder_name/start_of_the_filename |
         """
         logger.warn("Keyword 'List Objects' is deprecated. Use keyword 'S3 List Objects' instead")
-        client = self.state.session.client('s3')
+        client = self.library.session.client('s3')
         try:
             response = client.list_objects_v2(
                 Bucket=bucket,
@@ -86,7 +86,7 @@ class S3Keywords(LibraryComponent):
         | Delete File | bucket_name | folder/file.txt |
         """
         logger.warn("Keyword 'Delete File' is deprecated. Use keyword 'S3 Delete File' instead")
-        client = self.state.session.client('s3', endpoint_url=endpoint_url)
+        client = self.library.session.client('s3', endpoint_url=endpoint_url)
         try:
             response = client.delete_object(
                 Bucket=bucket,
@@ -113,7 +113,7 @@ class S3Keywords(LibraryComponent):
         | Download File | bucket_name | folder/s3_file.txt | ${OUTPUTDIR}/file.txt |
         """
         logger.warn("Keyword 'Download File' is deprecated. Use keyword 'S3 Download File' instead")
-        client = self.state.session.client('s3', endpoint_url=endpoint_url)
+        client = self.library.session.client('s3', endpoint_url=endpoint_url)
         try:
             client.download_file(bucket, key, path)
         except botocore.exceptions.ClientError as e:
@@ -136,7 +136,7 @@ class S3Keywords(LibraryComponent):
         | Upload File | bucket_name | folder/s3_file.txt | ${CURDIR}/file.txt |
         """
         logger.warn("Keyword 'Upload File' is deprecated. Use keyword 'S3 Upload File' instead")
-        client = self.state.session.client('s3', endpoint_url=endpoint_url)
+        client = self.library.session.client('s3', endpoint_url=endpoint_url)
         try:
             client.upload_file(path, bucket, key)
             response = client.head_object(
@@ -163,7 +163,7 @@ class S3Keywords(LibraryComponent):
         | Key Should Exist | bucket_name | folder/s3_file.txt |
         """
         logger.warn("Keyword 'Key Should Exist' is deprecated. Use keyword 'S3 Key Should Exist' instead")
-        client = self.state.session.client("s3", endpoint_url=endpoint_url)
+        client = self.library.session.client("s3", endpoint_url=endpoint_url)
         try:
             client.head_object(Bucket=bucket, Key=key)
         except botocore.exceptions.ClientError:
@@ -186,7 +186,7 @@ class S3Keywords(LibraryComponent):
         | Key Should Not Exist | bucket_name | folder/s3_file.txt |
         """
         logger.warn("Keyword 'Key Should Not Exist' is deprecated. Use keyword 'S3 Key Should Not Exist' instead")
-        client = self.state.session.client('s3', endpoint_url=endpoint_url)
+        client = self.library.session.client('s3', endpoint_url=endpoint_url)
         try:
             response = client.head_object(Bucket=bucket, Key=key)
             if response['ResponseMetadata']['HTTPStatusCode'] == 200:
@@ -207,7 +207,7 @@ class S3Keywords(LibraryComponent):
         *Examples:*
         | S3 Create bucket | bucket_name |
         """
-        client = self.state.session.client('s3')
+        client = self.library.session.client('s3')
         try:
             client.create_bucket(Bucket=bucket)
             logger.debug(f"Created new bucket: {bucket}")
@@ -238,7 +238,7 @@ class S3Keywords(LibraryComponent):
         | S3 List Objects | bucket_name | folder_name |
         | S3 List Objects | bucket_name | folder_name/start_of_the_filename |
         """
-        client = self.state.session.client('s3')
+        client = self.library.session.client('s3')
         try:
             response = client.list_objects_v2(
                 Bucket=bucket,
@@ -263,7 +263,7 @@ class S3Keywords(LibraryComponent):
         | S3 Delete File | bucket_name | file.txt |
         | S3 Delete File | bucket_name | folder/file.txt |
         """
-        client = self.state.session.client('s3')
+        client = self.library.session.client('s3')
         try:
             response = client.delete_object(
                 Bucket=bucket,
@@ -286,7 +286,7 @@ class S3Keywords(LibraryComponent):
         | S3 Download File | bucket_name | s3_file.txt | ${OUTPUTDIR}/file.txt |
         | S3 Download File | bucket_name | folder/s3_file.txt | ${OUTPUTDIR}/file.txt |
         """
-        client = self.state.session.client('s3')
+        client = self.library.session.client('s3')
         try:
             client.download_file(bucket, key, local_filepath)
         except botocore.exceptions.ClientError as e:
@@ -305,7 +305,7 @@ class S3Keywords(LibraryComponent):
         | S3 Upload File | bucket_name | s3_file.txt | ${CURDIR}/file.txt |
         | S3 Upload File | bucket_name | folder/s3_file.txt | ${CURDIR}/file.txt |
         """
-        client = self.state.session.client('s3')
+        client = self.library.session.client('s3')
         try:
             client.upload_file(local_path, bucket, key)
             response = client.head_object(
@@ -328,7 +328,7 @@ class S3Keywords(LibraryComponent):
         | S3 Key Should Exist | bucket_name | s3_file.txt |
         | S3 Key Should Exist | bucket_name | folder/s3_file.txt |
         """
-        client = self.state.session.client("s3")
+        client = self.library.session.client("s3")
         try:
             client.head_object(Bucket=bucket, Key=key)
         except botocore.exceptions.ClientError:
@@ -346,7 +346,7 @@ class S3Keywords(LibraryComponent):
         | S3 Key Should Not Exist | bucket_name | s3_file.txt |
         | S3 Key Should Not Exist | bucket_name | folder/s3_file.txt |
         """
-        client = self.state.session.client('s3')
+        client = self.library.session.client('s3')
         try:
             response = client.head_object(Bucket=bucket, Key=key)
             if response['ResponseMetadata']['HTTPStatusCode'] == 200:

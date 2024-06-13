@@ -30,7 +30,7 @@ class SessionKeywords(LibraryComponent):
         )
         logger.info(f"Session created: {str(session)} using access key: {access_key}")
         self._cache.register(session, alias=region)
-        self.state.session = session
+        self.library.session = session
         return session
 
     @keyword('Create Session With Token')
@@ -54,7 +54,7 @@ class SessionKeywords(LibraryComponent):
         )
         logger.info(f"Session created: {str(session)} using access key: {access_key} and corresponding token")
         self._cache.register(session, alias=region)
-        self.state.session = session
+        self.library.session = session
         return session
 
     @keyword('Create Session With Profile')
@@ -75,7 +75,7 @@ class SessionKeywords(LibraryComponent):
         )
         logger.info(f"Session created: {str(session)} using prifile: {profile}")
         self._cache.register(session, alias=region)
-        self.state.session = session
+        self.library.session = session
         return session
 
     @keyword('Delete Session')

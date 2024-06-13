@@ -7,5 +7,4 @@ __all__ = [
     SessionKeywords,
     S3Keywords,
     ResourceKeywords,
-    # RDSKeywords
 ]
