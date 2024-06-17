@@ -1,89 +1,74 @@
 # robotframework-aws
 
-AWSLibrary is a testing library for Robot Framework that gives you the ability to use many of the AWS services in your tests. This library directly interacts with [Boto 3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html).  Boto is the Amazon Web Services (AWS) SDK for Python. It enables Python developers to create, configure, and manage AWS services, such as EC2 and S3.
+AWSLibrary is a testing library for Robot Framework that gives you the ability to use many of the AWS services in your 
+tests. This library directly interacts with [Boto 3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html).  
+Boto is the Amazon Web Services (AWS) SDK for Python. It enables Python developers to create, configure, and manage 
+AWS services.
 
 If there is functionality that should be included in this library please create an issue or feel free to contribute.
 
-## Contributors are welcome. This package is at the beginning of development
-
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 ![PyPI](https://img.shields.io/pypi/v/robotframework-aws.svg)
 ![Last Commit](https://img.shields.io/github/last-commit/MarketSquare/robotframework-aws)
 ![License](https://img.shields.io/pypi/l/robotframework-aws)
 ![Downloads](https://img.shields.io/pypi/dm/robotframework-aws)
+![Total downloads](https://static.pepy.tech/personalized-badge/robotframework-aws?period=total&units=international_system&left_color=lightgrey&right_color=yellow&left_text=Total)
 
 ## Keyword Documentation
 
 ---------------
 
-A library of keywords for interacting with AWS services in your robot tests. This library covers a variety of AWS services.
+This library covers the AWS services listed in the keywords:
 
-[Documentation for Keywords](https://raw.githack.com/MarketSquare/robotframework-aws/master/docs/AWSLibrary.html)
+[Documentation of keywords](https://raw.githack.com/MarketSquare/robotframework-aws/master/docs/AWSLibrary.html)
 
 [Pypi](https://pypi.org/project/robotframework-aws/)
 
 ---------------
----------------
 
-### Attention Contributors
+### Installation and use
 
-  [Contribution guidelines for this project](CONTRIBUTING.md)
-
-### Installation
-
-#### 1. Install the package
+#### Install the package
 
 ```sh
 pip install robotframework-aws
 ```
 
-#### 2. Import Package
+#### Update the package
 
-Pass in your AWS Credentials as parameters as shown below
+```sh
+pip install robotframework-aws --updagrade
+```
+
+#### Creating a Test Case
+
+When creating a test case, start by creating an AWS session for your test and end by deleting it.
 
 ```robotframework
 *** Settings ***
 Library  AWSLibrary
+
+
+*** Variables ***
+${REGION}    eu-west-1
+${BUCKET}    some-bucket-name
+
+
+*** Test Cases ***
+Test Case
+    [Setup]    Create Session With Keys    ${REGION}    %{AWS_USER_NAME}    %{AWS_USER_PASS}
+    S3 Upload File    ${BUCKET}    new_file.json    ${CURDIR}/local_file.json
+    S3 Key Should Exist    ${BUCKET}    new_file.json
+    S3 Key Should Not Exist    ${BUCKET}    local_file.json
+    ${file_inside_folder}    S3 List Objects    ${BUCKET}    folder_name
+    Log List   ${file_inside_folder}
+    S3 Download File    ${BUCKET}    new_file.json    ${CURDIR}/new_local_file.json
+    S3 Delete File    ${BUCKET}    new_file.json
+    [Teardown]    Delete All Sessions
 ```
 
-#### 3. Creating a Test Case
+### Attention Contributors
 
-When creating a test case, start with creating a session in AWS for your test
+The project development contribution session and local testing with "localstack" is under construction and needs to be 
+reviewed, contributions are welcome.
 
-```robotframework
-***Test Case***
-Example Test Case
-    Create Session  us-east-1
-    Key Should Not Exist  bucky  static/test.html  test.html
-    Upload File  bucky  static/test.html  test.html
-    Key Should Exist  bucky static/test.html  test.html
-    Delete Session  us-east-1
-```
-
-## Session
-
-> A session is created to use AWS services as a user defining the region and profile is optional
-
-- | `Create Session With Keys` | region | access_key | secret_key |
-- | `Create Session With Profile` | region | profile |
-- | `Delete Session` | region | profile=optional |
-- | `Delete All Sessions` |
-
-## S3
-
-> A key represents the path of the file located in the S3 bucket and Object Path represents the local path of the file on your host
-
-- | `List Objects` | bucket_name | prefix |
-- | `Delete File` | bucket | key |
-- | `Upload File` | bucket_name | object_path | key |
-- | `Download File` | bucket_name | object_path | key |
-- | `Key Should Exist` | bucket_name | object_path | key |
-- | `Key Should Not Exist` | bucket_name | object_path | key |
-- | `Allowed Methods` | array of methods |
-
-## Resources
-
-> Keywords can be used for local functionality that can be used with all services. These are helper methods to validate functionality, existence, and so on
-
-- | `Local File Should Exist` | path |
-- | `Local File Should Not Exist` | path |
+  [Contribution guidelines for this project](CONTRIBUTING.md)

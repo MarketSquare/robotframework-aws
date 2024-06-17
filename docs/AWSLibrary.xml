@@ -1,52 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-11T12:20:45+00:00" specversion="6" source="C:\Merkle\repositories\RobotFramework-AWS\src\AWSLibrary\__init__.py" lineno="13">
-<version>0.0.2</version>
-<doc>Documentation for library ``AWSLibrary``.</doc>
+<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-13T14:55:30+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="13">
+<version>1.0.0</version>
+<doc>AWSLibrary is a testing library for Robot Framework that gives you the ability to use some of the AWS
+services in your tests. This robot library is made from Boto3 SDK
+
+| ***** Settings *****
+| Library  AWSLibrary
+|
+|
+| ***** Variables *****
+| ${REGION}    eu-west-1
+| ${BUCKET}    some-bucket-name
+|
+|
+| ***** Test Cases *****
+| Test Case
+|     [Setup]    Create Session With Keys    ${REGION}    %{AWS_USER_NAME}    %{AWS_USER_PASS}
+|     S3 Upload File    ${BUCKET}    new_file.json    ${CURDIR}/local_file.json
+|     S3 Key Should Exist    ${BUCKET}    new_file.json
+|     S3 Key Should Not Exist    ${BUCKET}    local_file.json
+|     ${file_inside_folder}    S3 List Objects    ${BUCKET}    folder_name
+|     Log List   ${file_inside_folder}
+|     S3 Download File    ${BUCKET}    new_file.json    ${CURDIR}/new_local_file.json
+|     S3 Delete File    ${BUCKET}    new_file.json
+|     [Teardown]    Delete All Sessions</doc>
 <tags>
 </tags>
 <inits>
 </inits>
 <keywords>
-<kw name="Allowed Methods">
-<arguments repr="bucket, methods=[], endpoint_url=None">
+<kw name="Create Bucket" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="12">
+<arguments repr="bucket, endpoint_url=None">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
 <name>bucket</name>
-</arg>
-<arg kind="POSITIONAL_OR_NAMED" required="false" repr="methods=[]">
-<name>methods</name>
-<default>[]</default>
 </arg>
 <arg kind="POSITIONAL_OR_NAMED" required="false" repr="endpoint_url=None">
 <name>endpoint_url</name>
 <default>None</default>
 </arg>
 </arguments>
-<doc/>
-<shortdoc/>
-</kw>
-<kw name="Create Bucket">
-<arguments repr="bucket, region=None, endpoint_url=None">
-<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
-<name>bucket</name>
-</arg>
-<arg kind="POSITIONAL_OR_NAMED" required="false" repr="region=None">
-<name>region</name>
-<default>None</default>
-</arg>
-<arg kind="POSITIONAL_OR_NAMED" required="false" repr="endpoint_url=None">
-<name>endpoint_url</name>
-<default>None</default>
-</arg>
-</arguments>
-<doc>Creates S3 Bucket with the name given @param: ```bucket```
-    and uses the optionally provided @param: ```endpoint_url```.
-    If Bucket already exists, an exception will be thrown.
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Create Bucket` instead
 
-Example:
-| Create Bucket | randomBucketName |</doc>
-<shortdoc>Creates S3 Bucket with the name given @param: ```bucket```     and uses the optionally provided @param: ```endpoint_url```.     If Bucket already exists, an exception will be thrown.</shortdoc>
+Creates S3 Bucket with the given bucket name
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+
+*Examples:*
+| Create bucket _name | bucket_name |</doc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Create Bucket` instead</shortdoc>
 </kw>
-<kw name="Create Session With Keys">
+<kw name="Create Session With Keys" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\session.py" lineno="15">
 <arguments repr="region, access_key, secret_key">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="region">
 <name>region</name>
@@ -58,15 +62,18 @@ Example:
 <name>secret_key</name>
 </arg>
 </arguments>
-<doc>Takes Region as an argument and creates as session with your access key
-and secret key stored at ~/.aws/credentials.
-Will throw error if not configured.
+<doc>Create an AWS session in region using your access key and secret key.
 
-Examples:
-| Create Session With Keys | us-west-1 | access key | secret key |</doc>
-<shortdoc>Takes Region as an argument and creates as session with your access key and secret key stored at ~/.aws/credentials. Will throw error if not configured.</shortdoc>
+| =Arguments= | =Description= |
+| ``region`` | &lt;str&gt; The AWS region name. |
+| ``access_key`` | &lt;str&gt; the access key. |
+| ``secret_key`` | &lt;str&gt; the secret key. |
+
+*Examples:*
+| Create Session With Keys | eu-west-1 | access_key | secret_key |</doc>
+<shortdoc>Create an AWS session in region using your access key and secret key.</shortdoc>
 </kw>
-<kw name="Create Session With Profile">
+<kw name="Create Session With Profile" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\session.py" lineno="61">
 <arguments repr="region, profile">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="region">
 <name>region</name>
@@ -75,14 +82,18 @@ Examples:
 <name>profile</name>
 </arg>
 </arguments>
-<doc>Takes Region as an argument and creates as session with your profile
- stored at ~/.aws/config. Will throw error if not configured
+<doc>Create an AWS session in region with your profile
+ stored at ~/.aws/config.
 
-Examples:
-| Create Session With Profile | us-west-1 |  profile name |</doc>
-<shortdoc>Takes Region as an argument and creates as session with your profile  stored at ~/.aws/config. Will throw error if not configured</shortdoc>
+| =Arguments= | =Description= |
+| ``region`` | &lt;str&gt; The AWS region name. |
+| ``profile`` | &lt;str&gt; the profile name. |
+
+*Examples:*
+| Create Session With Profile | us-west-1 | profile_name |</doc>
+<shortdoc>Create an AWS session in region with your profile  stored at ~/.aws/config.</shortdoc>
 </kw>
-<kw name="Create Session With Token">
+<kw name="Create Session With Token" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\session.py" lineno="37">
 <arguments repr="region, access_key, secret_key, token">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="region">
 <name>region</name>
@@ -97,34 +108,28 @@ Examples:
 <name>token</name>
 </arg>
 </arguments>
-<doc>Create an AWS session with region, access key, secret key and token. Suitable for nominal users.
+<doc>Create an AWS session in region using access key, secret key and token.
 
-Documentation:
-- ``region``: string to identify the region
-- ``access_key``: string to identify the access key
-- ``secret_key``: string to identify the secret key
-- ``token``: string to identify the user token
+| =Arguments= | =Description= |
+| ``region`` | &lt;str&gt; The AWS region name. |
+| ``access_key`` | &lt;str&gt; the access key. |
+| ``secret_key`` | &lt;str&gt; the secret key. |
+| ``token`` | &lt;str&gt; the user token. |
 
-Examples:
-| Create Session With Token | eu-west-1 | access key | secret key | token |</doc>
-<shortdoc>Create an AWS session with region, access key, secret key and token. Suitable for nominal users.</shortdoc>
+*Examples:*
+| Create Session With Token | eu-west-1 | access_key | secret_key | token |</doc>
+<shortdoc>Create an AWS session in region using access key, secret key and token.</shortdoc>
 </kw>
-<kw name="Database Exists">
+<kw name="Delete All Sessions" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\session.py" lineno="101">
 <arguments repr="">
 </arguments>
-<doc/>
-<shortdoc/>
-</kw>
-<kw name="Delete All Sessions">
-<arguments repr="">
-</arguments>
-<doc>Delete all sessions.
+<doc>Delete all current sessions.
 
-Examples:
+*Examples:*
 | Delete All Sessions |</doc>
-<shortdoc>Delete all sessions.</shortdoc>
+<shortdoc>Delete all current sessions.</shortdoc>
 </kw>
-<kw name="Delete File">
+<kw name="Delete File" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="74">
 <arguments repr="bucket, key, endpoint_url=None">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
 <name>bucket</name>
@@ -137,15 +142,20 @@ Examples:
 <default>None</default>
 </arg>
 </arguments>
-<doc>Delete File
-Requires:   @param ```bucket``` which is the bucket name:
-            @param: ```key``` which is the bucket location/path name.
-            @param: ```endpoint_url``` optionally override the s3 endpoint url
-    Example:
-    | Delete File | bucket | key |</doc>
-<shortdoc>Delete File Requires:   @param ```bucket``` which is the bucket name:             @param: ```key``` which is the bucket location/path name.             @param: ```endpoint_url``` optionally override the s3 endpoint url     Example:     | Delete File | bucket | key |</shortdoc>
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Delete File` instead
+
+Deletes the file from a bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete filepath. |
+
+*Examples:*
+| Delete File | bucket_name | file.txt |
+| Delete File | bucket_name | folder/file.txt |</doc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Delete File` instead</shortdoc>
 </kw>
-<kw name="Delete Session">
+<kw name="Delete Session" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\session.py" lineno="82">
 <arguments repr="region">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="region">
 <name>region</name>
@@ -153,14 +163,14 @@ Requires:   @param ```bucket``` which is the bucket name:
 </arguments>
 <doc>Delete session by entering the region.
 
-Arguments:
-- ``region``: string to identify the region
+| =Arguments= | =Description= |
+| ``region`` | &lt;str&gt; The AWS region name. |
 
-Examples:
+*Examples:*
 | Delete Session | us-west-1 |</doc>
 <shortdoc>Delete session by entering the region.</shortdoc>
 </kw>
-<kw name="Download File">
+<kw name="Download File" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="100">
 <arguments repr="bucket, key, path, endpoint_url=None">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
 <name>bucket</name>
@@ -176,16 +186,157 @@ Examples:
 <default>None</default>
 </arg>
 </arguments>
-<doc>Downloads File from S3 Bucket
-Requires:   @param ```bucket``` which is the bucket name:
-            @param: ```key``` which is the bucket location/path name.
-            @param: ```path``` which is the local path of file.
-            @param: ```endpoint_url``` optionally override the s3 endpoint url
-    Example:
-    | Download File | bucket | path | key |</doc>
-<shortdoc>Downloads File from S3 Bucket Requires:   @param ```bucket``` which is the bucket name:             @param: ```key``` which is the bucket location/path name.             @param: ```path``` which is the local path of file.             @param: ```endpoint_url``` optionally override the s3 endpoint url     Example:     | Download File | bucket | path | key |</shortdoc>
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Download File` instead
+
+Download file from a bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete filepath. |
+| ``path`` | &lt;str&gt; Complete local filepath. |
+
+*Examples:*
+| Download File | bucket_name | s3_file.txt | ${OUTPUTDIR}/file.txt |
+| Download File | bucket_name | folder/s3_file.txt | ${OUTPUTDIR}/file.txt |</doc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Download File` instead</shortdoc>
 </kw>
-<kw name="Key Should Exist">
+<kw name="Dynamo Delete Item" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\dynamo.py" lineno="77">
+<arguments repr="table_name, partition_key, partition_value, sort_key=None, sort_value=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="table_name">
+<name>table_name</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="partition_key">
+<name>partition_key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="partition_value">
+<name>partition_value</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="sort_key=None">
+<name>sort_key</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="sort_value=None">
+<name>sort_value</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>Deletes a single item in a table by partition key (primary key) and sort key if provided.
+
+| =Arguments= | =Description= |
+| ``table_name`` | &lt;str&gt; Name of the DynamoDB table. |
+| ``partition_key`` | &lt;str&gt; The key to search. |
+| ``partition_value`` | &lt;str&gt; Value of the partition key. |
+| ``sort_key`` | &lt;str&gt; (optional) The sort key to search. |
+| ``sort_value`` | &lt;str&gt; (optional) Value of the sort key. |
+
+*Examples:*
+| Dynamo Delete Item | library-books | book_id | 123 |
+| Dynamo Delete Item | library-books | book_id | 123 | book_code | abc001 |</doc>
+<shortdoc>Deletes a single item in a table by partition key (primary key) and sort key if provided.</shortdoc>
+</kw>
+<kw name="Dynamo Put Item" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\dynamo.py" lineno="60">
+<arguments repr="table_name, json_dict">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="table_name">
+<name>table_name</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="json_dict">
+<name>json_dict</name>
+</arg>
+</arguments>
+<doc>Creates a new item, or replaces an old item with a new item. If an item that has the same partition key
+(primary key) as the new item already exists in the specified table, the new item completely replaces the
+existing item.
+
+| =Arguments= | =Description= |
+| ``table_name`` | &lt;str&gt; Name of the DynamoDB table. |
+| ``table_name`` | &lt;dict&gt; JSON dictionary representing the dynamo item. |
+
+*Examples:*
+| Update Item | library-books | {"key": "value"} |</doc>
+<shortdoc>Creates a new item, or replaces an old item with a new item. If an item that has the same partition key (primary key) as the new item already exists in the specified table, the new item completely replaces the existing item.</shortdoc>
+</kw>
+<kw name="Dynamo Query Table" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\dynamo.py" lineno="13">
+<arguments repr="table_name, partition_key, partition_value, sort_key=None, sort_value=None, projection=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="table_name">
+<name>table_name</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="partition_key">
+<name>partition_key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="partition_value">
+<name>partition_value</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="sort_key=None">
+<name>sort_key</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="sort_value=None">
+<name>sort_value</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="projection=None">
+<name>projection</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>Queries a DynamoDB table based on the partition_key and his value. returns all the information found in a
+list of dictionaries.
+
+The result deserializes DynamoDB types to Python types:
+https://boto3.amazonaws.com/v1/documentation/api/latest/_modules/boto3/dynamodb/types.html
+
+| =Arguments= | =Description= |
+| ``table_name`` | &lt;str&gt; Name of the DynamoDB table. |
+| ``partition_key`` | &lt;str&gt; The key to search. |
+| ``partition_value`` | &lt;str&gt; Value of the partition key. |
+| ``sort_key`` | &lt;str&gt; (optional) The sort key to search. |
+| ``sort_value`` | &lt;str&gt; (optional) Value of the sort key. |
+| ``projection`` | &lt;str&gt; (optional) A string specifying the attributes to retrieve. |
+
+*Examples:*
+| Dynamo Query Table | library-books | book_id | 123 |
+| Dynamo Query Table | library-books | book_id | 123 | sort_key=book_code | sort_value=abc001 |
+| Dynamo Query Table | library-books | book_id | 123 | projection=value |</doc>
+<shortdoc>Queries a DynamoDB table based on the partition_key and his value. returns all the information found in a list of dictionaries.</shortdoc>
+</kw>
+<kw name="Dynamo Remove Key" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\dynamo.py" lineno="97">
+<arguments repr="table_name, partition_key, partition_value, attribute_name, sort_key=None, sort_value=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="table_name">
+<name>table_name</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="partition_key">
+<name>partition_key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="partition_value">
+<name>partition_value</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="attribute_name">
+<name>attribute_name</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="sort_key=None">
+<name>sort_key</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="sort_value=None">
+<name>sort_value</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>Removes a specific key in a DynamoDB item based on partition_key and sort key, if provided.
+
+| =Arguments= | =Description= |
+| ``table_name`` | &lt;str&gt; Name of the DynamoDB table. |
+| ``partition_key`` | &lt;str&gt; The key to search. |
+| ``partition_value`` | &lt;str&gt; Value of the partition key. |
+| ``attribute_name`` | &lt;str&gt; Key to remove, for nested keys use . to compose the path. |
+
+*Examples:*
+| Dynamo Remove Key | library-books | book_id | 123 | quantity |
+| Dynamo Remove Key | library-books | book_id | 123 | book.value |
+| Dynamo Remove Key | library-books | book_id | 123 | book | sort_key=book_code | sort_value=abc001 |</doc>
+<shortdoc>Removes a specific key in a DynamoDB item based on partition_key and sort key, if provided.</shortdoc>
+</kw>
+<kw name="Key Should Exist" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="151">
 <arguments repr="bucket, key, endpoint_url=None">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
 <name>bucket</name>
@@ -198,16 +349,20 @@ Requires:   @param ```bucket``` which is the bucket name:
 <default>None</default>
 </arg>
 </arguments>
-<doc>Key Should Exist
-Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will not fail.
-Requires:   @param ```bucket``` which is the bucket name:
-            @param: ```key``` which is the bucket location/path name.
-            @param: ```endpoint_url``` optionally override the s3 endpoint url
-    Example:
-    | Key Should Exist | bucket | key |</doc>
-<shortdoc>Key Should Exist Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will not fail. Requires:   @param ```bucket``` which is the bucket name:             @param: ```key``` which is the bucket location/path name.             @param: ```endpoint_url``` optionally override the s3 endpoint url     Example:     | Key Should Exist | bucket | key |</shortdoc>
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Key Should Exist` instead
+
+Check if the s3 object exist inside the bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+
+*Examples:*
+| Key Should Exist | bucket_name | s3_file.txt |
+| Key Should Exist | bucket_name | folder/s3_file.txt |</doc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Key Should Exist` instead</shortdoc>
 </kw>
-<kw name="Key Should Not Exist">
+<kw name="Key Should Not Exist" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="174">
 <arguments repr="bucket, key, endpoint_url=None">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
 <name>bucket</name>
@@ -220,16 +375,20 @@ Requires:   @param ```bucket``` which is the bucket name:
 <default>None</default>
 </arg>
 </arguments>
-<doc>Verifies Key on S3 Bucket Does Not Exist
-Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will fail.
-Requires:   @param ```bucket``` which is the bucket name:
-            @param: ```key``` which is the bucket location/path name.
-            @param: ```endpoint_url``` optionally override the s3 endpoint url
-    Example:
-    | Key Should Not Exist | bucket | key |</doc>
-<shortdoc>Verifies Key on S3 Bucket Does Not Exist Description: Checks to see if the file on the s3 bucket exist. If so, the keyword will fail. Requires:   @param ```bucket``` which is the bucket name:             @param: ```key``` which is the bucket location/path name.             @param: ```endpoint_url``` optionally override the s3 endpoint url     Example:     | Key Should Not Exist | bucket | key |</shortdoc>
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Key Should Not Exist` instead
+
+Check if the s3 object not exist inside the bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+
+*Examples:*
+| Key Should Not Exist | bucket_name | s3_file.txt |
+| Key Should Not Exist | bucket_name | folder/s3_file.txt |</doc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Key Should Not Exist` instead</shortdoc>
 </kw>
-<kw name="List Objects">
+<kw name="List Objects" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="41">
 <arguments repr="bucket, prefix=">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
 <name>bucket</name>
@@ -239,38 +398,200 @@ Requires:   @param ```bucket``` which is the bucket name:
 <default/>
 </arg>
 </arguments>
-<doc>List Objects
-Requires:   @param: ```bucket``` which is the bucket name
-Optional:   @param: ```prefix``` which limits the response to keys that begin with the specified prefix.
-    Example:
-    | List Objects | bucket | key |</doc>
-<shortdoc>List Objects Requires:   @param: ```bucket``` which is the bucket name Optional:   @param: ```prefix``` which limits the response to keys that begin with the specified prefix.     Example:     | List Objects | bucket | key |</shortdoc>
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 List Objects` instead
+
+List objects in a bucket. (up to 1,000) each request
+
+If prefix is informed will list only the files that start with this string,
+could be used to list only the files inside a folder for example.
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``Prefix`` | &lt;str&gt; prefix of the filepath. |
+
+*Examples:*
+| List Objects | bucket_name |
+| List Objects | bucket_name | folder_name |
+| List Objects | bucket_name | folder_name/start_of_the_filename |</doc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 List Objects` instead</shortdoc>
 </kw>
-<kw name="Local File Should Exist">
+<kw name="Local File Should Exist" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\resource.py" lineno="10">
 <arguments repr="path">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="path">
 <name>path</name>
 </arg>
 </arguments>
-<doc>Verifies Local File at the given path does exist
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0*
+
+Verifies Local File at the given path does exist
 Requires:   @param: ```path``` which is the bucket location/path name.
     Example:
     | Local File Should Exist | bucket | path |</doc>
-<shortdoc>Verifies Local File at the given path does exist Requires:   @param: ```path``` which is the bucket location/path name.     Example:     | Local File Should Exist | bucket | path |</shortdoc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0*</shortdoc>
 </kw>
-<kw name="Local File Should Not Exist">
+<kw name="Local File Should Not Exist" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\resource.py" lineno="28">
 <arguments repr="path">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="path">
 <name>path</name>
 </arg>
 </arguments>
-<doc>Verifies Local File at the given path does not exist
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0*
+
+Verifies Local File at the given path does not exist
 Requires:   @param: ```path``` which is the bucket location/path name.
     Example:
     | Local File Should Not Exist | bucket | path |</doc>
-<shortdoc>Verifies Local File at the given path does not exist Requires:   @param: ```path``` which is the bucket location/path name.     Example:     | Local File Should Not Exist | bucket | path |</shortdoc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0*</shortdoc>
 </kw>
-<kw name="Upload File">
+<kw name="S3 Create Bucket" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="201">
+<arguments repr="bucket">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+</arguments>
+<doc>Creates S3 Bucket with the given bucket name
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+
+*Examples:*
+| S3 Create bucket | bucket_name |</doc>
+<shortdoc>Creates S3 Bucket with the given bucket name</shortdoc>
+</kw>
+<kw name="S3 Delete File" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="255">
+<arguments repr="bucket, key">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="key">
+<name>key</name>
+</arg>
+</arguments>
+<doc>Deletes the file from a bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+
+*Examples:*
+| S3 Delete File | bucket_name | file.txt |
+| S3 Delete File | bucket_name | folder/file.txt |</doc>
+<shortdoc>Deletes the file from a bucket</shortdoc>
+</kw>
+<kw name="S3 Download File" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="277">
+<arguments repr="bucket, key, local_filepath">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="key">
+<name>key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="local_filepath">
+<name>local_filepath</name>
+</arg>
+</arguments>
+<doc>Download file from a bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+| ``local_path`` | &lt;str&gt; Complete local filepath. |
+
+*Examples:*
+| S3 Download File | bucket_name | s3_file.txt | ${OUTPUTDIR}/file.txt |
+| S3 Download File | bucket_name | folder/s3_file.txt | ${OUTPUTDIR}/file.txt |</doc>
+<shortdoc>Download file from a bucket</shortdoc>
+</kw>
+<kw name="S3 Key Should Exist" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="320">
+<arguments repr="bucket, key">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="key">
+<name>key</name>
+</arg>
+</arguments>
+<doc>Check if the s3 object exist inside the bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+
+*Examples:*
+| S3 Key Should Exist | bucket_name | s3_file.txt |
+| S3 Key Should Exist | bucket_name | folder/s3_file.txt |</doc>
+<shortdoc>Check if the s3 object exist inside the bucket</shortdoc>
+</kw>
+<kw name="S3 Key Should Not Exist" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="338">
+<arguments repr="bucket, key">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="key">
+<name>key</name>
+</arg>
+</arguments>
+<doc>Check if the s3 object not exist inside the bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+
+*Examples:*
+| S3 Key Should Not Exist | bucket_name | s3_file.txt |
+| S3 Key Should Not Exist | bucket_name | folder/s3_file.txt |</doc>
+<shortdoc>Check if the s3 object not exist inside the bucket</shortdoc>
+</kw>
+<kw name="S3 List Objects" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="226">
+<arguments repr="bucket, prefix=">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="prefix=">
+<name>prefix</name>
+<default/>
+</arg>
+</arguments>
+<doc>List objects in a bucket. (up to 1,000) each request
+
+If prefix is informed will list only the files that start with this string,
+could be used to list only the files inside a folder for example.
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``Prefix`` | &lt;str&gt; prefix of the filepath. |
+
+*Examples:*
+| S3 List Objects | bucket_name |
+| S3 List Objects | bucket_name | folder_name |
+| S3 List Objects | bucket_name | folder_name/start_of_the_filename |</doc>
+<shortdoc>List objects in a bucket. (up to 1,000) each request</shortdoc>
+</kw>
+<kw name="S3 Upload File" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="296">
+<arguments repr="bucket, key, local_path">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
+<name>bucket</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="key">
+<name>key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="local_path">
+<name>local_path</name>
+</arg>
+</arguments>
+<doc>Upload a file to the bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+| ``local_path`` | &lt;str&gt; Complete local filepath. |
+
+*Examples:*
+| S3 Upload File | bucket_name | s3_file.txt | ${CURDIR}/file.txt |
+| S3 Upload File | bucket_name | folder/s3_file.txt | ${CURDIR}/file.txt |</doc>
+<shortdoc>Upload a file to the bucket</shortdoc>
+</kw>
+<kw name="Upload File" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="123">
 <arguments repr="bucket, key, path, endpoint_url=None">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
 <name>bucket</name>
@@ -286,14 +607,19 @@ Requires:   @param: ```path``` which is the bucket location/path name.
 <default>None</default>
 </arg>
 </arguments>
-<doc>Uploads File from S3 Bucket
-Requires:   @param ```bucket``` which is the bucket name:
-            @param: ```key``` which is the bucket location/path name.
-            @param: ```path``` which is the local path of file.
-            @param: ```endpoint_url``` optionally override the s3 endpoint url
-    Example:
-    | Upload File | bucket | path | key |</doc>
-<shortdoc>Uploads File from S3 Bucket Requires:   @param ```bucket``` which is the bucket name:             @param: ```key``` which is the bucket location/path name.             @param: ```path``` which is the local path of file.             @param: ```endpoint_url``` optionally override the s3 endpoint url     Example:     | Upload File | bucket | path | key |</shortdoc>
+<doc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Upload File` instead
+
+Upload a file to the bucket
+
+| =Arguments= | =Description= |
+| ``bucket`` | &lt;str&gt; The bucket name. |
+| ``key`` | &lt;str&gt; complete s3 filepath. |
+| ``path`` | &lt;str&gt; Complete local filepath. |
+
+*Examples:*
+| Upload File | bucket_name | s3_file.txt | ${CURDIR}/file.txt |
+| Upload File | bucket_name | folder/s3_file.txt | ${CURDIR}/file.txt |</doc>
+<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 Upload File` instead</shortdoc>
 </kw>
 </keywords>
 <typedocs>
