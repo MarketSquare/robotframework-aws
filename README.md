@@ -36,7 +36,7 @@ pip install robotframework-aws
 #### Update the package
 
 ```sh
-pip install robotframework-aws --updagrade
+pip install robotframework-aws --upgrade
 ```
 
 #### Creating a Test Case

@@ -20,7 +20,8 @@ setup(
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.9"
+        "Framework :: Robot Framework",
+        "Framework :: Robot Framework :: Library",
     ],
     packages=find_packages('src'),
     package_dir={'': 'src'},
