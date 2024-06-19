@@ -17,17 +17,16 @@ class CloudWatchKeywords(LibraryComponent):
         """
         client = self.library.session.client('logs', endpoint_url=self.endpoint_url)
         time_behind = (datetime.now() - timedelta(minutes=minutes_behind)).timestamp()
-        start_query_response = client.start_query(logGroupName=log_group,
+        query = client.start_query(logGroupName=log_group,
                                                   startTime=int(time_behind),
                                                   endTime=int(datetime.now().timestamp()),
                                                   queryString=query,
                                                   limit=1)
-        query_id = start_query_response['queryId']
+        query_id = query['queryId']
         response = None
         logs = []
         while response is None or response['status'] == 'Running':
             time.sleep(1)
-            logger.warn("dormiu")
             response = client.get_query_results(queryId=query_id)
             logs.append(response['results'])
         return logs
