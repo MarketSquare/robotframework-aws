@@ -8,9 +8,25 @@ class DynamoKeywords(LibraryComponent):
 
     def __init__(self, library):
         LibraryComponent.__init__(self, library)
+        self.endpoint_url = None
+
+    @keyword('Dynamo Set Endpoint Url')
+    def dynamo_set_endpoint(self, url):
+        """ The complete URL to use for the constructed Dynamo client. Normally, botocore will automatically construct
+        the appropriate URL to use when communicating with a service. You can specify a complete URL
+        (including the “http/https” scheme) to override this behavior.
+
+        | =Arguments= | =Description= |
+        | ``url`` | <str> The complete endpoint URL. |
+
+        *Examples:*
+        | Dynamo Set Endpoint Url | http://localhost:4566/ |
+        """
+        self.endpoint_url = url
 
     @keyword('Dynamo Query Table')
-    def dynamo_query_table(self, table_name, partition_key, partition_value, sort_key=None, sort_value=None, projection=None):
+    def dynamo_query_table(self, table_name, partition_key, partition_value, sort_key=None, sort_value=None,
+                           projection=None):
         """Queries a DynamoDB table based on the partition_key and his value. returns all the information found in a
         list of dictionaries.
 
@@ -30,7 +46,7 @@ class DynamoKeywords(LibraryComponent):
         | Dynamo Query Table | library-books | book_id | 123 | sort_key=book_code | sort_value=abc001 |
         | Dynamo Query Table | library-books | book_id | 123 | projection=value |
         """
-        client = self.library.session.client('dynamodb')
+        client = self.library.session.client('dynamodb', endpoint_url=self.endpoint_url)
         if sort_key is None:
             expression = {':value': {'S': partition_value}}
             condition = f'{partition_key} = :value'
@@ -69,7 +85,7 @@ class DynamoKeywords(LibraryComponent):
         *Examples:*
         | Update Item | library-books | {"key": "value"} |
         """
-        resource = self.library.session.resource('dynamodb')
+        resource = self.library.session.resource('dynamodb', endpoint_url=self.endpoint_url)
         response = resource.Table(table_name).put_item(Item=json_dict)
         logger.info(response)
 
@@ -88,7 +104,7 @@ class DynamoKeywords(LibraryComponent):
         | Dynamo Delete Item | library-books | book_id | 123 |
         | Dynamo Delete Item | library-books | book_id | 123 | book_code | abc001 |
         """
-        resource = self.library.session.resource('dynamodb')
+        resource = self.library.session.resource('dynamodb', endpoint_url=self.endpoint_url)
         key = {partition_key: partition_value, sort_key: sort_value} if sort_key else {partition_key: partition_value}
         response = resource.Table(table_name).delete_item(Key=key)
         logger.info(response)
@@ -108,7 +124,7 @@ class DynamoKeywords(LibraryComponent):
         | Dynamo Remove Key | library-books | book_id | 123 | book.value |
         | Dynamo Remove Key | library-books | book_id | 123 | book | sort_key=book_code | sort_value=abc001 |
         """
-        resource = self.library.session.resource('dynamodb')
+        resource = self.library.session.resource('dynamodb', endpoint_url=self.endpoint_url)
         expression, names = self._compose_expression(attribute_name, remove=True)
         logger.debug(f"UpdateExpression: {expression}")
         logger.debug(f"ExpressionAttributeNames: {names}")
