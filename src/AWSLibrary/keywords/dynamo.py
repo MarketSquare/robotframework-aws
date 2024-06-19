@@ -110,7 +110,8 @@ class DynamoKeywords(LibraryComponent):
         logger.info(response)
 
     @keyword('Dynamo Remove Key')
-    def dynamo_remove_key(self, table_name, partition_key, partition_value, attribute_name, sort_key=None, sort_value=None):
+    def dynamo_remove_key(self, table_name, partition_key, partition_value, attribute_name,
+                          sort_key=None, sort_value=None):
         """Removes a specific key in a DynamoDB item based on partition_key and sort key, if provided.
 
         | =Arguments= | =Description= |
@@ -118,11 +119,13 @@ class DynamoKeywords(LibraryComponent):
         | ``partition_key`` | <str> The key to search. |
         | ``partition_value`` | <str> Value of the partition key. |
         | ``attribute_name`` | <str> Key to remove, for nested keys use . to compose the path. |
+        | ``sort_key`` | <str> (optional) The sort key to search. |
+        | ``sort_value`` | <str> (optional) Value of the sort key. |
 
         *Examples:*
         | Dynamo Remove Key | library-books | book_id | 123 | quantity |
         | Dynamo Remove Key | library-books | book_id | 123 | book.value |
-        | Dynamo Remove Key | library-books | book_id | 123 | book | sort_key=book_code | sort_value=abc001 |
+        | Dynamo Remove Key | library-books | book_id | 123 | quantity | sort_key=book_code | sort_value=abc001 |
         """
         resource = self.library.session.resource('dynamodb', endpoint_url=self.endpoint_url)
         expression, names = self._compose_expression(attribute_name, remove=True)
@@ -135,6 +138,47 @@ class DynamoKeywords(LibraryComponent):
             ExpressionAttributeNames=names
         )
         logger.info(response)
+
+    @keyword('Dynamo Update Key')
+    def dynamo_update_key(self, table_name, partition_key, partition_value, attribute_name, attribute_value,
+                          sort_key=None, sort_value=None):
+        """Update a specific key in a DynamoDB item based on partition_key and sort key, if provided.
+
+        Arguments:
+        - ``table_name``: name of the DynamoDB table.
+        - ``partition_key``: the partition key to search.
+        - ``value``: the value of partition key.
+        - ``attribute_name``: the key to update. For nested keys, use . to compose the path
+        - ``new_value``: the new value of the attribute_name.
+        - ``sort_key``: the sort key to search. Default as None
+        - ``sort_value``: the value of sort key. Default as None
+
+        | =Arguments= | =Description= |
+        | ``table_name`` | <str> Name of the DynamoDB table. |
+        | ``partition_key`` | <str> The key to search. |
+        | ``partition_value`` | <str> Value of the partition key. |
+        | ``attribute_name`` | <str> Key to update. For nested keys, use . to compose the path. |
+        | ``attribute_value`` | <str> The new value of the attribute_name. |
+        | ``sort_key`` | <str> (optional) The sort key to search. |
+        | ``sort_value`` | <str> (optional) Value of the sort key. |
+
+        *Examples:*
+        | Dynamo Update Key | library-books | book_id | 123 | quantity | 100 |
+        | Dynamo Update Key | library-books | book_id | 123 | book.value | 15 |
+        | Dynamo Update Key | library-books | book_id | 123 | quantity | 100 | sort_key=book_code | sort_value=abc001 |
+        """
+        resource = self.library.session.resource('dynamodb', endpoint_url=self.endpoint_url)
+        expression, names = self._compose_expression(attribute_name)
+        logger.debug(f"UpdateExpression: {expression}")
+        logger.debug(f"ExpressionAttributeNames: {names}")
+        key = {partition_key: partition_value, sort_key: sort_value} if sort_key else {partition_key: partition_value}
+        result = resource.Table(table_name).update_item(
+            Key=key,
+            UpdateExpression=expression,
+            ExpressionAttributeNames=names,
+            ExpressionAttributeValues={':new_value': attribute_value}
+        )
+        return result
 
     @staticmethod
     def _compose_expression(attribute, remove=False):

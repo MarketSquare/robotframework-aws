@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-19T17:14:24+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="13">
+<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-19T22:12:07+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="14">
 <version>0.2.0</version>
 <doc>AWSLibrary is a testing library for Robot Framework that gives you the ability to use some of the AWS
 services in your tests. This robot library is made from Boto3 SDK
@@ -29,6 +29,22 @@ services in your tests. This robot library is made from Boto3 SDK
 <inits>
 </inits>
 <keywords>
+<kw name="CloudWatch Logs Insights" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\cloudWatch.py" lineno="15">
+<arguments repr="log_group, query, minutes_behind=60">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="log_group">
+<name>log_group</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="query">
+<name>query</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="minutes_behind=60">
+<name>minutes_behind</name>
+<default>60</default>
+</arg>
+</arguments>
+<doc>TODO</doc>
+<shortdoc>TODO</shortdoc>
+</kw>
 <kw name="Create Bucket" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="16">
 <arguments repr="bucket, endpoint_url=None">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
@@ -344,11 +360,13 @@ https://boto3.amazonaws.com/v1/documentation/api/latest/_modules/boto3/dynamodb/
 | ``partition_key`` | &lt;str&gt; The key to search. |
 | ``partition_value`` | &lt;str&gt; Value of the partition key. |
 | ``attribute_name`` | &lt;str&gt; Key to remove, for nested keys use . to compose the path. |
+| ``sort_key`` | &lt;str&gt; (optional) The sort key to search. |
+| ``sort_value`` | &lt;str&gt; (optional) Value of the sort key. |
 
 *Examples:*
 | Dynamo Remove Key | library-books | book_id | 123 | quantity |
 | Dynamo Remove Key | library-books | book_id | 123 | book.value |
-| Dynamo Remove Key | library-books | book_id | 123 | book | sort_key=book_code | sort_value=abc001 |</doc>
+| Dynamo Remove Key | library-books | book_id | 123 | quantity | sort_key=book_code | sort_value=abc001 |</doc>
 <shortdoc>Removes a specific key in a DynamoDB item based on partition_key and sort key, if provided.</shortdoc>
 </kw>
 <kw name="Dynamo Set Endpoint Url" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\dynamo.py" lineno="14">
@@ -367,6 +385,58 @@ the appropriate URL to use when communicating with a service. You can specify a 
 *Examples:*
 | Dynamo Set Endpoint Url | http://localhost:4566/ |</doc>
 <shortdoc>The complete URL to use for the constructed Dynamo client. Normally, botocore will automatically construct the appropriate URL to use when communicating with a service. You can specify a complete URL (including the “http/https” scheme) to override this behavior.</shortdoc>
+</kw>
+<kw name="Dynamo Update Key" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\dynamo.py" lineno="143">
+<arguments repr="table_name, partition_key, partition_value, attribute_name, attribute_value, sort_key=None, sort_value=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="table_name">
+<name>table_name</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="partition_key">
+<name>partition_key</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="partition_value">
+<name>partition_value</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="attribute_name">
+<name>attribute_name</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="attribute_value">
+<name>attribute_value</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="sort_key=None">
+<name>sort_key</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="sort_value=None">
+<name>sort_value</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>Update a specific key in a DynamoDB item based on partition_key and sort key, if provided.
+
+Arguments:
+- ``table_name``: name of the DynamoDB table.
+- ``partition_key``: the partition key to search.
+- ``value``: the value of partition key.
+- ``attribute_name``: the key to update. For nested keys, use . to compose the path
+- ``new_value``: the new value of the attribute_name.
+- ``sort_key``: the sort key to search. Default as None
+- ``sort_value``: the value of sort key. Default as None
+
+| =Arguments= | =Description= |
+| ``table_name`` | &lt;str&gt; Name of the DynamoDB table. |
+| ``partition_key`` | &lt;str&gt; The key to search. |
+| ``partition_value`` | &lt;str&gt; Value of the partition key. |
+| ``attribute_name`` | &lt;str&gt; Key to update. For nested keys, use . to compose the path. |
+| ``attribute_value`` | &lt;str&gt; The new value of the attribute_name. |
+| ``sort_key`` | &lt;str&gt; (optional) The sort key to search. |
+| ``sort_value`` | &lt;str&gt; (optional) Value of the sort key. |
+
+*Examples:*
+| Dynamo Update Key | library-books | book_id | 123 | quantity | 100 |
+| Dynamo Update Key | library-books | book_id | 123 | book.value | 15 |
+| Dynamo Update Key | library-books | book_id | 123 | quantity | 100 | sort_key=book_code | sort_value=abc001 |</doc>
+<shortdoc>Update a specific key in a DynamoDB item based on partition_key and sort key, if provided.</shortdoc>
 </kw>
 <kw name="Key Should Exist" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="155">
 <arguments repr="bucket, key, endpoint_url=None">
