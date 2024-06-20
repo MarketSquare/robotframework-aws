@@ -12,6 +12,20 @@ class CloudWatchKeywords(LibraryComponent):
         LibraryComponent.__init__(self, library)
         self.endpoint_url = None
 
+    @keyword('CloudWatch Set Endpoint Url')
+    def cloudwatch_set_endpoint(self, url):
+        """ The complete URL to use for the constructed CloudWatch client. Normally, botocore will automatically construct the
+        appropriate URL to use when communicating with a service. You can specify a complete URL
+        (including the “http/https” scheme) to override this behavior.
+
+        | =Arguments= | =Description= |
+        | ``url`` | <str> The complete endpoint URL. |
+
+        *Examples:*
+        | CloudWatch Set Endpoint Url | http://localhost:4566/ |
+        """
+        self.endpoint_url = url
+
     @keyword('CloudWatch Logs Insights')
     def insights_query(self, log_group, query, start_time=60):
         """Executes a query on CloudWatch Insights and return the found results in a list.
