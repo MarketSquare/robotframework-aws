@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-19T22:12:07+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="14">
+<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-20T15:42:53+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="14">
 <version>0.2.0</version>
 <doc>AWSLibrary is a testing library for Robot Framework that gives you the ability to use some of the AWS
 services in your tests. This robot library is made from Boto3 SDK
@@ -29,21 +29,110 @@ services in your tests. This robot library is made from Boto3 SDK
 <inits>
 </inits>
 <keywords>
-<kw name="CloudWatch Logs Insights" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\cloudWatch.py" lineno="15">
-<arguments repr="log_group, query, minutes_behind=60">
+<kw name="CloudWatch Logs Insights" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\cloudWatch.py" lineno="16">
+<arguments repr="log_group, query, start_time=60">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="log_group">
 <name>log_group</name>
 </arg>
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="query">
 <name>query</name>
 </arg>
-<arg kind="POSITIONAL_OR_NAMED" required="false" repr="minutes_behind=60">
-<name>minutes_behind</name>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="start_time=60">
+<name>start_time</name>
 <default>60</default>
 </arg>
 </arguments>
-<doc>TODO</doc>
-<shortdoc>TODO</shortdoc>
+<doc>Executes a query on CloudWatch Insights and return the found results in a list.
+
+| =Arguments= | =Description= |
+| ``log_group`` | &lt;str&gt; Log group name. |
+| ``query`` | &lt;str&gt; Aws query log format. |
+| ``start_time`` | &lt;str&gt; The beginning of the time range to query from now to ago in minutes. |
+
+---
+Use the same aws console ``query`` format in the argument, like this examples:
+
+- Filter only by a part of the message, return the timestamp and the message:
+| ``fields @timestamp, @message | filter @message like 'some string inside message to search' | sort @timestamp desc | limit 5``
+- Filter by json path and part of the message, return only the message:
+| ``fields @message | filter API.httpMethod = 'GET' and @message like 'Zp8beEeByQ0EDvg' | sort @timestamp desc | limit 20``
+- Find the 10 most expensive requests:
+| ``filter @type = "REPORT" | fields @requestId, @billedDuration | sort by @billedDuration desc | limit 10``
+
+For more information, see CloudWatch Logs Insights Query Syntax.
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax.html
+---
+
+*Examples:*
+| ${logs} | CloudWatch Logs Insights | /aws/group-name | query |
+| ${logs} | CloudWatch Logs Insights | /aws/group-name | query | start_time=120 |</doc>
+<shortdoc>Executes a query on CloudWatch Insights and return the found results in a list.</shortdoc>
+</kw>
+<kw name="CloudWatch Wait For Logs" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\cloudWatch.py" lineno="57">
+<arguments repr="log_group, filter_pattern, regex_pattern, seconds_behind=60, timeout=30, not_found_fail=False">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="log_group">
+<name>log_group</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="filter_pattern">
+<name>filter_pattern</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="regex_pattern">
+<name>regex_pattern</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="seconds_behind=60">
+<name>seconds_behind</name>
+<default>60</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="timeout=30">
+<name>timeout</name>
+<default>30</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="not_found_fail=False">
+<name>not_found_fail</name>
+<default>False</default>
+</arg>
+</arguments>
+<doc>Wait until find the wanted log in cloudwatch.
+
+This keyword is used to wait in real time if the desired log appears inside the informed log group.
+It works in a similar way to the existing CloudWatch filter in "Live Tail".
+
+Return all the logs that match the informed regex in a list.
+
+| =Arguments= | =Description= |
+| ``log_group`` | &lt;str&gt; Log group name. |
+| ``filter_pattern`` | &lt;str&gt; Filter for CloudWatch. |
+| ``regex_pattern`` | &lt;str&gt; Regex pattern to search in filter results. |
+| ``seconds_behind`` | &lt;str&gt; How many seconds from now to ago, used to searching the logs. |
+| ``timeout`` | &lt;str&gt; Timeout in seconds to end the search. |
+| ``not_found_fail`` | &lt;str&gt; The beginning of the time range to query in minutes. |
+
+---
+For ``filter_pattern`` use the same as aws console filter patterns in Live tail.
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html
+
+- Filter for json path in log:
+| {$.foo.bar = some_string_value}
+- Filter for json path with null value in log:
+| {$.foo.bar IS NULL}
+- Filter for INFO logs:
+| INFO
+- Filter for DEBUG logs:
+| DEBUG
+- Filter for anything in logs:
+| " "
+
+For ``regex_pattern`` use the same regular expressions that robot framework uses in BuildIn Library.
+---
+
+Note: as boto3 takes some time to get the logs and apply the regex query to each one of them, depending on the
+amount of log found, the keyword execution time may be slightly longer than the timeout.
+
+*Examples:*
+| ${logs} | CloudWatch Wait For Logs | /aws/group_name | {$.foo.bar = id_value} | 2024.*filename |
+| ${logs} | CloudWatch Wait For Logs | /aws/group_name | INFO | \\d+.*id_code | timeout=60 |
+| ${logs} | CloudWatch Wait For Logs | /aws/group_name | " " | \\w+.*some_code | not_found_fail=${True} |</doc>
+<shortdoc>Wait until find the wanted log in cloudwatch.</shortdoc>
 </kw>
 <kw name="Create Bucket" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="16">
 <arguments repr="bucket, endpoint_url=None">
