@@ -1,14 +1,15 @@
 *** Settings ***
-Library  AWSLibrary
+Library    ${CURDIR}/../../src/AWSLibrary
+Library    OperatingSystem
 
 
-*** Variable ***
-${REGION}=  us-east-1
+*** Variables ***
+${REGION}    us-east-1
 
 
-*** Keywords ***
+*** Test Cases ***
 Test Setup
-    Create Session With Keys  ${REGION}
-
-Test Teardown
+    Create Session With Keys    ${REGION}    test    test
+    ${files}    List Objects    sample-bucket    endpoint_url=http://localhost:4566/
+    Log    ${files}    warn
     Delete All Sessions
