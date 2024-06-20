@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-20T15:49:30+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="14">
+<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-20T16:01:35+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="14">
 <version>0.2.0</version>
 <doc>AWSLibrary is a testing library for Robot Framework that gives you the ability to use some of the AWS
 services in your tests. This robot library is made from Boto3 SDK
@@ -29,7 +29,7 @@ services in your tests. This robot library is made from Boto3 SDK
 <inits>
 </inits>
 <keywords>
-<kw name="CloudWatch Logs Insights" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\cloudWatch.py" lineno="16">
+<kw name="CloudWatch Logs Insights" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\cloudWatch.py" lineno="30">
 <arguments repr="log_group, query, start_time=60">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="log_group">
 <name>log_group</name>
@@ -68,7 +68,24 @@ https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax.html
 | ${logs} | CloudWatch Logs Insights | /aws/group-name | query | start_time=120 |</doc>
 <shortdoc>Executes a query on CloudWatch Insights and return the found results in a list.</shortdoc>
 </kw>
-<kw name="CloudWatch Wait For Logs" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\cloudWatch.py" lineno="57">
+<kw name="CloudWatch Set Endpoint Url" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\cloudWatch.py" lineno="16">
+<arguments repr="url">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="url">
+<name>url</name>
+</arg>
+</arguments>
+<doc>The complete URL to use for the constructed CloudWatch client. Normally, botocore will automatically construct the
+appropriate URL to use when communicating with a service. You can specify a complete URL
+(including the “http/https” scheme) to override this behavior.
+
+| =Arguments= | =Description= |
+| ``url`` | &lt;str&gt; The complete endpoint URL. |
+
+*Examples:*
+| CloudWatch Set Endpoint Url | http://localhost:4566/ |</doc>
+<shortdoc>The complete URL to use for the constructed CloudWatch client. Normally, botocore will automatically construct the appropriate URL to use when communicating with a service. You can specify a complete URL (including the “http/https” scheme) to override this behavior.</shortdoc>
+</kw>
+<kw name="CloudWatch Wait For Logs" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\cloudWatch.py" lineno="71">
 <arguments repr="log_group, filter_pattern, regex_pattern, seconds_behind=60, timeout=30, not_found_fail=False">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="log_group">
 <name>log_group</name>
