@@ -69,7 +69,7 @@ class CloudWatchKeywords(LibraryComponent):
         | ``regex_pattern`` | <str> Regex pattern to search in filter results. |
         | ``seconds_behind`` | <str> How many seconds from now to ago, used to searching the logs. |
         | ``timeout`` | <str> Timeout in seconds to end the search. |
-        | ``not_found_fail`` | <str> The beginning of the time range to query in minutes. |
+        | ``not_found_fail`` | <bool> If set as True, the keyword will fail if not find any log |
 
         ---
         For ``filter_pattern`` use the same as aws console filter patterns in Live tail.

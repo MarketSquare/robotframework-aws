@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-20T15:42:53+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="14">
+<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-20T15:49:30+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="14">
 <version>0.2.0</version>
 <doc>AWSLibrary is a testing library for Robot Framework that gives you the ability to use some of the AWS
 services in your tests. This robot library is made from Boto3 SDK
@@ -105,7 +105,7 @@ Return all the logs that match the informed regex in a list.
 | ``regex_pattern`` | &lt;str&gt; Regex pattern to search in filter results. |
 | ``seconds_behind`` | &lt;str&gt; How many seconds from now to ago, used to searching the logs. |
 | ``timeout`` | &lt;str&gt; Timeout in seconds to end the search. |
-| ``not_found_fail`` | &lt;str&gt; The beginning of the time range to query in minutes. |
+| ``not_found_fail`` | &lt;bool&gt; If set as True, the keyword will fail if not find any log |
 
 ---
 For ``filter_pattern`` use the same as aws console filter patterns in Live tail.
