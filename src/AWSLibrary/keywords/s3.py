@@ -6,6 +6,10 @@ import botocore
 
 class S3Keywords(LibraryComponent):
 
+    def __init__(self, library):
+        LibraryComponent.__init__(self, library)
+        self.endpoint_url = None
+
     # begin of deprecated keywords
 
     @keyword('Create Bucket')
@@ -128,7 +132,7 @@ class S3Keywords(LibraryComponent):
 
         | =Arguments= | =Description= |
         | ``bucket`` | <str> The bucket name. |
-        | ``key`` | <str> complete s3 filepath. |
+        | ``key`` | <str> Complete s3 filepath. |
         | ``path`` | <str> Complete local filepath. |
 
         *Examples:*
@@ -156,7 +160,7 @@ class S3Keywords(LibraryComponent):
 
         | =Arguments= | =Description= |
         | ``bucket`` | <str> The bucket name. |
-        | ``key`` | <str> complete s3 filepath. |
+        | ``key`` | <str> Complete s3 filepath. |
 
         *Examples:*
         | Key Should Exist | bucket_name | s3_file.txt |
@@ -179,7 +183,7 @@ class S3Keywords(LibraryComponent):
 
         | =Arguments= | =Description= |
         | ``bucket`` | <str> The bucket name. |
-        | ``key`` | <str> complete s3 filepath. |
+        | ``key`` | <str> Complete s3 filepath. |
 
         *Examples:*
         | Key Should Not Exist | bucket_name | s3_file.txt |
@@ -196,6 +200,19 @@ class S3Keywords(LibraryComponent):
                 raise Exception(e)
 
     # end of deprecated keywords
+    @keyword('S3 Set Endpoint Url')
+    def s3_set_endpoint(self, url):
+        """ The complete URL to use for the constructed S3 client. Normally, botocore will automatically construct the
+        appropriate URL to use when communicating with a service. You can specify a complete URL
+        (including the “http/https” scheme) to override this behavior.
+
+        | =Arguments= | =Description= |
+        | ``url`` | <str> The complete endpoint URL. |
+
+        *Examples:*
+        | S3 Set Endpoint Url | http://localhost:4566/ |
+        """
+        self.endpoint_url = url
 
     @keyword('S3 Create Bucket')
     def s3_create_bucket(self, bucket):
@@ -238,7 +255,7 @@ class S3Keywords(LibraryComponent):
         | S3 List Objects | bucket_name | folder_name |
         | S3 List Objects | bucket_name | folder_name/start_of_the_filename |
         """
-        client = self.library.session.client('s3')
+        client = self.library.session.client('s3', endpoint_url=self.endpoint_url)
         try:
             response = client.list_objects_v2(
                 Bucket=bucket,
@@ -257,13 +274,13 @@ class S3Keywords(LibraryComponent):
 
         | =Arguments= | =Description= |
         | ``bucket`` | <str> The bucket name. |
-        | ``key`` | <str> complete s3 filepath. |
+        | ``key`` | <str> Complete s3 filepath. |
 
         *Examples:*
         | S3 Delete File | bucket_name | file.txt |
         | S3 Delete File | bucket_name | folder/file.txt |
         """
-        client = self.library.session.client('s3')
+        client = self.library.session.client('s3', endpoint_url=self.endpoint_url)
         try:
             response = client.delete_object(
                 Bucket=bucket,
@@ -279,14 +296,14 @@ class S3Keywords(LibraryComponent):
 
         | =Arguments= | =Description= |
         | ``bucket`` | <str> The bucket name. |
-        | ``key`` | <str> complete s3 filepath. |
+        | ``key`` | <str> Complete s3 filepath. |
         | ``local_path`` | <str> Complete local filepath. |
 
         *Examples:*
         | S3 Download File | bucket_name | s3_file.txt | ${OUTPUTDIR}/file.txt |
         | S3 Download File | bucket_name | folder/s3_file.txt | ${OUTPUTDIR}/file.txt |
         """
-        client = self.library.session.client('s3')
+        client = self.library.session.client('s3', endpoint_url=self.endpoint_url)
         try:
             client.download_file(bucket, key, local_filepath)
         except botocore.exceptions.ClientError as e:
@@ -298,14 +315,14 @@ class S3Keywords(LibraryComponent):
 
         | =Arguments= | =Description= |
         | ``bucket`` | <str> The bucket name. |
-        | ``key`` | <str> complete s3 filepath. |
+        | ``key`` | <str> Complete s3 filepath. |
         | ``local_path`` | <str> Complete local filepath. |
 
         *Examples:*
         | S3 Upload File | bucket_name | s3_file.txt | ${CURDIR}/file.txt |
         | S3 Upload File | bucket_name | folder/s3_file.txt | ${CURDIR}/file.txt |
         """
-        client = self.library.session.client('s3')
+        client = self.library.session.client('s3', endpoint_url=self.endpoint_url)
         try:
             client.upload_file(local_path, bucket, key)
             response = client.head_object(
@@ -322,16 +339,17 @@ class S3Keywords(LibraryComponent):
 
         | =Arguments= | =Description= |
         | ``bucket`` | <str> The bucket name. |
-        | ``key`` | <str> complete s3 filepath. |
+        | ``key`` | <str> Complete s3 filepath. |
 
         *Examples:*
         | S3 Key Should Exist | bucket_name | s3_file.txt |
         | S3 Key Should Exist | bucket_name | folder/s3_file.txt |
         """
-        client = self.library.session.client("s3")
+        client = self.library.session.client("s3", endpoint_url=self.endpoint_url)
         try:
             client.head_object(Bucket=bucket, Key=key)
-        except botocore.exceptions.ClientError:
+        except botocore.exceptions.ClientError as e:
+            logger.info(e)
             raise Exception(f"Key: {key} does not exist inside {bucket}")
 
     @keyword('S3 Key Should Not Exist')
@@ -340,13 +358,13 @@ class S3Keywords(LibraryComponent):
 
         | =Arguments= | =Description= |
         | ``bucket`` | <str> The bucket name. |
-        | ``key`` | <str> complete s3 filepath. |
+        | ``key`` | <str> Complete s3 filepath. |
 
         *Examples:*
         | S3 Key Should Not Exist | bucket_name | s3_file.txt |
         | S3 Key Should Not Exist | bucket_name | folder/s3_file.txt |
         """
-        client = self.library.session.client('s3')
+        client = self.library.session.client('s3', endpoint_url=self.endpoint_url)
         try:
             response = client.head_object(Bucket=bucket, Key=key)
             if response['ResponseMetadata']['HTTPStatusCode'] == 200:
@@ -354,3 +372,61 @@ class S3Keywords(LibraryComponent):
         except botocore.exceptions.ClientError as e:  # noqa
             if e.response['ResponseMetadata']['HTTPStatusCode'] != 404:
                 raise Exception(e)
+
+    @keyword('S3 Get File Content')
+    def s3_get_content(self, bucket, key):
+        """ Get the file content in S3 bucket.
+
+        | =Arguments= | =Description= |
+        | ``bucket`` | <str> The bucket name. |
+        | ``key`` | <str> Complete s3 filepath. |
+
+        *Examples:*
+        | Get S3 File Content | bucket_name | s3_file.json |
+        | Get S3 File Content | bucket_name | folder_name/s3_file.txt |
+        """
+        client = self.library.session.client('s3', endpoint_url=self.endpoint_url)
+        try:
+            s3_object = client.get_object(Bucket=bucket, Key=key)
+        except botocore.exceptions.ClientError as e:
+            logger.info(e)
+            raise Exception(f"Key: {key} does not exist inside {bucket}")
+        return s3_object['Body'].read()
+
+    @keyword('S3 Get File Metadata')
+    def s3_get_metadata(self, bucket, key):
+        """ Get the file metadata in S3 bucket.
+
+        | =Arguments= | =Description= |
+        | ``bucket`` | <str> The bucket name. |
+        | ``key`` | <str> Complete s3 filepath. |
+
+        *Examples:*
+        | Get S3 File Metadata | bucket_name | s3_file.json |
+        | Get S3 File Metadata | bucket_name | folder_name/s3_file.txt |
+        """
+        client = self.library.session.client('s3', endpoint_url=self.endpoint_url)
+        try:
+            metadata = client.head_object(Bucket=bucket, Key=key)
+        except botocore.exceptions.ClientError as e:
+            logger.info(e)
+            raise Exception(f"Key: {key} does not exist inside {bucket}")
+        return metadata
+
+    @keyword('S3 Copy Between Buckets')
+    def s3_copy_file(self, source_bucket, source_key, destination_bucket, destination_key):
+        """ Copy a file from a S3 bucket to another bucket.
+
+        | =Arguments= | =Description= |
+        | ``source_bucket`` | <str> Source bucket name. |
+        | ``source_key`` | <str> Complete source s3 filepath. |
+        | ``destination_bucket`` | <str> Destination bucket name. |
+        | ``destination_key`` | <str> complete destination s3 filepath. |
+
+        *Examples:*
+        | S3 Copy Between Buckets | source-bucket-name | file.json | destination-bucket-name | bkp_file.json |
+        | S3 Copy Between Buckets | source-bucket-name | folder/file.json | destination-bucket-name | backup_folder/bkp_file.json |
+        """
+        client = self.library.session.client('s3', endpoint_url=self.endpoint_url)
+        copy_source = {'Bucket': source_bucket, 'Key': source_key}
+        client.copy(copy_source, destination_bucket, destination_key)

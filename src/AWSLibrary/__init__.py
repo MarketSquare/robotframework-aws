@@ -4,7 +4,8 @@ from AWSLibrary.keywords import (
     SessionKeywords,
     S3Keywords,
     ResourceKeywords,
-    DynamoKeywords
+    DynamoKeywords,
+    CloudWatchKeywords
 )
 from AWSLibrary.version import get_version
 __version__ = get_version()
@@ -45,5 +46,6 @@ class AWSLibrary(DynamicCore):
             S3Keywords(self),
             ResourceKeywords(self),
             DynamoKeywords(self),
+            CloudWatchKeywords(self),
         ]
         DynamicCore.__init__(self, libraries)

@@ -9,7 +9,7 @@ def readme():
 
 setup(
     name='robotframework-aws',
-    version='0.1.0',
+    version='0.2.0',
     author="Dillan Teagle",
     author_email="softwaredeveloper@dillanteagle.me",
     description="A python package to test AWS services in Robot Framework",

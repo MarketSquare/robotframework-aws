@@ -73,7 +73,23 @@ class SessionKeywords(LibraryComponent):
             profile_name=profile,
             region_name=region
         )
-        logger.info(f"Session created: {str(session)} using prifile: {profile}")
+        logger.info(f"Session created: {str(session)} using profile: {profile}")
+        self._cache.register(session, alias=region)
+        self.library.session = session
+        return session
+
+    @keyword('Create Session With Role')
+    def create_session_with_role(self, region):
+        """ Create an AWS session in region using current role context.
+
+        | =Arguments= | =Description= |
+        | ``region`` | <str> The AWS region name. |
+
+        *Examples:*
+        | Create Session With Role | eu-west-1 |
+        """
+        session = boto3.Session(region_name=region)
+        logger.info(f"Session created: {str(session)} using current role context")
         self._cache.register(session, alias=region)
         self.library.session = session
         return session

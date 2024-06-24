@@ -1,5 +1,9 @@
 # ***** UNDER CONSTRUCTION *****
 
+We are working to create an environment with tests in localstack https://github.com/localstack/localstack if you have 
+experience with this tool and time, any help will be appreciated.
+
+
 ## Contributing to RobotFramework-AWS
 
 Thank you for considering contributing to a library for interacting with AWS Services in RobotFramework for Test Automation.
