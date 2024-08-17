@@ -32,7 +32,6 @@ Invalid Queue Name
     END
     Should Be Equal    ${error}    Queue name '${invalid_queue}' not found.
     
-    
 Delete Messages
     Delete All Messages In SQS    ${queue}
     ${messages}    Receive Messages From SQS    ${queue}
