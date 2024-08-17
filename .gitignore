@@ -134,3 +134,6 @@ dmypy.json
 .idea
 tests/robot/local_tests.robot
 log/
+
+# localstack
+localstack/.localstack/

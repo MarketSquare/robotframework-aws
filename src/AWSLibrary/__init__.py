@@ -1,3 +1,4 @@
+from AWSLibrary.keywords.sqs import SQSKeywords
 from .librarycomponent import LibraryComponent
 from robotlibcore import DynamicCore
 from AWSLibrary.keywords import (
@@ -47,5 +48,6 @@ class AWSLibrary(DynamicCore):
             ResourceKeywords(self),
             DynamoKeywords(self),
             CloudWatchKeywords(self),
+            SQSKeywords(self)
         ]
         DynamicCore.__init__(self, libraries)

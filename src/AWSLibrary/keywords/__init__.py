@@ -3,6 +3,7 @@ from AWSLibrary.keywords.s3 import S3Keywords
 from AWSLibrary.keywords.resource import ResourceKeywords
 from AWSLibrary.keywords.dynamo import DynamoKeywords
 from AWSLibrary.keywords.cloudWatch import CloudWatchKeywords
+from AWSLibrary.keywords.sqs import SQSKeywords
 
 
 __all__ = [
@@ -10,5 +11,6 @@ __all__ = [
     S3Keywords,
     ResourceKeywords,
     DynamoKeywords,
-    CloudWatchKeywords
+    CloudWatchKeywords,
+    SQSKeywords
 ]
