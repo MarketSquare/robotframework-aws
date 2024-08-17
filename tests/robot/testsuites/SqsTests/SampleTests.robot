@@ -1,7 +1,9 @@
 *** Settings ***
-Library    AWSLibrary
+Library    ${CURDIR}/../../../../src/AWSLibrary
+#Library    AWSLibrary
 Library    Collections
-Library    SeleniumLibrary
+Library    OperatingSystem
+#Library    SeleniumLibrary
 Suite Setup    Create Session With Keys  ${REGION}  ${ACCESS_KEY}  ${SECRET_KEY}
 Suite Teardown    Delete All Sessions
 
@@ -12,6 +14,10 @@ ${SECRET_KEY}    dummy
 
 
 *** Test Cases ***
+#test
+#    ${path}    Normalize path    ${CURDIR}/../../../../src/AWSLibrary
+#    Log     ${path}    warn
+#    Import Library    ${path}
 
 Send and Recieve Message
     SQS Set Endpoint Url    http://localhost:4566    # Point to localstack sqs instance

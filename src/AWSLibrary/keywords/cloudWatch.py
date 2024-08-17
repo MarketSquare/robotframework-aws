@@ -108,8 +108,8 @@ class CloudWatchKeywords(LibraryComponent):
 
         *Examples:*
         | ${logs} | CloudWatch Wait For Logs | /aws/group_name | {$.foo.bar = id_value} | 2024.*filename |
-        | ${logs} | CloudWatch Wait For Logs | /aws/group_name | INFO | \\\d+.*id_code | timeout=60 |
-        | ${logs} | CloudWatch Wait For Logs | /aws/group_name | " " | \\\w+.*some_code | not_found_fail=${True} |
+        | ${logs} | CloudWatch Wait For Logs | /aws/group_name | INFO | code.*id_code | timeout=60 |
+        | ${logs} | CloudWatch Wait For Logs | /aws/group_name | " " | code.*some_code | not_found_fail=${True} |
         """
         client = self.library.session.client('logs', endpoint_url=self.endpoint_url)
         stream_response = client.describe_log_streams(logGroupName=log_group,
