@@ -1,10 +1,8 @@
 *** Settings ***
 Library    ${CURDIR}/../../../../src/AWSLibrary
-#Library    AWSLibrary
 Library    Collections
 Library    OperatingSystem
-#Library    SeleniumLibrary
-Suite Setup    Create Session With Keys  ${REGION}  ${ACCESS_KEY}  ${SECRET_KEY}
+Suite Setup
 Suite Teardown    Delete All Sessions
 
 *** Variables ***
@@ -14,13 +12,8 @@ ${SECRET_KEY}    dummy
 
 
 *** Test Cases ***
-#test
-#    ${path}    Normalize path    ${CURDIR}/../../../../src/AWSLibrary
-#    Log     ${path}    warn
-#    Import Library    ${path}
-
 Send and Recieve Message
-    SQS Set Endpoint Url    http://localhost:4566    # Point to localstack sqs instance
+#    SQS Set Endpoint Url    http://localhost:4566    # Point to localstack sqs instance
     Send Message To SQS    test-queueName    Hello world!
     Sleep    2
     ${messages}    Receive Messages From SQS    test-queueName
@@ -30,7 +23,7 @@ Send and Recieve Message
     Should Be Equal    ${actual_value}   Hello world!
 
 Invalid Queue Name
-    SQS Set Endpoint Url    http://localhost:4566    # Point to localstack sqs instance
+#    SQS Set Endpoint Url    http://localhost:4566    # Point to localstack sqs instance
     TRY
         Send Message To SQS    invalid-queueName    Hello world!
     EXCEPT    Queue name 'invalid-queueName' not found.
@@ -38,9 +31,13 @@ Invalid Queue Name
     END
     
 Delete Messages
-    SQS Set Endpoint Url    http://localhost:4566    # Point to localstack sqs instance
+#    SQS Set Endpoint Url    http://localhost:4566    # Point to localstack sqs instance
     Delete All Messages In SQS    test-queueName
     ${messages}    Receive Messages From SQS    test-queueName
     ${count}    Get Length    ${messages}
     Should Be Equal As Integers    ${count}   0
 
+*** Keywords ***
+Create Session And Set Endpoint
+    Create Session With Keys    ${REGION}    ${ACCESS_KEY}    ${SECRET_KEY}
+    SQS Set Endpoint Url    http://localhost:4566    # Point to localstack sqs instance
