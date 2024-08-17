@@ -2,7 +2,7 @@
 Library    ${CURDIR}/../../../../src/AWSLibrary
 Library    Collections
 Library    OperatingSystem
-Suite Setup
+Suite Setup    Create Session And Set Endpoint
 Suite Teardown    Delete All Sessions
 
 *** Variables ***
