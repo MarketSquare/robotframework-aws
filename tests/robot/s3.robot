@@ -57,6 +57,7 @@ Test Get Content
     [Setup]    S3 Upload File    ${BUCKET_NAME}    s3_file_to_read.txt    ${CURDIR}/data/local_file.txt
     ${content}    S3 Get File Content    ${BUCKET_NAME}    s3_file_to_read.txt
     Should Be Equal As Strings    ${content}    file for robot testing.
+    [Teardown]    S3 Delete File    ${BUCKET_NAME}    s3_file_to_read.txt
 
 Test Copy
     [Tags]    s3
