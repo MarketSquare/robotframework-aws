@@ -20,7 +20,7 @@ Test Upload And List
 Test Remove
     [Tags]    s3
     S3 Key Should Not Exist    ${BUCKET_NAME}    s3_file_to_remove.txt
-    ${objects}    S3 List Objects    ${BUCKET_NAME}
+    ${objects}    S3 List Objects    ${BUCKET_NAME}    prefix=s3_file_to_remove
     Should Be Empty    ${objects}
     S3 Upload File    ${BUCKET_NAME}    s3_file_to_remove.txt    ${CURDIR}/data/local_file.txt
     S3 Key Should Exist    ${BUCKET_NAME}    s3_file_to_remove.txt
