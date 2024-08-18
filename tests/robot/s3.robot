@@ -56,7 +56,7 @@ Test Get Content
     [Tags]    s3
     [Setup]    S3 Upload File    ${BUCKET_NAME}    s3_file_to_read.txt    ${CURDIR}/data/local_file.txt
     ${content}    S3 Get File Content    ${BUCKET_NAME}    s3_file_to_read.txt
-    Should Be Equal As Strings    ${content}    file for robot testing.
+    Should Be Equal As Strings    ${content}    File for Robot Framework test
     [Teardown]    S3 Delete File    ${BUCKET_NAME}    s3_file_to_read.txt
 
 Test Copy
@@ -71,4 +71,7 @@ Test Metadata
     [Tags]    s3
     [Setup]    S3 Upload File    ${BUCKET_NAME}    s3_file_metadata.txt    ${CURDIR}/data/local_file.txt
     ${metadata}    S3 Get File Metadata    ${BUCKET_NAME}    s3_file_metadata.txt
-    Log    ${metadata}    warn
+    Dictionary Should Contain Key    ${metadata}    ResponseMetadata
+    Dictionary Should Contain Key    ${metadata}    Metadata
+    Dictionary Should Contain Key    ${metadata}[ResponseMetadata]    RequestId
+    Dictionary Should Contain Key    ${metadata}[ResponseMetadata][HTTPHeaders]    last-modified
