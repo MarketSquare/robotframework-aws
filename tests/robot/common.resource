@@ -3,6 +3,7 @@ Library    ${CURDIR}/../../src/AWSLibrary
 Library    Collections
 Library    OperatingSystem
 
+
 *** Variables ***
 ${REGION}    us-east-1
 ${ACCESS_KEY}    dummy

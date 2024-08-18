@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    data.resource
+Resource    common.resource
 Suite Setup    Create Session And Set Endpoint
 Suite Teardown    Delete All Sessions
 
@@ -11,6 +11,7 @@ ${INVALID_QUEUE}    invalid-queueName
 
 *** Test Cases ***
 Send and Recieve Message
+    [Tags]    sqs
     Send Message To SQS    ${QUEUE_NAME}    Hello world!
     Sleep    2
     ${messages}    Receive Messages From SQS    ${QUEUE_NAME}
@@ -20,6 +21,7 @@ Send and Recieve Message
     Should Be Equal    ${actual_value}   Hello world!
 
 Invalid Queue Name
+    [Tags]    sqs
     TRY
         Send Message To SQS    ${INVALID_QUEUE}    Hello world!
     EXCEPT    AS    ${error}
@@ -28,6 +30,7 @@ Invalid Queue Name
     Should Be Equal    ${error}    Queue name '${INVALID_QUEUE}' not found.
     
 Delete Messages
+    [Tags]    sqs
     Delete All Messages In SQS    ${QUEUE_NAME}
     ${messages}    Receive Messages From SQS    ${QUEUE_NAME}
     ${count}    Get Length    ${messages}

@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    data.resource
+Resource    common.resource
 Suite Setup    Create Session And Set Endpoint
 Suite Teardown    Delete All Sessions
 

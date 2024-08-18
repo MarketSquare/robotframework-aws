@@ -1,113 +1,71 @@
-# ***** UNDER CONSTRUCTION *****
+# Development environment
+
+Feel free to create issues for ideas for new functionality with other aws services
 
 We are working to create an environment with tests in localstack https://github.com/localstack/localstack if you have 
 experience with this tool and time, any help will be appreciated.
 
-
 ## Contributing to RobotFramework-AWS
 
-Thank you for considering contributing to a library for interacting with AWS Services in RobotFramework for Test Automation.
+Thank you for considering contributing to a library for interacting with AWS services in RobotFramework 
+for test automation.
 
-Let's go over setting up the development environment.
-
-Setup virtualenvironment:
-
-```sh
-python -m venv venv
-```
-
-activate
-
-```sh
-source venv/bin/activate
-```
-
-install dependencies
+Configure your environment as desired, the requirements are in the requirements.txt file
 
 ```sh
 pip install -r requirements.txt
 ```
 
-set environment variables for aws as ACCESS_KEY and SECRET_KEY
+## Testing
 
-install package development setup from root directory where setup.py is
+### Localstack
 
+For now, we have inside the folder localstack the docker compose file and in the init-aws.sh the commands to send
+for localstack.
+
+To start localstack just run inside localstack folder:
 ```sh
-pip install -e .
+docker-compose up
 ```
+Then you can use inside robot, the endpoint http://localhost:4566
 
-## TESTING
+### Robot Framework
 
-For every keyword or method created, will be followed with two different tests. Unit and Robot tests.
-Located in the tests directory are separated tests by type unit/robot.
+The tests suites are inside tests/robot folder
 
-Robot Tests will need a configuration file added to the root of robot/ for tests to run.
+The common variables, keywords and libraries should be in common.resource file. The tests suites have the 
+aws module name like s3.robot or sqs.robot then we can run it separately.
 
-`run_arguments.robot`
+Any extra file like txt, json, csv or similar should be inside data folder.
+
+The robot files should import only the common.resource.
 
 ```robotframework
-## SUITE NAME
---name AWS Library Testing
-
-## SETTINGS
-# tools must be in same directory as run_arguments.robot
---pythonpath ./AWSLibrary
---pythonpath .
-
-# LOG LEVEL
-# --loglevel DEBUG
---loglevel INFO
-
-# put all logs into directory
---outputdir reports
-# --timestampoutputs
---debugfile debug.log
-
-## VIRTUAL DISPLAY
--v USE_XVFB:True
-
-## PROXY
--v USE_PROXY:False
--v PROXY_TYPE:socks
--v PROXY_HOST:localhost
--v PROXY_PORT:9999
-
-## VARIABLES
--v ACCESS_KEY:
--v SECRET_KEY:
-
-testsuites/
+*** Settings ***
+Resource    common.resource
+Suite Setup    Create Session And Set Endpoint
+Suite Teardown    Delete All Sessions
 ```
 
-## Local AWS Services with Localstack
+All the libraries import should be in common.resource, as the suite setup.
 
-```sh
-docker-compose up -d
+```robotframework
+*** Settings ***
+Library    ${CURDIR}/../../src/AWSLibrary
+Library    Collections
+Library    OperatingSystem
 
+
+*** Keywords ***
+Create Session And Set Endpoint
+    Create Session With Keys    ${REGION}    ${ACCESS_KEY}    ${SECRET_KEY}
+    SQS Set Endpoint Url    http://localhost:4566    # Point to localstack sqs instance
+    S3 Set Endpoint Url    http://localhost:4566    # Point to localstack s3 instance
 ```
 
-<http://localhost:8055/>
+### TO-DO
 
-Make sure and add your aws credentials in the variables section.
-
-Unit tests and Robot Tests are automated with tox. You can run tox to test your build before committing your changes
-
-```sh
-tox
-```
-
-Upon pushing your branch. Tox will run and travis ci will run the reports
-
-Tox will grab the AWS environment variables that you set. which you can see in tox.ini
-
-### Pre Commit
-
-We use flake8 for checking for linting errors
-
-Git Secrets will run on commit to make sure there are no hardcoded credentials in any files
-
-Upon pushing your branch. Tox will run and travis ci will run the reports
-
-### Issues
-
-Feel free to create issues for ideas for new functionality with other aws services
+* Create CloudWatch and DynamoDB in localstack and create robot tests
+* Add more services in library and in localstack
+* Add robot tests for this new services
+* Create GitHub actions to run the tests in push and merges.
