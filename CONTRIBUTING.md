@@ -65,7 +65,7 @@ Create Session And Set Endpoint
 
 ### TO-DO
 
-* Create CloudWatch and DynamoDB in localstack and create robot tests
-* Add more services in library and in localstack
-* Add robot tests for this new services
-* Create GitHub actions to run the tests in push and merges.
+- [ ]  Create CloudWatch and DynamoDB in localstack and create robot tests
+- [ ]  Add more services in library and in localstack
+- [ ]  Add robot tests for this new services
+- [ ]  Create GitHub actions to run the tests in push and merges.
