@@ -1,24 +1,19 @@
 *** Settings ***
-Library    ${CURDIR}/../../../../src/AWSLibrary
-Library    Collections
-Library    OperatingSystem
+Resource    data.resource
 Suite Setup    Create Session And Set Endpoint
 Suite Teardown    Delete All Sessions
 
 
 *** Variables ***
-${REGION}    us-east-1
-${ACCESS_KEY}    dummy
-${SECRET_KEY}    dummy
-${queue}    test-queueName
-${invalid_queue}    invalid-queueName
+${QUEUE_NAME}    test-queueName
+${INVALID_QUEUE}    invalid-queueName
 
 
 *** Test Cases ***
 Send and Recieve Message
-    Send Message To SQS    ${queue}    Hello world!
+    Send Message To SQS    ${QUEUE_NAME}    Hello world!
     Sleep    2
-    ${messages}    Receive Messages From SQS    ${queue}
+    ${messages}    Receive Messages From SQS    ${QUEUE_NAME}
     ${dict_message}    Set Variable    ${messages}[0]
     Dictionary Should Contain Key    ${dict_message}    Body
     ${actual_value}    Get From Dictionary    ${dict_message}    Body
@@ -26,20 +21,14 @@ Send and Recieve Message
 
 Invalid Queue Name
     TRY
-        Send Message To SQS    ${invalid_queue}    Hello world!
+        Send Message To SQS    ${INVALID_QUEUE}    Hello world!
     EXCEPT    AS    ${error}
         Log    ${error}
     END
-    Should Be Equal    ${error}    Queue name '${invalid_queue}' not found.
+    Should Be Equal    ${error}    Queue name '${INVALID_QUEUE}' not found.
     
 Delete Messages
-    Delete All Messages In SQS    ${queue}
-    ${messages}    Receive Messages From SQS    ${queue}
+    Delete All Messages In SQS    ${QUEUE_NAME}
+    ${messages}    Receive Messages From SQS    ${QUEUE_NAME}
     ${count}    Get Length    ${messages}
     Should Be Equal As Integers    ${count}   0
-
-
-*** Keywords ***
-Create Session And Set Endpoint
-    Create Session With Keys    ${REGION}    ${ACCESS_KEY}    ${SECRET_KEY}
-    SQS Set Endpoint Url    http://localhost:4566    # Point to localstack sqs instance
