@@ -6,6 +6,7 @@ Suite Teardown    Delete All Sessions
 
 *** Variables ***
 ${BUCKET_NAME}    test-bucket
+${BUCKET_NAME_2}    test-bucket-2
 
 
 *** Test Cases ***
@@ -16,6 +17,7 @@ Test Upload And List
 	Should Not Be Empty    ${objects}
 	Should Be Equal    ${objects}[0]    s3_file.txt
 	S3 Key Should Exist    ${BUCKET_NAME}    s3_file.txt
+	[Teardown]    S3 Delete File    ${BUCKET_NAME}    s3_file.txt
 
 Test Remove And List With Prefix
     [Tags]    s3
@@ -34,17 +36,18 @@ Test Download
     S3 Upload File    ${BUCKET_NAME}    s3_file_to_download.txt    ${CURDIR}/data/local_file.txt
     S3 Download File    ${BUCKET_NAME}    s3_file_to_download.txt    ${OUTPUTDIR}/downloaded_file.txt
     File Should Exist    ${OUTPUTDIR}/downloaded_file.txt
+    [Teardown]    S3 Delete File    ${BUCKET_NAME}    s3_file_to_download.txt
 
 Test Get Content
-    [Tags]    s3
+    [Tags]    s33
     [Setup]    S3 Upload File    ${BUCKET_NAME}    s3_file_to_read.txt    ${CURDIR}/data/local_file.txt
     ${content}    S3 Get File Content    ${BUCKET_NAME}    s3_file_to_read.txt
-    Should Be Equal    ${content}    file for robot testing.
+    Should Be Equal As Strings    ${content}    file for robot testing.
 
-Test Create Bucket And Copy
+Test Copy
     [Tags]    s3
     [Setup]    S3 Upload File    ${BUCKET_NAME}    s3_file_to_copy.txt    ${CURDIR}/data/local_file.txt
-    ${id}    Evaluate    random.sample(range(1111, 9999), 1)    random
-    S3 Create Bucket    new-bucket-${id}
-    S3 Copy Between Buckets    ${BUCKET_NAME}    s3_file_to_copy.txt    new-bucket-${id}    s3_file_copied.txt
-    S3 Key Should Exist    new-bucket-${id}    s3_file_copied.txt
+    S3 Copy Between Buckets    ${BUCKET_NAME}    s3_file_to_copy.txt    ${BUCKET_NAME_2}    s3_file_copied.txt
+    S3 Key Should Exist    ${BUCKET_NAME_2}    s3_file_copied.txt
+    [Teardown]    Run Keywords    S3 Delete File    ${BUCKET_NAME}    s3_file_to_copy.txt
+    ...    AND    S3 Delete File    ${BUCKET_NAME_2}    s3_file_copied.txt
