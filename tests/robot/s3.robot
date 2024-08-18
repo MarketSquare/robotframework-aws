@@ -75,3 +75,4 @@ Test Metadata
     Dictionary Should Contain Key    ${metadata}    Metadata
     Dictionary Should Contain Key    ${metadata}[ResponseMetadata]    RequestId
     Dictionary Should Contain Key    ${metadata}[ResponseMetadata][HTTPHeaders]    last-modified
+    [Teardown]    S3 Delete File    ${BUCKET_NAME}    s3_file_metadata.txt
