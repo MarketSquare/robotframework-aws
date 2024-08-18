@@ -47,7 +47,8 @@ Suite Setup    Create Session And Set Endpoint
 Suite Teardown    Delete All Sessions
 ```
 
-All the libraries import should be in common.resource, as the suite setup.
+All the libraries import should be in common.resource, as the suite setup. The import to AWSLibrary is relative to 
+project source, because then you can test the new keywords or changes just running locally the tests
 
 ```robotframework
 *** Settings ***
@@ -61,6 +62,18 @@ Create Session And Set Endpoint
     Create Session With Keys    ${REGION}    ${ACCESS_KEY}    ${SECRET_KEY}
     SQS Set Endpoint Url    http://localhost:4566    # Point to localstack sqs instance
     S3 Set Endpoint Url    http://localhost:4566    # Point to localstack s3 instance
+```
+
+To run with debug level all tests, from the main folder:
+```sh
+robot -d log -L TRACE tests/robot
+```
+
+To run just one module, like s3:
+```sh
+robot -d log -L TRACE tests/robot/s3.robot
+# or
+robot -d log -L TRACE -i s3 tests/robot
 ```
 
 ### TO-DO
