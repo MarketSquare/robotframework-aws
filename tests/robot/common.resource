@@ -8,10 +8,11 @@ Library    OperatingSystem
 ${REGION}    us-east-1
 ${ACCESS_KEY}    dummy
 ${SECRET_KEY}    dummy
-
+#${LOCALSTACK_ENDPOINT}    http://localhost:4566
+${LOCALSTACK_ENDPOINT}    http://192.168.1.86:4566
 
 *** Keywords ***
 Create Session And Set Endpoint
     Create Session With Keys    ${REGION}    ${ACCESS_KEY}    ${SECRET_KEY}
-    SQS Set Endpoint Url    http://localhost:4566    # Point to localstack sqs instance
-    S3 Set Endpoint Url    http://localhost:4566    # Point to localstack s3 instance
+    SQS Set Endpoint Url    ${LOCALSTACK_ENDPOINT}    # Point to localstack sqs instance
+    S3 Set Endpoint Url    ${LOCALSTACK_ENDPOINT}    # Point to localstack s3 instance

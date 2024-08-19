@@ -11,6 +11,7 @@ services:
       - DEBUG=1
       - DOCKER_HOST=unix:///var/run/docker.sock
       - AWS_DEFAULT_REGION=us-east-1
+      - GATEWAY_LISTEN=0.0.0.0
     volumes:
       - './init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh'
       - .localstack:/var/lib/localstack

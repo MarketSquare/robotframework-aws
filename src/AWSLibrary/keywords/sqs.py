@@ -2,7 +2,6 @@ import botocore
 from AWSLibrary.librarycomponent import LibraryComponent
 from robot.api import logger
 from robot.api.deco import keyword
-from mypy_boto3_sqs import SQSClient
 
 
 class SQSKeywords(LibraryComponent):
@@ -38,7 +37,6 @@ class SQSKeywords(LibraryComponent):
         | Send Message To SQS | queue_name | Hello World! |
         
         *Example 2:*
-        | ${example_type} | Create Dictionary | StringValue | 123 | DataType | String |
         | ${message_attributes} | Create Dictionary | Example | ${order_type} |
         | Send Message To SQS | sqs_name | Hello World! | ${message_attributes} |
         """
@@ -46,7 +44,6 @@ class SQSKeywords(LibraryComponent):
         queue_url = self._get_queue_url(queue_name)
         if message_attributes is None:
             message_attributes = {}
-
         try:
             response = sqs.send_message(
                 QueueUrl=queue_url,
@@ -59,16 +56,16 @@ class SQSKeywords(LibraryComponent):
         
     @keyword('Receive Messages From SQS')
     def receive_messages_from_sqs(self, queue_name: str, max_number: int = 10, wait_time: int = 10) -> list:
-        """ Recieve Messages From Queue
+        """ Receive Messages From Queue
 
         | =Arguments= | =Description= |
         | ``queue_name`` | <str> The queue name. |
-        | ``max_number`` | <Optional int> Max number of messages to receive. |
-        | ``wait_time`` | <Optional int> Wait untill to get the messages. |
+        | ``max_number`` | <Optional int> Max number of messages to receive. Default as 10 |
+        | ``wait_time`` | <Optional int> Wait until to get the messages. Default as 10 seconds |
 
         *Example:*
         | ${messages_list} | Receive Messages From SQS | queue_name |
-        | Log List | ${messages_list} |
+        | ${messages_list} | Receive Messages From SQS | queue_name | max_number=20 | wait_time=30 |
         """
         sqs = self._get_sqs_client()
         queue_url = self._get_queue_url(queue_name)
@@ -104,8 +101,8 @@ class SQSKeywords(LibraryComponent):
             logger.info(f"Queue '{queue_name}' has been purged successfully.")
         except botocore.exceptions.ClientError as e:
             raise Exception(f"An error occurred while purging the queue: {e}")
-        
-    def _get_sqs_client(self) -> SQSClient:
+
+    def _get_sqs_client(self):
         """Retrieve the SQS client."""
         return self.library.session.client('sqs', endpoint_url=self.endpoint_url)
 
