@@ -5,7 +5,7 @@ Suite Teardown    Delete All Sessions
 
 
 *** Variables ***
-${BUCKET_NAME}    test-bucket
+${BUCKET_NAME}      test-bucket-1
 ${BUCKET_NAME_2}    test-bucket-2
 
 

@@ -8,7 +8,7 @@ Variables    data/variables.py
 ${REGION}    us-east-1
 ${ACCESS_KEY}    dummy
 ${SECRET_KEY}    dummy
-${LOCALSTACK_ENDPOINT}    http://192.168.1.86:4566
+${LOCALSTACK_ENDPOINT}    http://localhost:4566
 
 *** Keywords ***
 Create Session And Set Endpoint

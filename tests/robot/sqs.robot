@@ -5,7 +5,7 @@ Suite Teardown    Delete All Sessions
 
 
 *** Variables ***
-${QUEUE_NAME}    test-queueName
+${QUEUE_NAME}       test-queueName
 ${INVALID_QUEUE}    invalid-queueName
 
 
