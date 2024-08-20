@@ -24,6 +24,7 @@ jobs:
       run: sleep 20
 
   run-robot-tests:
+    needs: [ run-localstack ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
