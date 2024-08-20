@@ -20,7 +20,7 @@ awslocal dynamodb create-table \
     AttributeName=SongTitle,AttributeType=S \
     --billing-mode PAY_PER_REQUEST \
     --region us-east-1
-awslocal awslocal logs create-log-group --log-group-name test
+awslocal logs create-log-group --log-group-name test
 awslocal logs create-log-stream \
  --log-group-name test \
  --log-stream-name test
