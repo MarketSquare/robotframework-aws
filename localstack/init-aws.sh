@@ -14,7 +14,7 @@ awslocal dynamodb create-table \
     --table-name music \
     --key-schema \
     AttributeName=Artist,KeyType=HASH \
-    AttributeName=SongTitle,KeyType=HASH \
+    AttributeName=SongTitle,KeyType=RANGE \
     --attribute-definitions \
     AttributeName=Artist,AttributeType=S \
     AttributeName=SongTitle,AttributeType=S \
