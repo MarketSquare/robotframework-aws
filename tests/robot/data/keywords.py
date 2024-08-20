@@ -2,7 +2,7 @@ import boto3
 import time
 
 
-endpoint = "http://192.168.1.86:4566"
+endpoint = "http://localhost:4566"
 LOG_GROUP = 'test'
 LOG_STREAM = 'test'
 
