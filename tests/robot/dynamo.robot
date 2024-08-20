@@ -5,7 +5,7 @@ Suite Teardown    Delete All Sessions
 
 
 *** Variables ***
-${TABLE_NAME}    global01
+${TABLE_NAME}    global
 
 
 *** Test Cases ***
