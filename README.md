@@ -68,7 +68,4 @@ Test Case
 
 ### Attention Contributors
 
-The project development contribution session and local testing with "localstack" is under construction and needs to be 
-reviewed, contributions are welcome.
-
   [Contribution guidelines for this project](CONTRIBUTING.md)

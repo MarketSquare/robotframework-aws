@@ -65,7 +65,8 @@ class CloudWatchKeywords(LibraryComponent):
             logger.debug("waiting for Logs Insights")
             time.sleep(0.5)
             response = client.get_query_results(queryId=query_id)
-        return response['results']
+        results = [sublist[1:] for sublist in response['results']]
+        return results
 
     @keyword('CloudWatch Wait For Logs')
     def wait_for_logs(self, log_group, filter_pattern, regex_pattern, seconds_behind=60, timeout=30,
@@ -108,8 +109,8 @@ class CloudWatchKeywords(LibraryComponent):
 
         *Examples:*
         | ${logs} | CloudWatch Wait For Logs | /aws/group_name | {$.foo.bar = id_value} | 2024.*filename |
-        | ${logs} | CloudWatch Wait For Logs | /aws/group_name | INFO | \\\d+.*id_code | timeout=60 |
-        | ${logs} | CloudWatch Wait For Logs | /aws/group_name | " " | \\\w+.*some_code | not_found_fail=${True} |
+        | ${logs} | CloudWatch Wait For Logs | /aws/group_name | INFO | code.*id_code | timeout=60 |
+        | ${logs} | CloudWatch Wait For Logs | /aws/group_name | " " | code.*some_code | not_found_fail=${True} |
         """
         client = self.library.session.client('logs', endpoint_url=self.endpoint_url)
         stream_response = client.describe_log_streams(logGroupName=log_group,
