@@ -25,7 +25,7 @@ for localstack.
 
 To start localstack just run inside localstack folder:
 ```sh
-docker-compose up
+docker-compose up -d
 ```
 Then you can use inside robot, the endpoint http://localhost:4566
 

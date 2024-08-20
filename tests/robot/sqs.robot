@@ -5,20 +5,31 @@ Suite Teardown    Delete All Sessions
 
 
 *** Variables ***
-${QUEUE_NAME}    test-queueName
+${QUEUE_NAME}       test-queueName
 ${INVALID_QUEUE}    invalid-queueName
 
 
 *** Test Cases ***
-Send and Recieve Message
+Send and Receive Message
     [Tags]    sqs
     Send Message To SQS    ${QUEUE_NAME}    Hello world!
-    Sleep    2
     ${messages}    Receive Messages From SQS    ${QUEUE_NAME}
     ${dict_message}    Set Variable    ${messages}[0]
     Dictionary Should Contain Key    ${dict_message}    Body
     ${actual_value}    Get From Dictionary    ${dict_message}    Body
     Should Be Equal    ${actual_value}   Hello world!
+    [Teardown]    Delete All Messages In SQS    ${QUEUE_NAME}
+
+Send and Receive Messages
+    [Tags]    sqs
+    ${messages_number}    Set Variable    ${5}
+    FOR    ${index}    IN RANGE    1    ${messages_number}+1
+        Send Message To SQS    ${QUEUE_NAME}    Message 0${index}
+    END
+    ${messages}    Receive Messages From SQS    ${QUEUE_NAME}
+    ${messages_len}    Get Length    ${messages}
+    Should Be Equal As Integers    ${messages_len}   ${messages_number}
+    [Teardown]    Delete All Messages In SQS    ${QUEUE_NAME}
 
 Invalid Queue Name
     [Tags]    sqs
@@ -32,6 +43,6 @@ Invalid Queue Name
 Delete Messages
     [Tags]    sqs
     Delete All Messages In SQS    ${QUEUE_NAME}
-    ${messages}    Receive Messages From SQS    ${QUEUE_NAME}
-    ${count}    Get Length    ${messages}
-    Should Be Equal As Integers    ${count}   0
+    ${messages}    Receive Messages From SQS    ${QUEUE_NAME}    wait_time=5
+    ${messages_len}    Get Length    ${messages}
+    Should Be Equal As Integers    ${messages_len}   0

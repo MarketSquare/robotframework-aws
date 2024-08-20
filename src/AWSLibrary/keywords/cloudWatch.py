@@ -65,7 +65,8 @@ class CloudWatchKeywords(LibraryComponent):
             logger.debug("waiting for Logs Insights")
             time.sleep(0.5)
             response = client.get_query_results(queryId=query_id)
-        return response['results']
+        results = [sublist[1:] for sublist in response['results']]
+        return results
 
     @keyword('CloudWatch Wait For Logs')
     def wait_for_logs(self, log_group, filter_pattern, regex_pattern, seconds_behind=60, timeout=30,
