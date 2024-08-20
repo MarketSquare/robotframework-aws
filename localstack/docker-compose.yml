@@ -7,7 +7,7 @@ services:
       - '4563-4599:4563-4599'
       - '8055:8080'
     environment:
-      - SERVICES=s3,lambda,dynamodb,rds,sqs
+      - SERVICES=s3,lambda,dynamodb,rds,sqs,logs
       - DEBUG=1
       - DOCKER_HOST=unix:///var/run/docker.sock
       - AWS_DEFAULT_REGION=us-east-1

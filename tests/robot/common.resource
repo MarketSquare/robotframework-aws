@@ -4,11 +4,13 @@ Library    Collections
 Library    OperatingSystem
 Variables    data/variables.py
 
+
 *** Variables ***
 ${REGION}    us-east-1
 ${ACCESS_KEY}    dummy
 ${SECRET_KEY}    dummy
 ${LOCALSTACK_ENDPOINT}    http://localhost:4566
+
 
 *** Keywords ***
 Create Session And Set Endpoint
