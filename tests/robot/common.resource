@@ -2,6 +2,7 @@
 Library    ${CURDIR}/../../src/AWSLibrary
 Library    Collections
 Library    OperatingSystem
+Library     data/keywords.py
 Variables    data/variables.py
 
 
@@ -9,7 +10,8 @@ Variables    data/variables.py
 ${REGION}    us-east-1
 ${ACCESS_KEY}    dummy
 ${SECRET_KEY}    dummy
-${LOCALSTACK_ENDPOINT}    http://localhost:4566
+#${LOCALSTACK_ENDPOINT}    http://localhost:4566
+${LOCALSTACK_ENDPOINT}    http://192.168.1.86:4566
 
 
 *** Keywords ***
@@ -18,3 +20,4 @@ Create Session And Set Endpoint
     SQS Set Endpoint Url    ${LOCALSTACK_ENDPOINT}    # Point to localstack sqs instance
     S3 Set Endpoint Url    ${LOCALSTACK_ENDPOINT}    # Point to localstack s3 instance
     Dynamo Set Endpoint Url    ${LOCALSTACK_ENDPOINT}    # Point to localstack dynamo instance
+    CloudWatch Set Endpoint Url    ${LOCALSTACK_ENDPOINT}    # Point to localstack cloudwatch instance
