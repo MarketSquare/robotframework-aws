@@ -32,6 +32,16 @@ Test Delete And Update Key
     Should Be Equal    ${result_update}[0][active]    ${False}
     Should Be Equal    ${result_update}[0][name]    new name
 
+Test Delete And Update Nested Key
+    [Tags]    dynamo
+    [Setup]    Dynamo Put Item    ${TABLE_NAME}    ${ITEM_CODE_01}
+    Dynamo Remove Key    ${TABLE_NAME}    id    code01    factory.id
+    ${result_delete}    Dynamo Query Table    ${TABLE_NAME}    id    code01
+    Dictionary Should Not Contain Key    ${result_delete}[0][factory]    id
+    Dynamo Update Key    ${TABLE_NAME}    id    code01    factory.description    New description
+    ${result_update}    Dynamo Query Table    ${TABLE_NAME}    id    code01
+    Should Be Equal    ${result_update}[0][factory][description]    New description
+
 Test Delete Item
     [Tags]    dynamo
     [Setup]    Dynamo Put Item    ${TABLE_NAME}    ${ITEM_CODE_01}
@@ -42,15 +52,17 @@ Test Delete Item
     Should Be Empty    ${result_delete}
 
 Test Insert New Key
-    [Tags]    run
+    [Tags]    dynamo
     [Setup]    Dynamo Put Item    ${TABLE_NAME}    ${ITEM_CODE_01}
     ${result}    Dynamo Query Table    ${TABLE_NAME}    id    code01
-    Dictionary Should Not Contain Key    ${result}[0]    new_code
+    Dictionary Should Not Contain Key    ${result}[0]    codes_list
     ${new_item}    Copy Dictionary    ${result}[0]    deepcopy=${True}
-    Set To Dictionary    ${new_item}    new_code=ABCD
+    ${codes_list}    Create List    ${10}    ${22}    ${19}    ${16}
+    Set To Dictionary    ${new_item}    codes_list=${codes_list}
     Dynamo Put Item    ${TABLE_NAME}    ${new_item}
     ${result_update}    Dynamo Query Table    ${TABLE_NAME}    id    code01
-    Dictionary Should Contain Key    ${result_update}[0]    new_code
+    Dictionary Should Contain Key    ${result_update}[0]    codes_list
+    Should Be Equal    ${result_update}[0][codes_list]    ${codes_list}
 
 Test Put And Query Item With Sort Key
     [Tags]    dynamo
