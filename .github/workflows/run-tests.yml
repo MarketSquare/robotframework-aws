@@ -1,0 +1,57 @@
+name: Run LocalStack And Execute Keyword Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  run-localstack-and-robot:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v3
+    - name: Install Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install docker-compose -y
+    - name: Start Localstack docker
+      working-directory: ./localstack
+      run: |
+        docker-compose up -d
+    - name: Wait for LocalStack to be ready
+      run: sleep 10
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      env:
+        ROBOT_TESTS_DIR: ${{ github.workspace }}/Tests
+        ROBOT_REPORTS_DIR: ${{ github.workspace }}/reports
+      with:
+        python-version: '3.10'
+    - name: Install Dependencies
+      working-directory: ./
+      run: pip install -r requirements.txt
+    - name: Run Robot Framework
+      run: robot -d ./reports ./tests/robot
+    - name: Upload test results
+      uses: actions/upload-artifact@v1
+      if: always()
+      with:
+        name: robot_reports
+        path: reports
+
+  generate-robot-report:
+    if: always()
+    needs: [ run-localstack-and-robot ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download reports
+        uses: actions/download-artifact@v1
+        with:
+          name: robot_reports
+      - name: Send report to commit
+        uses: joonvena/robotframework-reporter-action@v2.4
+        with:
+          gh_access_token: ${{ secrets.GITHUB_TOKEN }}
+          report_path: /robot_reports
