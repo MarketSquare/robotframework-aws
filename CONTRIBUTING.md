@@ -78,7 +78,7 @@ robot -d log -L TRACE -i s3 tests/robot
 
 ### TO-DO
 
-- [ ]  Create CloudWatch and DynamoDB in localstack and create robot tests
+- [x]  Create CloudWatch and DynamoDB in localstack and create robot tests
+- [x]  Create GitHub actions to run the tests in push and merges.
 - [ ]  Add more services in library and in localstack
 - [ ]  Add robot tests for this new services
-- [ ]  Create GitHub actions to run the tests in push and merges.
