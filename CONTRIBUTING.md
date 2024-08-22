@@ -28,6 +28,9 @@ To start localstack just run inside localstack folder:
 docker-compose up -d
 ```
 Then you can use inside robot, the endpoint http://localhost:4566
+see some examples in /tests/robot folder
+
+I only tested this docker on Ubuntu, if you use other system and got some error, fell free to fix and send some pull request.
 
 ### Robot Framework
 
@@ -76,9 +79,12 @@ robot -d log -L TRACE tests/robot/s3.robot
 robot -d log -L TRACE -i s3 tests/robot
 ```
 
+### GitHub Actions
+
+If you don´t have the environment to test the Library, you can fork the project and create the branch inside the folder 
+test. Like "test/my-branch" then after do a push the GitHub actions will start the tests.
+
 ### TO-DO
 
-- [x]  Create CloudWatch and DynamoDB in localstack and create robot tests
-- [x]  Create GitHub actions to run the tests in push and merges.
 - [ ]  Add more services in library and in localstack
 - [ ]  Add robot tests for this new services
