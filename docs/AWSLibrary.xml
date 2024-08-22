@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-06-20T16:01:35+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="14">
-<version>0.2.0</version>
+<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-08-22T16:38:33+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="15">
+<version>1.0.0</version>
 <doc>AWSLibrary is a testing library for Robot Framework that gives you the ability to use some of the AWS
 services in your tests. This robot library is made from Boto3 SDK
 
@@ -85,7 +85,7 @@ appropriate URL to use when communicating with a service. You can specify a comp
 | CloudWatch Set Endpoint Url | http://localhost:4566/ |</doc>
 <shortdoc>The complete URL to use for the constructed CloudWatch client. Normally, botocore will automatically construct the appropriate URL to use when communicating with a service. You can specify a complete URL (including the “http/https” scheme) to override this behavior.</shortdoc>
 </kw>
-<kw name="CloudWatch Wait For Logs" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\cloudWatch.py" lineno="71">
+<kw name="CloudWatch Wait For Logs" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\cloudWatch.py" lineno="72">
 <arguments repr="log_group, filter_pattern, regex_pattern, seconds_behind=60, timeout=30, not_found_fail=False">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="log_group">
 <name>log_group</name>
@@ -147,8 +147,8 @@ amount of log found, the keyword execution time may be slightly longer than the 
 
 *Examples:*
 | ${logs} | CloudWatch Wait For Logs | /aws/group_name | {$.foo.bar = id_value} | 2024.*filename |
-| ${logs} | CloudWatch Wait For Logs | /aws/group_name | INFO | \\d+.*id_code | timeout=60 |
-| ${logs} | CloudWatch Wait For Logs | /aws/group_name | " " | \\w+.*some_code | not_found_fail=${True} |</doc>
+| ${logs} | CloudWatch Wait For Logs | /aws/group_name | INFO | code.*id_code | timeout=60 |
+| ${logs} | CloudWatch Wait For Logs | /aws/group_name | " " | code.*some_code | not_found_fail=${True} |</doc>
 <shortdoc>Wait until find the wanted log in cloudwatch.</shortdoc>
 </kw>
 <kw name="Create Bucket" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="16">
@@ -389,7 +389,7 @@ existing item.
 | ``table_name`` | &lt;dict&gt; JSON dictionary representing the dynamo item. |
 
 *Examples:*
-| Update Item | library-books | {"key": "value"} |</doc>
+| Dynamo Put Item | library-books | {"key": "value"} |</doc>
 <shortdoc>Creates a new item, or replaces an old item with a new item. If an item that has the same partition key (primary key) as the new item already exists in the specified table, the new item completely replaces the existing item.</shortdoc>
 </kw>
 <kw name="Dynamo Query Table" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\dynamo.py" lineno="28">
@@ -691,7 +691,7 @@ Requires:   @param: ```path``` which is the bucket location/path name.
 | ``bucket`` | &lt;str&gt; The bucket name. |
 
 *Examples:*
-| S3 Create bucket | bucket_name |</doc>
+| S3 Create Bucket | bucket_name |</doc>
 <shortdoc>Creates S3 Bucket with the given bucket name</shortdoc>
 </kw>
 <kw name="S3 Delete File" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="272">
@@ -754,8 +754,8 @@ Requires:   @param: ```path``` which is the bucket location/path name.
 | ``key`` | &lt;str&gt; Complete s3 filepath. |
 
 *Examples:*
-| Get S3 File Content | bucket_name | s3_file.json |
-| Get S3 File Content | bucket_name | folder_name/s3_file.txt |</doc>
+| S3 Get File Content | bucket_name | s3_file.json |
+| S3 Get File Content | bucket_name | folder_name/s3_file.txt |</doc>
 <shortdoc>Get the file content in S3 bucket.</shortdoc>
 </kw>
 <kw name="S3 Get File Metadata" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="397">
@@ -774,8 +774,8 @@ Requires:   @param: ```path``` which is the bucket location/path name.
 | ``key`` | &lt;str&gt; Complete s3 filepath. |
 
 *Examples:*
-| Get S3 File Metadata | bucket_name | s3_file.json |
-| Get S3 File Metadata | bucket_name | folder_name/s3_file.txt |</doc>
+| S3 Get File Metadata | bucket_name | s3_file.json |
+| S3 Get File Metadata | bucket_name | folder_name/s3_file.txt |</doc>
 <shortdoc>Get the file metadata in S3 bucket.</shortdoc>
 </kw>
 <kw name="S3 Key Should Exist" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="337">
@@ -884,6 +884,99 @@ appropriate URL to use when communicating with a service. You can specify a comp
 | S3 Upload File | bucket_name | folder/s3_file.txt | ${CURDIR}/file.txt |</doc>
 <shortdoc>Upload a file to the bucket</shortdoc>
 </kw>
+<kw name="Sqs Delete All Messages" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\sqs.py" lineno="86">
+<arguments repr="queue_name: str">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="queue_name: str">
+<name>queue_name</name>
+<type name="str" typedoc="string"/>
+</arg>
+</arguments>
+<doc>Delete All Messages In SQS
+
+| =Arguments= | =Description= |
+| ``queue_name`` | &lt;str&gt; The queue name. |
+
+*Example:*
+| Sqs Delete All Messages | queue_name |</doc>
+<shortdoc>Delete All Messages In SQS</shortdoc>
+</kw>
+<kw name="Sqs Receive Messages" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\sqs.py" lineno="58">
+<arguments repr="queue_name: str, max_number: int = 10, wait_time: int = 10">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="queue_name: str">
+<name>queue_name</name>
+<type name="str" typedoc="string"/>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="max_number: int = 10">
+<name>max_number</name>
+<type name="int" typedoc="integer"/>
+<default>10</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="wait_time: int = 10">
+<name>wait_time</name>
+<type name="int" typedoc="integer"/>
+<default>10</default>
+</arg>
+</arguments>
+<returntype name="list" typedoc="list"/>
+<doc>Receive Messages From Queue
+
+| =Arguments= | =Description= |
+| ``queue_name`` | &lt;str&gt; The queue name. |
+| ``max_number`` | &lt;Optional int&gt; Max number of messages to receive. Default as 10 |
+| ``wait_time`` | &lt;Optional int&gt; Wait until to get the messages. Default as 10 seconds |
+
+*Example:*
+| ${messages_list} | Sqs Receive Messages | queue_name |
+| ${messages_list} | Sqs Receive Messages | queue_name | max_number=20 | wait_time=30 |</doc>
+<shortdoc>Receive Messages From Queue</shortdoc>
+</kw>
+<kw name="Sqs Send Message" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\sqs.py" lineno="28">
+<arguments repr="queue_name: str, message_body: str, message_attributes=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="queue_name: str">
+<name>queue_name</name>
+<type name="str" typedoc="string"/>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="message_body: str">
+<name>message_body</name>
+<type name="str" typedoc="string"/>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="message_attributes=None">
+<name>message_attributes</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>Send a Message to Queue
+
+| =Arguments= | =Description= |
+| ``queue_name`` | &lt;str&gt; The queue name. |
+| ``message_body`` | &lt;str&gt; message to send. |
+| ``message_attributes`` | &lt;Optional&gt; Metadata to send. |
+
+*Example 1:*
+| Sqs Send Message | queue_name | Hello World! |
+
+*Example 2:*
+| ${message_attributes} | Create Dictionary | Example | ${order_type} |
+| Sqs Send Message | sqs_name | Hello World! | ${message_attributes} |</doc>
+<shortdoc>Send a Message to Queue</shortdoc>
+</kw>
+<kw name="Sqs Set Endpoint Url" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\sqs.py" lineno="14">
+<arguments repr="url">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="url">
+<name>url</name>
+</arg>
+</arguments>
+<doc>The complete URL to use for the constructed S3 client. Normally, botocore will automatically construct the
+appropriate URL to use when communicating with a service. You can specify a complete URL
+(including the “http/https” scheme) to override this behavior.
+
+| =Arguments= | =Description= |
+| ``url`` | &lt;str&gt; The complete endpoint URL. |
+
+*Examples:*
+| Sqs Set Endpoint Url | http://localhost:4566/ |</doc>
+<shortdoc>The complete URL to use for the constructed S3 client. Normally, botocore will automatically construct the appropriate URL to use when communicating with a service. You can specify a complete URL (including the “http/https” scheme) to override this behavior.</shortdoc>
+</kw>
 <kw name="Upload File" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="127">
 <arguments repr="bucket, key, path, endpoint_url=None">
 <arg kind="POSITIONAL_OR_NAMED" required="true" repr="bucket">
@@ -916,5 +1009,58 @@ Upload a file to the bucket
 </kw>
 </keywords>
 <typedocs>
+<type name="integer" type="Standard">
+<doc>Conversion is done using Python's [https://docs.python.org/library/functions.html#int|int]
+built-in function. Floating point
+numbers are accepted only if they can be represented as integers exactly.
+For example, ``1.0`` is accepted and ``1.1`` is not.
+
+Starting from RF 4.1, it is possible to use hexadecimal, octal and binary
+numbers by prefixing values with ``0x``, ``0o`` and ``0b``, respectively.
+
+Starting from RF 4.1, spaces and underscores can be used as visual separators
+for digit grouping purposes.
+
+Examples: ``42``, ``-1``, ``0b1010``, ``10 000 000``, ``0xBAD_C0FFEE``
+</doc>
+<accepts>
+<type>string</type>
+<type>float</type>
+</accepts>
+<usages>
+<usage>Sqs Receive Messages</usage>
+</usages>
+</type>
+<type name="list" type="Standard">
+<doc>Strings must be Python [https://docs.python.org/library/stdtypes.html#list|list]
+literals. They are converted to actual lists using the
+[https://docs.python.org/library/ast.html#ast.literal_eval|ast.literal_eval]
+function. They can contain any values ``ast.literal_eval`` supports, including
+lists and other containers.
+
+If the type has nested types like ``list[int]``, items are converted
+to those types automatically. This in new in Robot Framework 6.0.
+
+Examples: ``['one', 'two']``, ``[('one', 1), ('two', 2)]``
+</doc>
+<accepts>
+<type>string</type>
+<type>Sequence</type>
+</accepts>
+<usages>
+<usage>Sqs Receive Messages</usage>
+</usages>
+</type>
+<type name="string" type="Standard">
+<doc>All arguments are converted to Unicode strings.</doc>
+<accepts>
+<type>Any</type>
+</accepts>
+<usages>
+<usage>Sqs Delete All Messages</usage>
+<usage>Sqs Receive Messages</usage>
+<usage>Sqs Send Message</usage>
+</usages>
+</type>
 </typedocs>
 </keywordspec>

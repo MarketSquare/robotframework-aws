@@ -83,7 +83,7 @@ class DynamoKeywords(LibraryComponent):
         | ``table_name`` | <dict> JSON dictionary representing the dynamo item. |
 
         *Examples:*
-        | Update Item | library-books | {"key": "value"} |
+        | Dynamo Put Item | library-books | {"key": "value"} |
         """
         resource = self.library.session.resource('dynamodb', endpoint_url=self.endpoint_url)
         response = resource.Table(table_name).put_item(Item=json_dict)

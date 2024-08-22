@@ -222,7 +222,7 @@ class S3Keywords(LibraryComponent):
         | ``bucket`` | <str> The bucket name. |
 
         *Examples:*
-        | S3 Create bucket | bucket_name |
+        | S3 Create Bucket | bucket_name |
         """
         client = self.library.session.client('s3')
         try:
@@ -382,8 +382,8 @@ class S3Keywords(LibraryComponent):
         | ``key`` | <str> Complete s3 filepath. |
 
         *Examples:*
-        | Get S3 File Content | bucket_name | s3_file.json |
-        | Get S3 File Content | bucket_name | folder_name/s3_file.txt |
+        | S3 Get File Content | bucket_name | s3_file.json |
+        | S3 Get File Content | bucket_name | folder_name/s3_file.txt |
         """
         client = self.library.session.client('s3', endpoint_url=self.endpoint_url)
         try:
@@ -402,8 +402,8 @@ class S3Keywords(LibraryComponent):
         | ``key`` | <str> Complete s3 filepath. |
 
         *Examples:*
-        | Get S3 File Metadata | bucket_name | s3_file.json |
-        | Get S3 File Metadata | bucket_name | folder_name/s3_file.txt |
+        | S3 Get File Metadata | bucket_name | s3_file.json |
+        | S3 Get File Metadata | bucket_name | folder_name/s3_file.txt |
         """
         client = self.library.session.client('s3', endpoint_url=self.endpoint_url)
         try:

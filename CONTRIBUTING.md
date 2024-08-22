@@ -16,6 +16,14 @@ Configure your environment as desired, the requirements are in the requirements.
 pip install -r requirements.txt
 ```
 
+All keyword names must start with the module name for easy searching in html documentation, example:
+```robotframework
+S3 Upload File
+Sqs Send Message
+CloudWatch Wait For Logs
+Dynamo Query Table
+```
+
 ## Testing
 
 ### Localstack
