@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-08-22T16:38:33+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="15">
+<keywordspec name="AWSLibrary" type="LIBRARY" format="ROBOT" scope="GLOBAL" generated="2024-08-23T13:36:10+00:00" specversion="6" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\__init__.py" lineno="14">
 <version>1.0.0</version>
 <doc>AWSLibrary is a testing library for Robot Framework that gives you the ability to use some of the AWS
 services in your tests. This robot library is made from Boto3 SDK
@@ -622,34 +622,6 @@ could be used to list only the files inside a folder for example.
 | List Objects | bucket_name | folder_name |
 | List Objects | bucket_name | folder_name/start_of_the_filename |</doc>
 <shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0* use `S3 List Objects` instead</shortdoc>
-</kw>
-<kw name="Local File Should Exist" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\resource.py" lineno="10">
-<arguments repr="path">
-<arg kind="POSITIONAL_OR_NAMED" required="true" repr="path">
-<name>path</name>
-</arg>
-</arguments>
-<doc>*DEPRECATED - this keyword will be removed in version 2.0.0*
-
-Verifies Local File at the given path does exist
-Requires:   @param: ```path``` which is the bucket location/path name.
-    Example:
-    | Local File Should Exist | bucket | path |</doc>
-<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0*</shortdoc>
-</kw>
-<kw name="Local File Should Not Exist" deprecated="true" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\resource.py" lineno="28">
-<arguments repr="path">
-<arg kind="POSITIONAL_OR_NAMED" required="true" repr="path">
-<name>path</name>
-</arg>
-</arguments>
-<doc>*DEPRECATED - this keyword will be removed in version 2.0.0*
-
-Verifies Local File at the given path does not exist
-Requires:   @param: ```path``` which is the bucket location/path name.
-    Example:
-    | Local File Should Not Exist | bucket | path |</doc>
-<shortdoc>*DEPRECATED - this keyword will be removed in version 2.0.0*</shortdoc>
 </kw>
 <kw name="S3 Copy Between Buckets" source="C:\Merkle\repositories\robotframework-aws\src\AWSLibrary\keywords\s3.py" lineno="417">
 <arguments repr="source_bucket, source_key, destination_bucket, destination_key">
