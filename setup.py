@@ -3,13 +3,13 @@ from setuptools import setup, find_packages
 
 def readme():
     with open('README.md') as f:
-        README = f.read()
-    return README
+        read_me = f.read()
+    return read_me
 
 
 setup(
     name='robotframework-aws',
-    version='0.2.0',
+    version='1.0.0',
     author="Dillan Teagle",
     author_email="softwaredeveloper@dillanteagle.me",
     description="A python package to test AWS services in Robot Framework",

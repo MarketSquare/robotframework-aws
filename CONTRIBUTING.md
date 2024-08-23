@@ -16,6 +16,22 @@ Configure your environment as desired, the requirements are in the requirements.
 pip install -r requirements.txt
 ```
 
+### Keywords
+All keyword names must start with the module name for easy searching in html documentation, example:
+```robotframework
+S3 Upload File
+Sqs Send Message
+CloudWatch Wait For Logs
+Dynamo Query Table
+```
+### Versioning
+From left to right. The first number is incremented every time a new AWS module is incorporated, that is, 
+when a new python file with a new class is incorporated into the project.
+
+The second one is incremented every time a new keyword is added to the existing modules. (sqs, dynamo, s3...)
+
+The last one is incremented by bugfix or code improvements.
+
 ## Testing
 
 ### Localstack

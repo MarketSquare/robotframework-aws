@@ -4,7 +4,6 @@ from robotlibcore import DynamicCore
 from AWSLibrary.keywords import (
     SessionKeywords,
     S3Keywords,
-    ResourceKeywords,
     DynamoKeywords,
     CloudWatchKeywords
 )
@@ -45,7 +44,6 @@ class AWSLibrary(DynamicCore):
         libraries = [
             SessionKeywords(self),
             S3Keywords(self),
-            ResourceKeywords(self),
             DynamoKeywords(self),
             CloudWatchKeywords(self),
             SQSKeywords(self)

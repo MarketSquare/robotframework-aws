@@ -10,7 +10,7 @@ class SQSKeywords(LibraryComponent):
         LibraryComponent.__init__(self, library)
         self.endpoint_url = None
     
-    @keyword('SQS Set Endpoint Url')
+    @keyword('Sqs Set Endpoint Url')
     def sqs_set_endpoint(self, url):
         """ The complete URL to use for the constructed S3 client. Normally, botocore will automatically construct the
         appropriate URL to use when communicating with a service. You can specify a complete URL
@@ -20,11 +20,11 @@ class SQSKeywords(LibraryComponent):
         | ``url`` | <str> The complete endpoint URL. |
 
         *Examples:*
-        | SQS Set Endpoint Url | http://localhost:4566/ |
+        | Sqs Set Endpoint Url | http://localhost:4566/ |
         """
         self.endpoint_url = url
     
-    @keyword('Send Message To SQS')
+    @keyword('Sqs Send Message')
     def send_message_to_sqs(self, queue_name: str, message_body: str, message_attributes=None):
         """ Send a Message to Queue
 
@@ -34,11 +34,11 @@ class SQSKeywords(LibraryComponent):
         | ``message_attributes`` | <Optional> Metadata to send. |
 
         *Example 1:*
-        | Send Message To SQS | queue_name | Hello World! |
+        | Sqs Send Message | queue_name | Hello World! |
         
         *Example 2:*
         | ${message_attributes} | Create Dictionary | Example | ${order_type} |
-        | Send Message To SQS | sqs_name | Hello World! | ${message_attributes} |
+        | Sqs Send Message | sqs_name | Hello World! | ${message_attributes} |
         """
         sqs = self._get_sqs_client()
         queue_url = self._get_queue_url(queue_name)
@@ -54,7 +54,7 @@ class SQSKeywords(LibraryComponent):
         except botocore.exceptions.ClientError as e:
             raise Exception(e)
         
-    @keyword('Receive Messages From SQS')
+    @keyword('Sqs Receive Messages')
     def receive_messages_from_sqs(self, queue_name: str, max_number: int = 10, wait_time: int = 10) -> list:
         """ Receive Messages From Queue
 
@@ -64,8 +64,8 @@ class SQSKeywords(LibraryComponent):
         | ``wait_time`` | <Optional int> Wait until to get the messages. Default as 10 seconds |
 
         *Example:*
-        | ${messages_list} | Receive Messages From SQS | queue_name |
-        | ${messages_list} | Receive Messages From SQS | queue_name | max_number=20 | wait_time=30 |
+        | ${messages_list} | Sqs Receive Messages | queue_name |
+        | ${messages_list} | Sqs Receive Messages | queue_name | max_number=20 | wait_time=30 |
         """
         sqs = self._get_sqs_client()
         queue_url = self._get_queue_url(queue_name)
@@ -82,7 +82,7 @@ class SQSKeywords(LibraryComponent):
         except botocore.exceptions.ClientError as e:
             raise Exception(e)
         
-    @keyword('Delete All Messages In SQS')
+    @keyword('Sqs Delete All Messages')
     def purge_sqs(self, queue_name: str):
         """
         Delete All Messages In SQS
@@ -91,7 +91,7 @@ class SQSKeywords(LibraryComponent):
         | ``queue_name`` | <str> The queue name. |
 
         *Example:*
-        | Delete All Messages In SQS | queue_name |
+        | Sqs Delete All Messages | queue_name |
         """
         sqs = self._get_sqs_client()
         queue_url = self._get_queue_url(queue_name)
