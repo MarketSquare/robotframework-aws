@@ -28,7 +28,7 @@ jobs:
     - name: Wait for LocalStack to be ready
       run: sleep 10
     - name: Set up Python 3.10
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       env:
         ROBOT_TESTS_DIR: ${{ github.workspace }}/Tests
         ROBOT_REPORTS_DIR: ${{ github.workspace }}/reports
