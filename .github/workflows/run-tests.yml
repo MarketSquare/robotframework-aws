@@ -11,7 +11,7 @@ on:
 
 jobs:
   run-localstack-and-robot:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -49,7 +49,7 @@ jobs:
   generate-robot-report:
     if: always()
     needs: [ run-localstack-and-robot ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Download reports
         uses: actions/download-artifact@v1
