@@ -24,7 +24,7 @@ jobs:
     - name: Start Localstack docker
       working-directory: ./localstack
       run: |
-        docker-compose up -d
+        docker compose up -d
     - name: Wait for LocalStack to be ready
       run: sleep 10
     - name: Set up Python 3.10
