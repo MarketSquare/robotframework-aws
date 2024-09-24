@@ -55,6 +55,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: robot_reports
+      - name: Display structure of downloaded files
+        run: ls -R /robot_reports
       - name: Send report to commit
         uses: joonvena/robotframework-reporter-action@v2.4
         with:
