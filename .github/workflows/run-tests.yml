@@ -11,7 +11,7 @@ on:
 
 jobs:
   run-localstack-and-robot:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -24,11 +24,11 @@ jobs:
     - name: Start Localstack docker
       working-directory: ./localstack
       run: |
-        docker-compose up -d
+        docker compose up -d
     - name: Wait for LocalStack to be ready
       run: sleep 10
     - name: Set up Python 3.10
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       env:
         ROBOT_TESTS_DIR: ${{ github.workspace }}/Tests
         ROBOT_REPORTS_DIR: ${{ github.workspace }}/reports
@@ -40,7 +40,7 @@ jobs:
     - name: Run Robot Framework
       run: robot -d ./reports ./tests/robot
     - name: Upload test results
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: robot_reports
@@ -49,14 +49,16 @@ jobs:
   generate-robot-report:
     if: always()
     needs: [ run-localstack-and-robot ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Download reports
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v4
         with:
           name: robot_reports
+      - name: Display structure of downloaded files
+        run: ls -R .
       - name: Send report to commit
         uses: joonvena/robotframework-reporter-action@v2.4
         with:
           gh_access_token: ${{ secrets.GITHUB_TOKEN }}
-          report_path: /robot_reports
+          report_path: .
