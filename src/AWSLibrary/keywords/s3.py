@@ -333,6 +333,32 @@ class S3Keywords(LibraryComponent):
         except botocore.exceptions.ClientError as e:
             raise Exception(e)
 
+    @keyword('S3 Put Object With Checksum')
+    def s3_put_object_with_checksum(self, bucket, key, body, checksum_algorithm='SHA256'):
+        """ Put an object to the bucket with checksum validation for integrity.
+
+        | =Arguments= | =Description= |
+        | ``bucket`` | <str> The bucket name. |
+        | ``key`` | <str> Complete s3 filepath. |
+        | ``body`` | <str> The object data. |
+        | ``checksum_algorithm`` | <str> The checksum algorithm (SHA256, SHA1, CRC32, CRC32C). Default: SHA256. |
+
+        *Examples:*
+        | S3 Put Object With Checksum | bucket_name | s3_file.txt | ${data} |
+        | S3 Put Object With Checksum | bucket_name | s3_file.txt | ${data} | CRC32 |
+        """
+        client = self.library.session.client('s3', endpoint_url=self.endpoint_url)
+        try:
+            response = client.put_object(
+                Bucket=bucket,
+                Key=key,
+                Body=body,
+                ChecksumAlgorithm=checksum_algorithm
+            )
+            logger.info(response)
+        except botocore.exceptions.ClientError as e:
+            raise Exception(e)
+
     @keyword('S3 Key Should Exist')
     def s3_key_should_exist(self, bucket, key):
         """ Check if the s3 object exist inside the bucket

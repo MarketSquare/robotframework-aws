@@ -64,3 +64,6 @@ localstack/.localstack/
 
 # VS Code
 .vscode/
+
+# Results
+results/
