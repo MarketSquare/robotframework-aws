@@ -61,3 +61,6 @@ log/
 
 # localstack
 localstack/.localstack/
+
+# VS Code
+.vscode/
