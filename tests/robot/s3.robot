@@ -76,3 +76,10 @@ Test Metadata
     Dictionary Should Contain Key    ${metadata}[ResponseMetadata]    RequestId
     Dictionary Should Contain Key    ${metadata}[ResponseMetadata][HTTPHeaders]    last-modified
     [Teardown]    S3 Delete File    ${BUCKET_NAME}    s3_file_metadata.txt
+
+Test Put Object With Checksum
+    [Tags]    s3
+    ${data}=    Get File    ${CURDIR}/data/local_file.txt
+    S3 Put Object With Checksum    ${BUCKET_NAME}    s3_file_checksum.txt    ${data}    SHA256
+    S3 Key Should Exist    ${BUCKET_NAME}    s3_file_checksum.txt
+    [Teardown]    S3 Delete File    ${BUCKET_NAME}    s3_file_checksum.txt

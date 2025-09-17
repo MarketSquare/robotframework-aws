@@ -25,5 +25,5 @@ setup(
     ],
     packages=find_packages('src'),
     package_dir={'': 'src'},
-    install_requires=['boto3 >= 1.34.125', 'robotframework >= 6.1.1', 'robotframework-pythonlibcore>=4.4.1']
+    install_requires=['boto3 >= 1.40.30', 'robotframework >= 6.1.1', 'robotframework-pythonlibcore>=4.4.1']
 )
